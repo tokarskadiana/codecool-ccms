@@ -1,17 +1,25 @@
 from user import User
 
 class Student(User):
-    def add_student(self):
-        pass
+    list_of_students = []
+
+    @staticmethod
+    def add_student(username, password, first_name, last_name, telephone='', mail=''):
+        username = '{}.{}'.format(first_name, last_name)
+        student = Student(username, password, first_name, last_name, telephone, mail)
+        Student.list_of_students.append(student)
 
     def edit_student(self):
         pass
 
-    def delete_student(self):
-        pass
+    @staticmethod
+    def delete_student(username):
+        for student in Student.list_of_students:
+            if student.username == username:
+                Student.list_of_students.remove(student)
 
     def list_student(self):
-        pass
+        return Student.list_of_students
 
     def view_details(self):
         pass
