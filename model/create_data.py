@@ -127,15 +127,17 @@ class Database(object):
         for i in range(0,len(new_list),attr_number):
             submit_object_list.append(Submition(new_list[i],new_list[i+1],new_list[i+2]))
 
+
         return Assignment(row[0],row[1],row[2],submit_object_list)
 
     @staticmethod
     def assignment_data_save(row):
         submilit_list = row.submit_list
-        print(submilit_list)
+
         submit = [row.title,row.description,row.due_date]
         for index, item in enumerate(submilit_list):
             submit.append(item.student_username)
             submit.append(item.content)
             submit.append(item.grade)
+
         return submit
