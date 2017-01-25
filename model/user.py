@@ -16,9 +16,10 @@ class User:
     def log_in(cls, username=None, password=None):
         from mentor import Mentor
         from student import Student
+        from manager import Manager
 
         users = [Mentor.mentors_list,
-                 Student.list_of_students]
+                 Student.list_of_students, Employee.employee_list]
 
         for list_of_users in users:
             for person in list_of_users:
@@ -34,9 +35,11 @@ class User:
 
 
 class Employee(User):
+    employee_list = []
 
     @classmethod
-    def add_employee(cls):
+    def add_employee(cls, password, first_name, last_name, telephone, mail):
         e = Employee(password, first_name, last_name, telephone, mail)
+        cls.employee_list.append(e)
 
 
