@@ -1,6 +1,6 @@
 from model import student
 from model import attendance
-from employee_controller import EmployeeController
+from controller.employee_controller import EmployeeController
 
 
 class MentorController(EmployeeController):

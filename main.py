@@ -1,5 +1,13 @@
 from model.user import User
+from model.user import Employee
+from model.student import Student
+from model.mentor import Mentor
+from model.manager import Manager
 from controller.student_controller import StudentController
+from controller.user_controller import UserController
+from controller.mentor_controller import MentorController
+from controller.menager_controller import MenagerController
+from controller.employee_controller import EmployeeController
 from view import View as view
 
 
@@ -13,8 +21,8 @@ def student_session(user):
         elif option == '2':
             pass
         elif option == '0':
-            User.sing_out()
-            main()
+            UserController.sign_out()
+            return
         else:
             print('Enter valid option.')
             continue
@@ -40,15 +48,16 @@ def mentor_session(user):
         elif option == '7':
             pass
         elif option == '0':
-            User.sing_out()
-            main()
+            UserController.sign_out()
+            return
         else:
             print('Enter valid option.')
             continue
 
-def menager_session(user):
-        session = MenagerController(user)
-        while True:
+
+def manager_session(user):
+    session = MenagerController(user)
+    while True:
         view.menager_menu()
         option = input('\nChoose the option:')
         if option == '1':
@@ -62,8 +71,8 @@ def menager_session(user):
         elif option == '5':
             pass
         elif option == '0':
-            User.sing_out()
-            main()
+            UserController.sign_out()
+            return
         else:
             print('Enter valid option.')
             continue
@@ -77,23 +86,32 @@ def employee_session(user):
         if option == '1':
             pass
         elif option == '0':
-            User.sing_out()
-            main()
+            UserController.sign_out()
+            return
         else:
             print('Enter valid option.')
             continue
 
+
+def date_base():
+    Employee.create('dupa', 'Kati', 'K')
+    Mentor.add_mentor('dupa', 'Marcin', 'Foo')
+    Student.add_student('dupa', 'diana', 'd')
+    Manager.add_manager('dupa', 'Jurek', 'K')
+
+
 def main():
+    date_base()
     log_in_input = view.main_menu()
     username = log_in_input[0]
     password = log_in_input[1]
-    user = User.log_in(username, password)
+    user = UserController.log_in(username, password)
     if type(user) == Student:
         student_session(user)
     elif type(user) == Mentor:
         mentor_session(user)
-    elif type(user) == Menager:
-        menager_session(user)
+    elif type(user) == Manager:
+        manager_session(user)
     elif type(user) == Employee:
         employee_session(user)
     else:
