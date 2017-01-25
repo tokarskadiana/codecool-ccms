@@ -23,16 +23,17 @@ class Mentor(User):
             if username == mentor.username:
                 return [self.username, self.first_name, self.last_name, self.telephone, self.mail]
 
-    @classmethod
-    def delete_mentor(cls, username):
+    @staticmethod
+    def delete_mentor(username):
         for mentor in Mentor.mentors_list:
             if username == mentor.username:
                 Mentor.mentors_list.remove(mentor)
 
         return Mentor.mentors_list
 
-    def list_mentors(self):
-        return self.mentors_list
+    @staticmethod
+    def list_mentors():
+        return Mentor.mentors_list
 
     def __str__(self):
         return ('{} {}'.format(self.first_name, self.last_name))
