@@ -1,11 +1,9 @@
 from user import User
 
-# from user import *
-# from mentor import *
+
 
 class Mentor(User):
     mentors_list = []
-
 
     @classmethod
     def add_mentor(cls, password, first_name, last_name, telephone=None, mail=None):
@@ -35,6 +33,9 @@ class Mentor(User):
 
     def list_mentors(self):
         return self.mentors_list
+
+    def __str__(self):
+        return ('{} {}'.format(self.first_name, self.last_name))
 
 
 
