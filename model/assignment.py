@@ -48,13 +48,13 @@ class Assignment:
             return True
         return False
 
-    def __str__(self):
-        '''
-        Returns formated output of object.
-
-        Returns:str
-        '''
-        return '{}, {}, {}'.format(self.title, self.due_date, self.description)
+    # def __str__(self):
+    #     '''
+    #     Returns formated output of object.
+    #
+    #     Returns:str
+    #     '''
+    #     return '{}, {}, {}'.format(self.title, self.due_date, self.description)
 
     @classmethod
     def get_list(cls):
