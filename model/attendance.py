@@ -1,13 +1,13 @@
 class Attendance:
     list_of_attendance = [] # [obcj]  : obcj " ", {" ": 0/1}
 
-    def __init__(self, date):
+    def __init__(self, date, student_presence={}):
         """
         Initialize Assignment object.
         :param date (str): date of checking attendance
         """
         self.date = date
-        self.student_presence = {}
+        self.student_presence = student_presence
 
     def check_attendance(self, username, present):
         """
