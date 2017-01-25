@@ -102,17 +102,21 @@ class Assignment:
         Returns:list
         '''
         details = []
-        for submition in self.submit_list:
-            details.append([submition.get_student_username(),
-                            submition.get_content(), submition.get_grade()])
-        return details
+        if self.submit_list:
+            for submition in self.submit_list:
+                details.append([submition.get_student_username(),
+                                submition.get_content(), submition.get_grade()])
+        if details:
+            return details
+        return None
 
     def list_assignment_grades(self, student_username):
         '''
         Find submittion by user name and return info about garade.
 
-        Returns:str
+        Returns:list
         '''
         for submit in self.submit_list:
             if submit.get_student_username() == student_username:
-                return '{} - {}'.format(self.title, submit.get_grade())
+                return [self.title, submit.get_grade()]
+        return None
