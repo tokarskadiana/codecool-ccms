@@ -5,13 +5,15 @@ class Student(User):
     list_of_students = []
 
     @staticmethod
-    def add_student(username, password, first_name, last_name, telephone='', mail=''):
-        username = '{}.{}'.format(first_name, last_name)
-        student = Student(username, password, first_name, last_name, telephone, mail)
+    def add_student(password, first_name, last_name, telephone='', mail=''):
+        student = Student(password, first_name, last_name, telephone, mail)
         Student.list_of_students.append(student)
 
-    def edit_student(self):
-        pass
+    def edit_student(self, **kwargs):
+        for key, value in kwargs:
+            if key:
+                if key in self.__dict__.keys():
+                    self.__dict__[key] = value
 
     @staticmethod
     def delete_student(username):
@@ -24,4 +26,6 @@ class Student(User):
         return Student.list_of_students
 
     def view_details(self):
-        pass
+        list_det = []
+        list_det.append(self.username, self.first_name, self.last_name, self.telephone, self.mail)
+        return list_det
