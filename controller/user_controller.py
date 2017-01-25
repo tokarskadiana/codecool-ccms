@@ -1,5 +1,3 @@
-
-
 class UserController:
     def __init__(self, user):
         '''

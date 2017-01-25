@@ -5,6 +5,9 @@ from employee_controller import EmployeeController
 
 class MentorController(EmployeeController):
 
+    def add_assiment(self):
+        pass
+
     def grade_assignment(self):
         pass
 
@@ -15,6 +18,7 @@ class MentorController(EmployeeController):
             ask = input('0 or 1')
             atta.check_attendance(person.username, int(ask))
     # +add_student(first_name, last_name, password): str
+
     @staticmethod
     def add_student(first_name, last_name, password):
         student.Student.add_student(password, first_name, last_name)
@@ -22,7 +26,8 @@ class MentorController(EmployeeController):
     # +edit_student(Student_obj: obj, options_to_change: ** kwargs)
     @staticmethod
     def edit_student(person, first_name, last_name, telephone, mail):
-        student.Student.edit_student(person, first_name='', last_name='', telephone='', mail='')
+        student.Student.edit_student(
+            person, first_name='', last_name='', telephone='', mail='')
 
     # +remove_student(Stud_obj:obj):str
     @staticmethod
