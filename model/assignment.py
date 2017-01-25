@@ -1,6 +1,5 @@
-from student import *
-from submit import *
-from create_data import *
+from student import Student
+from submit import Submition
 
 
 class Assignment:
