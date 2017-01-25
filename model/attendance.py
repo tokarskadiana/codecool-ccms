@@ -1,7 +1,7 @@
 class Attendance:
     list_of_attendance = [] # [obcj]  : obcj " ", {" ": 0/1}
 
-    def __init__(self, date, student_presence={}):
+    def __init__(self, date, student_presence):
         """
         Initialize Assignment object.
         :param date (str): date of checking attendance
@@ -50,9 +50,9 @@ class Attendance:
         for day_attendance in Attendance.list_of_attendance:
             for student, present in day_attendance.student_presence.items():
                 if student in percent_of_presence.keys():
-                    percent_of_presence[student] += present
+                    percent_of_presence[student] += int(present)
                 else:
-                    percent_of_presence[student] = present
+                    percent_of_presence[student] = int(present)
         for student, attendance in percent_of_presence.items():
             percent_of_presence[student] = str(int((attendance/len(Attendance.list_of_attendance))*100))
         # print(percent_of_presence)
