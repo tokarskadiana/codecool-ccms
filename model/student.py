@@ -1,5 +1,6 @@
 from user import User
 
+
 class Student(User):
     list_of_students = []
 
@@ -18,6 +19,7 @@ class Student(User):
             if student.username == username:
                 Student.list_of_students.remove(student)
 
+    @classmethod
     def list_student(self):
         return Student.list_of_students
 
