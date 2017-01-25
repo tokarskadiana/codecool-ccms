@@ -1,6 +1,6 @@
-from student import *
-from submit import *
-from create_data import *
+from student import Student
+from submit import Submition
+# from create_data import Database
 
 
 class Assignment:

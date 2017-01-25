@@ -1,5 +1,5 @@
-from user import User
-from mentor import *
+# from user import *
+# from mentor import *
 
 
 class Mentor(User):
@@ -11,7 +11,6 @@ class Mentor(User):
 
 
     def edit_mentor(self, username):
-        if
         pass
 
     def view_mentor_details(self):
