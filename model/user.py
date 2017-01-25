@@ -1,5 +1,6 @@
 from student import *
-from mentor import *
+from mentor import Mentor
+from student import Student
 
 class User:
     def __init__(self, password, first_name, last_name, telephone, mail):
@@ -14,7 +15,13 @@ class User:
 
 
     def log_in(self, username, password):
-     #   if username
+        users = [Mentor.mentors_list,
+                 Student.list_of_students]
+
+        if username in users:
+
+
+
 
         pass
 

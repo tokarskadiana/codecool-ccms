@@ -11,7 +11,7 @@ class Mentor(User):
 
 
     def edit_mentor(self, username):
-        if
+
         pass
 
     def view_mentor_details(self):
@@ -22,3 +22,5 @@ class Mentor(User):
 
     def list_mentors(self):
         pass
+
+
