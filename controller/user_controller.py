@@ -7,4 +7,4 @@ class UserController:
 
         Arguments:user object
         '''
-        pass
+        self.user = user

@@ -10,6 +10,7 @@ def check_user_type(self):
     '''
     pass
 
+
 def start_session(self):
     '''
     Create apropriate conntroller for user.
