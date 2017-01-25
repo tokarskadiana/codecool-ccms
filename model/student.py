@@ -22,7 +22,7 @@ class Student(User):
         Edit student attr.
         :param kwargs: name of attr and value of it
         """
-        for key, value in kwargs:
+        for key, value in kwargs.items():
             if key:
                 if key in self.__dict__.keys():
                     self.__dict__[key] = value

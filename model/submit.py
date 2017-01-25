@@ -2,22 +2,22 @@ class Submition:
     '''
     Represent an submit of individual student_username
     '''
-    def __init__(self, student_username):
+    def __init__(self, student_username, content, grade):
         '''
         Constructor of Submition object.
         '''
         self.student_username = student_username
-        self.content = None
-        self.grade = None
+        self.content = content
+        self.grade = grade
 
     @classmethod
-    def create(cls, student_username):
+    def create(cls, student_username, content=None, grade=None):
         '''
         Make new submition.
 
         Returns: instance of Submition class
         '''
-        return Submition(student_username)
+        return Submition(student_username, content, grade)
 
     def get_student_username(self):
         '''
