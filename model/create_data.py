@@ -3,6 +3,7 @@ from user import User
 from student import Student
 from assignment import Assignment
 from submit import Submition
+from attendance import Attendance
 
 import csv
 
@@ -68,7 +69,6 @@ class Database(object):
         file = cls.default_path + filename
         with open(file, "w") as file:
             for record in table:
-                print(record)
                 row = ','.join(cls.user_data(record))
                 file.write(row + "\n")
 
@@ -88,11 +88,31 @@ class Database(object):
 
             for element in assignment_reader:
                 count_record += 1
-                cls.assigment_data_read(element)
-                # temp_data = Assignment(element[0], element[1], element[2], element[3], element[4])
-                # object_assignment_list.append(temp_data)
+
+                temp_data = cls.assignment_data_read(element)
+                object_assignment_list.append(temp_data)
 
         return object_assignment_list
+
+    @classmethod
+    def save_assignment_to_csv(cls, filename , table):
+        """
+        Writes list of lists into a csv file.
+
+        Args:
+            file_name (str): name of file to write to
+            table: list of lists to write to a file
+
+        Returns:
+             None
+        """
+        file = cls.default_path + filename
+        print(table)
+        with open(file, "w") as file:
+            for record in table:
+
+                row = ','.join(cls.assignment_data_save(record))
+                file.write(row + "\n")
 
     @staticmethod
     def user_data(row):
@@ -100,23 +120,22 @@ class Database(object):
         return [row.password,row.first_name,row.last_name,row.telephone,row.mail]
 
     @staticmethod
-    def assigment_data_read(row,attr_number = 3):
-        # student_username
-        # content
-        # grade
-        # Structure title, description, due_date, submit_list
-        print(row)
+    def assignment_data_read(row,attr_number = 3):
+
         new_list = row[3:]
-        submmit_object_list = []
+        submit_object_list = []
         for i in range(0,len(new_list),attr_number):
-            submmit_object_list.append(Submition(new_list[i],new_list[i+1],new_list[i+2]))
-        print(submmit_object_list)
-        return submmit_object_list
+            submit_object_list.append(Submition(new_list[i],new_list[i+1],new_list[i+2]))
 
+        return Assignment(row[0],row[1],row[2],submit_object_list)
 
-
-
-data = Database.create_assignment_from_csv('assigment.csv')
-#
-# data = Database.save_user_to_csv('students_test.csv',data)
-# # print(data[0].__dict__)
+    @staticmethod
+    def assignment_data_save(row):
+        submilit_list = row.submit_list
+        print(submilit_list)
+        submit = [row.title,row.description,row.due_date]
+        for index, item in enumerate(submilit_list):
+            submit.append(item.student_username)
+            submit.append(item.content)
+            submit.append(item.grade)
+        return submit
