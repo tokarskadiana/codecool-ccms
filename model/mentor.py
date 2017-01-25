@@ -1,5 +1,7 @@
 from user import User
 
+# from user import *
+# from mentor import *
 
 class Mentor(User):
     mentors_list = []

@@ -1,16 +1,20 @@
-from student import *
-from submit import *
-from create_data import *
+from student import Student
+from submit import Submition
+# from create_data import Database
 
 
 class Assignment:
     '''
-    Class representing assignment object
+    Class representing assignment object.
     '''
+    list_assignment = []
+    error_infos = {1: 'You can\'t change it twice.',
+                   2: 'There no student with such username.',
+                   3: 'Data base error.'}
 
     def __init__(self, title, description, due_date, submit_list):
         '''
-        Constructor of an object
+        Constructor of an object.
         '''
         self.title = title
         self.description = description
@@ -19,7 +23,7 @@ class Assignment:
 
     def make_submit_list(self, submit_list):
         '''
-        Make a list of submitions for particular assigment instance for every students
+        Make a list of submitions for particular assigment instance for every students.
 
         Returns:list
         '''
@@ -37,64 +41,82 @@ class Assignment:
 
         Returns: str
         '''
-        assignment = cls(title, description, due_date, submit_list)
-        Data.save_to_csv(assignment)        # save to csv immediately
-        return 'Assignment was added.'
+        assigment = cls(title, description, due_date, submit_list)
+        cls.list_assignment.append(
+            cls(title, description, due_date, submit_list))
+        if assigment in cls.list_assignment:
+            return True
+        return False
 
     def __str__(self):
         '''
-        Returns formated output of object
+        Returns formated output of object.
 
         Returns:str
         '''
         return '{}, {}, {}'.format(self.title, self.due_date, self.description)
 
     @classmethod
-    def list_assignment(cls):
+    def get_list(cls):
         '''
-        Contains the list with all available assigment
+        Contains the list with all available assigment.
 
         Returns:list
         '''
-        return Data.create_from_csv('../data_base/assigment.csv')  # create list of assiments from csv
+        return cls.list_assignment
 
     def submit_assignment(self, user_name, content):
         '''
-        Make able to submit assigment to students
+        Make able to submit assigment to students.
 
-        Returns:str
+        Returns: bool/int
         '''
         if self.submit_list:
             for submition in self.submit_list:
                 if submition.get_student_username() == user_name:
                     if submition.change_content(content):
-                        return 'You submit assigment.'
-                    return 'Assignment already submited. You cant submit assigment twice.'
-                return 'There no student with such username.'
-        return 'You cant submit this assignment.'
+                        return True
+                    return 1
+                return 2
+        return 3
 
     def grade_assigment(self, user_name, grade):
         '''
-        Make able mentor to grade students assigment
+        Make able mentor to grade students assigment.
 
-        Returns:str
+        Returns:bool/int
         '''
         if self.submit_list:
             for submition in self.submit_list:
                 if submition.get_student_username() == user_name:
                     if submition.change_grade(grade):
-                        return 'You grade {} assigment.'.format(user_name)
-                    return 'Assignment already graded. You cant grade assigment twice.'
-                return 'There no student with such username.'
-        return 'You cant grade this assignment.'
+                        return True
+                    return 1
+                return 2
+        return 3
 
     def view_details(self):
         '''
-        View details of particular assigment
+        View details of particular assigment.
 
         Returns:list
         '''
         details = []
-        for submition in self.submit_list:
-            details.append([submition.get_student_username(),
-                            submition.get_content(), submition.get_grade()])
+        if self.submit_list:
+            for submition in self.submit_list:
+                details.append([submition.get_student_username(),
+                                submition.get_content(), submition.get_grade()])
+        if details:
+            return details
+        return None
+
+    def list_assignment_grades(self, student_username):
+        '''
+        Find submittion by user name and return info about garade.
+
+        Returns:list
+        '''
+        for submit in self.submit_list:
+            if submit.get_student_username() == student_username:
+                return [self.title, submit.get_grade()]
+        return None
