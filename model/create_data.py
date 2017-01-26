@@ -51,7 +51,7 @@ class Database(object):
         file = cls.default_path + filename
         with open(file, "w") as file:
             for record in table:
-                print(record)
+
                 row = ','.join(cls.user_data(record))
                 file.write(row + "\n")
 
@@ -95,7 +95,7 @@ class Database(object):
              None
         """
         file = cls.default_path + filename
-        print(table)
+
         with open(file, "w") as file:
             for record in table:
 
@@ -122,7 +122,7 @@ class Database(object):
             submit.append(item.student_username)
             submit.append(item.content)
             submit.append(item.grade)
-        print('added')
+
         return submit
 
     @classmethod
