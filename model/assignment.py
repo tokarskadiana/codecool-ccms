@@ -92,6 +92,7 @@ class Assignment:
                 if submition.get_student_username() == user_name:
                     if submition.change_grade(grade):
                         return True
+                return False
         return False
 
     def view_details(self):
