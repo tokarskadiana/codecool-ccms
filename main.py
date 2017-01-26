@@ -3,6 +3,7 @@ from model.user import Employee
 from model.student import Student
 from model.mentor import Mentor
 from model.manager import Manager
+from model.attendance import Attendance
 from controller.student_controller import StudentController
 from controller.user_controller import UserController
 from controller.mentor_controller import MentorController
@@ -18,7 +19,7 @@ def student_session(user):
         view.student_menu()
         option = input('\nChoose the option:')
         if option == '1':
-            pass
+
         elif option == '2':
             pass
         elif option == '0':
@@ -35,13 +36,21 @@ def mentor_session(user):
         view.mentor_menu()
         option = input('\nChoose the option:')
         if option == '1':
-            pass
+            day = input('write day "day.month.year"')
+            MentorController.check_attendence(day)
+
         elif option == '2':
-            pass
+            title = input('title: ')
+            description = input('description')
+            due_date = input('due_date')
+            MentorController.add_assiment(title, description, due_date)
+
         elif option == '3':
             pass
+
         elif option == '4':
-            pass
+
+
         elif option == '5':
             pass
         elif option == '6':
@@ -107,6 +116,7 @@ def main():
     elif type(user) == Employee:
         EmployeeController.employee_session(user)
     else:
+        print(type(user))
         main()
 
 main()

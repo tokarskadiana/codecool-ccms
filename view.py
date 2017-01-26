@@ -1,3 +1,5 @@
+from model.assignment import Assignment
+
 class View:
     @staticmethod
     def print_assignment_grades(list_assignment_grades):
@@ -33,6 +35,23 @@ class View:
         7. View presence statistics
         0. Exit
         ''')
+
+    @staticmethod
+    def display_assigments():
+        for index, ass in enumerate(sorted((Assignment.list_assignment))):
+            print('{} {} {}'.format(index, ass.title, ass.due_date))
+
+    @staticmethod
+    def display_ass(number):
+        for index, ass in enumerate(sorted(Assignment.list_assignment)):
+            if str(index) == number:
+                details = ass.view_details()
+                for index, student_subb in enumerate(details):
+                    print('{} {} {} {}'.format(index, student_subb[0], student_subb[1], student_subb[2]))
+
+    @staticmethod
+    def display_students():
+        
 
     @staticmethod
     def menager_menu():
