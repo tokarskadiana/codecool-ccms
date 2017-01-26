@@ -1,20 +1,14 @@
 from controller.user_controller import UserController
-from model import student
+from model.student import Student
 
 
 class EmployeeController(UserController):
 
+    @staticmethod
     def list_students():
         list_of_details = []
-        for person in student.Student.list_of_students:
-            list_of_details.append(person.view_details())
+        for student in Student.list_student():
+            list_of_details.append(student.view_details())
 
-    def view_students_details(self, username):
-        """
+        return list_of_details
 
-        :param username: username of wanted student
-        :return:
-        """
-        for person in student.Student.list_of_students:
-            if username == person.username:
-                list_of_details = person.view_details()  # list
