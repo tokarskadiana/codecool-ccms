@@ -1,5 +1,6 @@
 from tabulate import tabulate
 from model.assignment import Assignment
+from controller.mentor_controller import MentorController
 
 
 class View:
@@ -47,17 +48,15 @@ class View:
 
     @staticmethod
     def display_assigments():
-        for index, ass in enumerate(sorted((Assignment.list_assignment))):
+        for index, ass in enumerate((Assignment.list_assignment)):
             print('{} {} {}'.format(index, ass.title, ass.due_date))
 
     @staticmethod
     def display_ass(number):
-        for index, ass in enumerate(sorted(Assignment.list_assignment)):
-            if str(index) == number:
-                details = ass.view_details()
-                for index, student_subb in enumerate(details):
-                    print('{} {} {} {}'.format(index, student_subb[
-                          0], student_subb[1], student_subb[2]))
+        details = MentorController.display_assignment(number)
+
+        for content in details:
+            print('{} {} {} {}'.format(content[0], content[1], content[2], content[3]))
 
     @staticmethod
     def display_students(students_list):

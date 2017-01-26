@@ -30,7 +30,11 @@ def mentor_session(user):
             MentorController.add_assiment(title, description, due_date)
 
         elif option == '3':
-            pass
+            view.display_assigments()
+            number = input('write number of ass: ')
+            view.display_ass(number)
+
+
 
         elif option == '4':
             first_name = input('first name: ')

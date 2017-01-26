@@ -106,7 +106,7 @@ class Assignment:
         details = []
         if self.submit_list:
             for submition in self.submit_list:
-                details.append([submition.get_student_username(),
+                details.append([self.title, submition.get_student_username(),
                                 submition.get_content(), submition.get_grade()])
         if details:
             return details
@@ -130,6 +130,6 @@ class Assignment:
         :param number:
         :return:
         """
-        for index, ass in enumerate(sorted(Assignment.list_assignment)):
+        for index, ass in enumerate(Assignment.list_assignment):
             if str(index) == number:
                 return ass

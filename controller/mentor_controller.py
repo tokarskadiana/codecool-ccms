@@ -50,3 +50,9 @@ class MentorController(EmployeeController):
     @staticmethod
     def view_presence_statistic():
         return attendance.Attendance.present_statistic()
+
+    @staticmethod
+    def display_assignment(number):
+        for index, ass in enumerate(assignment.Assignment.list_assignment):
+            if str(index) == number:
+                return ass.view_details()
