@@ -34,9 +34,10 @@ class Student(User):
         Remove student from list_of_students by given username.
         :param username (str): value of username attr
         """
-        for student in Student.list_of_students:
-            if student.username == username:
-                Student.list_of_students.remove(student)
+        for stu in Student.list_of_students:
+            if username == stu.username:
+                Student.list_of_students.remove(stu)
+
 
     @staticmethod
     def list_student():

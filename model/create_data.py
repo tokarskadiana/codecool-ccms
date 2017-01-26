@@ -172,7 +172,6 @@ class Database(object):
              None
         """
         file = cls.default_path + filename
-        print(table)
         with open(file, "w") as file:
             for record in table:
 
@@ -185,7 +184,6 @@ class Database(object):
         attendance_list = row.student_presence
 
         attendance = [row.date]
-        print(attendance_list)
         for key , value in attendance_list.items():
             attendance.append(key)
             attendance.append(value)

@@ -1,5 +1,7 @@
 from controller.user_controller import UserController
 from model.assignment import Assignment
+from view import View as view
+
 
 class StudentController(UserController):
     def list_assignment_grades(self):
@@ -35,7 +37,7 @@ class StudentController(UserController):
                 grades = session.list_assignment_grades()
                 view.print_assignment_grades(grades)
             elif option == '2':
-                assignment_title = input('Enter assiment title to submit:')
+                assignment_title = input('Enter assignment title to submit:')
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
             elif option == '0':
