@@ -15,6 +15,7 @@ class View:
 
     @staticmethod
     def student_menu():
+        View.clear()
         print('''
         -----------MENU-----------
         1. List your assignments

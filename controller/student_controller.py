@@ -36,10 +36,15 @@ class StudentController(UserController):
             view.student_menu()
             option = input('\nChoose the option:')
             if option == '1':
+                view.clear()
                 grades = session.list_assignment_grades()
-                # print(grades)
+                print('Your assignments:'
+                      '\n')
                 view.print_assignment_grades(grades)
+                input('\nPress any key to back')
+                continue
             elif option == '2':
+                view.clear()
                 assignment_title = input('Enter assignment title to submit:')
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
