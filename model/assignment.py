@@ -8,9 +8,9 @@ class Assignment:
     Class representing assignment object.
     '''
     list_assignment = []
-    error_infos = {1: 'You can\'t change it twice.',
-                   2: 'There no student with such username.',
-                   3: 'Data base error.'}
+    # error_infos = {1: 'You can\'t change it twice.',
+    #                2: 'There no student with such username.',
+    #                3: 'Data base error.'}
 
     def __init__(self, title, description, due_date, submit_list):
         '''
@@ -30,7 +30,8 @@ class Assignment:
         if not submit_list:
             if Student.list_student():
                 for student in Student.list_student():
-                    submit_list.append(Submition.create(student.username))
+
+                    submit_list.append(Submition.create(student.get_username()))
                 return submit_list
         return submit_list
 
@@ -48,13 +49,16 @@ class Assignment:
             return True
         return False
 
-    # def __str__(self):
-    #     '''
-    #     Returns formated output of object.
-    #
-    #     Returns:str
-    #     '''
-    #     return '{}, {}, {}'.format(self.title, self.due_date, self.description)
+    def __str__(self):
+        '''
+        Returns formated output of object.
+
+        Returns:str
+        '''
+        return '{}, {}, {}'.format(self.title, self.due_date, self.description)
+
+    def get_title(self):
+        return self.title
 
     @classmethod
     def get_list(cls):
@@ -75,10 +79,10 @@ class Assignment:
             for submition in self.submit_list:
                 if submition.get_student_username() == user_name:
                     if submition.change_content(content):
-                        return True
-                    return 1
-                return 2
-        return 3
+                        return 'Ok'
+                    return 'no 1'
+                return 'no 2'
+        return 'no 3'
 
     def grade_assigment(self, user_name, grade):
         '''
@@ -91,9 +95,7 @@ class Assignment:
                 if submition.get_student_username() == user_name:
                     if submition.change_grade(grade):
                         return True
-                    return 1
-                return 2
-        return 3
+        return False
 
     def view_details(self):
         '''

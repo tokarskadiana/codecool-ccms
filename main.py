@@ -3,6 +3,7 @@ from model.user import Employee
 from model.student import Student
 from model.mentor import Mentor
 from model.manager import Manager
+from model.assignment import Assignment
 from model.attendance import Attendance
 from controller.student_controller import StudentController
 from controller.user_controller import UserController
@@ -11,23 +12,6 @@ from controller.menager_controller import MenagerController
 from controller.employee_controller import EmployeeController
 from controller.database_controller import DatabaseController
 from view import View as view
-
-
-def student_session(user):
-    session = StudentController(user)
-    while True:
-        view.student_menu()
-        option = input('\nChoose the option:')
-        if option == '1':
-            pass
-        elif option == '2':
-            pass
-        elif option == '0':
-            UserController.sign_out()
-            return
-        else:
-            print('Enter valid option.')
-            continue
 
 
 def mentor_session(user):
@@ -53,7 +37,6 @@ def mentor_session(user):
             last_name = input('last name: ')
             password = input('password: ')
             MentorController.add_student(first_name, last_name, password)
-
 
         elif option == '5':
             view.display_students(Student.list_of_students)
@@ -82,50 +65,33 @@ def manager_session(user):
         view.menager_menu()
         option = input('\nChoose the option:')
         if option == '1':
-            pass
+            list_mentors = session.list_mentor()
+            view.print_mentors_list(list_mentors)
         elif option == '2':
-            pass
+            first_name = input('Enter first name:')
+            last_name = input('Enter last name:')
+            password = input('Enter password:')
+            print(session.add_mentor(first_name, last_name, password))
         elif option == '3':
-            pass
+            first_name = input('Enter first name:')
+            last_name = input('Enter last name:')
+            password = input('Enter password:')
+            print(session.add_assistant(first_name, last_name, password))
         elif option == '4':
-            pass
+            view.edit_menu()
+            mentor = input('Enter user_name:')
+            parameter = input('Enter what you want to edit:')
+            new_value = input('Enter new value:')
+            print(session.edit_mentor(mentor, parameter, new_value))
         elif option == '5':
-            pass
+            mentor = input('Enter mentors username you want to delete:')
+            print(session.remove_mentor(mentor))
         elif option == '0':
             UserController.sign_out()
             return
         else:
             print('Enter valid option.')
             continue
-
-
-def employee_session(user):
-    session = EmployeeController(user)
-    while True:
-        view.employee_menu()
-        option = input('\nChoose the option:')
-        if option == '1':
-            student_list = session.list_students()
-            view.show_full_name(student_list)
-            user_index = int(input('For more details give the number of person: '))
-            if user_index -1 > len(student_list):
-                    raise ValueError
-            view.show_details(student_list[user_index -1])
-        elif option == '0':
-            UserController.sign_out()
-            return
-        else:
-            print('Enter valid option.')
-            continue
-
-
-def date_base():
-    Employee.create('dupa', 'Kati', 'K')
-    Mentor.add_mentor('dupa', 'Marcin', 'Foo')
-    Student.add_student('dupa', 'diana', 'd')
-    Manager.add_manager('dupa', 'Jurek', 'K')
-
-# X0ChACq,Wanda,Ward,86-(541)543-7895,wward0@utexas.edu
 
 
 def main():
@@ -136,13 +102,13 @@ def main():
     password = log_in_input[1]
     user = UserController.log_in(username, password)
     if type(user) == Student:
-        student_session(user)
+        StudentController.student_session(user)
     elif type(user) == Mentor:
         mentor_session(user)
     elif type(user) == Manager:
         manager_session(user)
     elif type(user) == Employee:
-        employee_session(user)
+        EmployeeController.employee_session(user)
     else:
         print(type(user))
         main()

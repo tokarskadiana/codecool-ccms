@@ -1,6 +1,9 @@
+from tabulate import tabulate
 from model.assignment import Assignment
 
+
 class View:
+
     @staticmethod
     def print_assignment_grades(list_assignment_grades):
         for item in list_assignment_grades:
@@ -14,6 +17,12 @@ class View:
         2. Submit assignment
         0. Exit
         ''')
+
+    @staticmethod
+    def print_assignment_grades(assignment_grades):
+        headers = ['Assiment', 'Grade']
+        print(tabulate(assignment_grades, headers,
+                       tablefmt="fancy_grid", stralign="center"))
 
     @staticmethod
     def main_menu():
@@ -47,7 +56,8 @@ class View:
             if str(index) == number:
                 details = ass.view_details()
                 for index, student_subb in enumerate(details):
-                    print('{} {} {} {}'.format(index, student_subb[0], student_subb[1], student_subb[2]))
+                    print('{} {} {} {}'.format(index, student_subb[
+                          0], student_subb[1], student_subb[2]))
 
     @staticmethod
     def display_students(students_list):
@@ -80,16 +90,27 @@ class View:
         0. Exit
         ''')
 
+    @staticmethod
+    def print_mentors_list(mentors_list):
+        for mentor in mentors_list:
+            print (mentor)
+
+    @staticmethod
+    def edit_menu():
+        print('''
+        You can edit following parameters:
+            - telephone
+            - mail
+        ''')
 
     @staticmethod
     def show_full_name(user_list):
         n = 0
         for user in user_list:
-            print('{}. {} {}'.format(n + 1, user[0], user[1]))
-
-
+            n += 1
+            print('{}. {} {}'.format(n, user[0], user[1]))
 
     @staticmethod
     def show_details(user):
-        print('{} {} phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
-
+        print(
+            '{} {} phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
