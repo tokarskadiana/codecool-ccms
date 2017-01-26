@@ -29,7 +29,7 @@ class Attendance:
             for student, present in days.student_presence.items():
                 if username == student:
                     present_list[days.date] = present
-        print(present_list)
+
         return present_list
 
 

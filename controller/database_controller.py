@@ -1,33 +1,28 @@
-from model.mentor import Mentor
-from model.student import Student
+from model.create_data import Database
 from model.manager import Manager
+from model.mentor import Mentor
 from model.user import Employee
+from model.student import Student
+from model.assignment import Assignment
+from model.attendance import Attendance
+
+class DatabaseController:
 
 
-class UserController:
+    @staticmethod
+    def DatabaseFromCSV():
+        Manager.managers_list = Database.create_user_from_csv('manager.csv',Manager)
+        Mentor.mentors_list = Database.create_user_from_csv('mentors.csv', Mentor)
+        Employee.employee_list = Database.create_user_from_csv('employe.csv', Employee)
+        Student.list_of_students  = Database.create_user_from_csv('students.csv', Student)
+        Assignment.list_assignment = Database.create_assignment_from_csv('assigment.csv')
+        Attendance.list_of_attendance = Database.create_attendance_from_csv('attendance.csv')
 
-    def __init__(self, user):
-        '''
-        Constructor of user controller.
-
-        Arguments:user object
-        '''
-        self.user = user
-
-    @classmethod
-    def log_in(cls, username, password):
-        users = [Mentor.list_mentors(),
-                 Student.list_student(), Employee.list_employee(), Manager.list_manager()]
-
-        for list_of_users in users:
-            for person in list_of_users:
-                if username == person.username:
-                    if password == person.password:
-                        return person
-        return None
-
-    @classmethod
-    def sign_out(cls):
-        # save data to file
-        # call main() function
-        pass
+    @staticmethod
+    def DatabaseToCSV():
+        Database.save_user_to_csv('manager.csv', Manager.managers_list)
+        Database.save_user_to_csv('mentors.csv', Mentor.mentors_list)
+        Database.save_user_to_csv('employe.csv', Employee.employee_list)
+        Database.save_user_to_csv('students.csv', Student.list_of_students)
+        Database.save_assignment_to_csv('assigment.csv', Assignment.list_assignment)
+        Database.save_attendance_to_csv('attendance.csv', Attendance.list_of_attendance)

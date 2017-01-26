@@ -1,5 +1,5 @@
-from student import Student
-from submit import Submition
+from model.student import Student
+from model.submit import Submition
 # from create_data import Database
 
 
