@@ -22,10 +22,16 @@ class EmployeeController(UserController):
             if option == '1':
                 student_list = session.list_students()
                 view.show_full_name(student_list)
-                user_index = int(input('For more details give the number of person: '))
-                if user_index -1 > len(student_list):
-                        raise ValueError
-                view.show_details(student_list[user_index -1])
+                user_index = input('For more details give the number of person: ')
+                try:
+                    user_index = int(user_index)
+                    if user_index -1 > len(student_list):
+                        print('Wrong number')
+                        continue
+                    view.show_details(student_list[user_index -1])
+                except ValueError:
+                    print('Wrong number')
+
             elif option == '0':
                 UserController.sign_out()
                 return
