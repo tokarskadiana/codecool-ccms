@@ -14,13 +14,12 @@ from controller.database_controller import DatabaseController
 from view import View as view
 
 
-
 def main():
     DatabaseController.DatabaseFromCSV()
 
     log_in_input = view.main_menu()
-    username = 'Wanda.Ward'#log_in_input[0]
-    password = 'X0ChACq'#log_in_input[1]
+    username = 'dupa.dupa'  # log_in_input[0]
+    password = 'dupa'  # log_in_input[1]
     user = UserController.log_in(username, password)
     if type(user) == Student:
         StudentController.student_session(user)

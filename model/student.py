@@ -38,7 +38,6 @@ class Student(User):
             if username == stu.username:
                 Student.list_of_students.remove(stu)
 
-
     @staticmethod
     def list_student():
         """
@@ -47,7 +46,7 @@ class Student(User):
         """
         return Student.list_of_students
 
-    def view_details(self):
+    def get_details(self):
         """
         Returns list of personal data.
         :return (list): list of personal data
@@ -58,5 +57,5 @@ class Student(User):
     def get_username(self):
         return self.username
 
-    def get_full_name(self):
-        return [self.first_name, self.last_name]
+    def __str__(self):
+        return '{} {} {}'.format(self.first_name, self.last_name, self.username)

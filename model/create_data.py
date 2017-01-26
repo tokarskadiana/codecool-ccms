@@ -30,8 +30,7 @@ class Database(object):
 
             for element in user_reader:
                 count_record += 1
-                temp_data = user_type(element[0], element[1], element[
-                                      2], element[3], element[4])
+                temp_data = user_type(element[0], element[1], element[2], element[3], element[4])
                 object_user_list.append(temp_data)
 
         return object_user_list

@@ -8,9 +8,17 @@ from controller.mentor_controller import MentorController
 class View:
 
     @staticmethod
-    def print_assignment_grades(list_assignment_grades):
-        for item in list_assignment_grades:
-            print(item)
+    def main_menu():
+        View.clear()
+        print('Welcome in CodeCool Management System')
+        print('\nTo EXIT program press "0"\n')
+        username = input('Enter your username:')
+        if username == '0':
+            sys.exit()
+            password = input('Enter your password:')
+            if password == '0':
+                sys.exit()
+                return username, password
 
     @staticmethod
     def student_menu():
@@ -21,25 +29,6 @@ class View:
         2. Submit assignment
         0. Exit
         ''')
-
-    @staticmethod
-    def print_assignment_grades(assignment_grades):
-        headers = ['Assiment', 'Grade']
-        print(tabulate(assignment_grades, headers,
-                       tablefmt="fancy_grid", stralign="center"))
-
-    @staticmethod
-    def main_menu():
-        View.clear()
-        print('Welcome in CodeCool Management System')
-        print('\nTo EXIT program press "0"\n')
-        username = input('Enter your username:')
-        if username == '0':
-            sys.exit()
-        password = input('Enter your password:')
-        if password == '0':
-            sys.exit()
-        return username, password
 
     @staticmethod
     def mentor_menu():
@@ -55,37 +44,6 @@ class View:
         7. View presence statistics
         0. Exit
         ''')
-
-    @staticmethod
-    def display_assigments():
-        for index, ass in enumerate((Assignment.list_assignment)):
-            print('{} {} {}'.format(index, ass.title, ass.due_date))
-
-    @staticmethod
-    def display_ass(number):
-        details = MentorController.display_assignment(number)
-<<<<<<< HEAD
-
-        for content in details:
-            print('{} {} {} {}'.format(
-                content[0], content[1], content[2], content[3]))
-=======
-        if details:
-            for content in details:
-                print('{} {} {} {}'.format(content[0], content[1], content[2], content[3]))
-                return True
->>>>>>> d35d3c4f1feee5a8658e331a239e3e04480d6654
-
-    @staticmethod
-    def display_students(students_list):
-        for index, student in enumerate(students_list):
-            print('{} {} {}'.format(index, student.first_name, student.last_name))
-
-    @staticmethod
-    def display_static_present(list_stat):
-        if list_stat:
-            for key, value in list_stat.items():
-                print('{} {}'.format(key, value))
 
     @staticmethod
     def menager_menu():
@@ -110,9 +68,45 @@ class View:
         ''')
 
     @staticmethod
-    def print_mentors_list(mentors_list):
+    def show_user_details(user):
+        headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
+        print(tabulate([list(user)], headers, tablefmt="fancy_grid"))
+
+    @staticmethod
+    def print_assignment_grades(assignment_grades):
+        headers = ['Assiment', 'Grade']
+        print(tabulate(assignment_grades, headers,
+                       tablefmt="fancy_grid", stralign="center"))
+
+    @staticmethod
+    def print_user_list(user_list):
         headers = ['Index', 'First name', 'Last name', 'User name']
-        print (tabulate(mentors_list, headers, tablefmt="fancy_grid"))
+        print (tabulate(user_list, headers, tablefmt="fancy_grid"))
+
+    @staticmethod
+    def display_assigments():
+        for index, ass in enumerate((Assignment.list_assignment)):
+            print('{} {} {}'.format(index, ass.title, ass.due_date))
+
+    @staticmethod
+    def display_ass(number):
+        details = MentorController.display_assignment(number)
+        if details:
+            for content in details:
+                print('{} {} {} {}'.format(
+                    content[0], content[1], content[2], content[3]))
+                return True
+
+    @staticmethod
+    def display_students(students_list):
+        for index, student in enumerate(students_list):
+            print('{} {} {}'.format(index, student.first_name, student.last_name))
+
+    @staticmethod
+    def display_static_present(list_stat):
+        if list_stat:
+            for key, value in list_stat.items():
+                print('{} {}'.format(key, value))
 
     @staticmethod
     def edit_menu():
@@ -131,18 +125,8 @@ class View:
             print('{}. {} {}'.format(n, user[0], user[1]))
 
     @staticmethod
-    def show_details(user):
-        print(
-            '\n\t{} {}, phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
-
-    @staticmethod
     def clear():
         """
         Clears screen for better display
         """
         os.system('cls' if os.name == 'nt' else 'clear')
-
-    @staticmethod
-    def show_user_details(user):
-        headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
-        print(tabulate([list(user)], headers, tablefmt="fancy_grid"))
