@@ -14,6 +14,7 @@ from controller.database_controller import DatabaseController
 from view import View as view
 
 
+
 def main():
     DatabaseController.DatabaseFromCSV()
 

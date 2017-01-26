@@ -3,6 +3,7 @@ from model.student import Student
 from model.manager import Manager
 from model.user import Employee
 from controller.database_controller import DatabaseController
+
 import sys
 
 

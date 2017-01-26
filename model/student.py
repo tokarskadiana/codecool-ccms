@@ -4,8 +4,8 @@ from model.user import User
 class Student(User):
     list_of_students = []
 
-    @staticmethod
-    def add_student(password, first_name, last_name, telephone='', mail=''):
+    @classmethod
+    def add_student(cls, password, first_name, last_name, telephone='', mail=''):
         """
         Initialize Assignment object.
         :param password (str): password
@@ -14,7 +14,8 @@ class Student(User):
         :param telephone (str): telephone
         :param mail (str): mail
         """
-        student = Student(password, first_name, last_name, telephone, mail)
+        password_coded = password_coded = cls.encodeBase64(password)
+        student = Student(password_coded, first_name, last_name, telephone, mail)
         Student.list_of_students.append(student)
 
     def edit_student(self, **kwargs):

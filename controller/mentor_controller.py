@@ -2,6 +2,7 @@ from model import student
 from model import attendance
 from model.assignment import Assignment
 from controller.employee_controller import EmployeeController
+from controller.user_controller import UserController
 import view
 from model.student import Student
 from  .user_controller import UserController

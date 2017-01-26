@@ -11,18 +11,13 @@ class DatabaseController:
 
     @staticmethod
     def DatabaseFromCSV():
-        Manager.managers_list = Database.create_user_from_csv(
-            'manager1.csv', Manager)
-        Mentor.mentors_list = Database.create_user_from_csv(
-            'mentors1.csv', Mentor)
-        Employee.employee_list = Database.create_user_from_csv(
-            'employe1.csv', Employee)
-        Student.list_of_students = Database.create_user_from_csv(
-            'students1.csv', Student)
-        Assignment.list_assignment = Database.create_assignment_from_csv(
-            'assigment1.csv')
-        Attendance.list_of_attendance = Database.create_attendance_from_csv(
-            'attendance1.csv')
+
+        Manager.managers_list = Database.create_user_from_csv('manager1.csv',Manager)
+        Mentor.mentors_list = Database.create_user_from_csv('mentors1.csv', Mentor)
+        Employee.employee_list = Database.create_user_from_csv('employe1.csv', Employee)
+        Student.list_of_students  = Database.create_user_from_csv('students1.csv', Student)
+        Assignment.list_assignment = Database.create_assignment_from_csv('assigment1.csv')
+        Attendance.list_of_attendance = Database.create_attendance_from_csv('attendance1.csv')
 
     @staticmethod
     def DatabaseToCSV():
