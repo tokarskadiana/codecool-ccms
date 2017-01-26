@@ -4,6 +4,8 @@ from model.manager import Manager
 from model.user import Employee
 from controller.database_controller import DatabaseController
 import sys
+
+
 class UserController:
 
     def __init__(self, user):

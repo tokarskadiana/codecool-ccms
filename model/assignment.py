@@ -8,9 +8,6 @@ class Assignment:
     Class representing assignment object.
     '''
     list_assignment = []
-    # error_infos = {1: 'You can\'t change it twice.',
-    #                2: 'There no student with such username.',
-    #                3: 'Data base error.'}
 
     def __init__(self, title, description, due_date, submit_list):
         '''
