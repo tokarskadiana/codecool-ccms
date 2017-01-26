@@ -5,6 +5,22 @@ from view import View as view
 
 class StudentController(UserController):
 
+    def list_assignment(self):
+        assignment_list = []
+        for assignment in Assignment.get_list():
+            assignment_list.append(str(assignment).split())
+        return assignment_list
+
+    def list_assignment_title_content(self, username):
+        info = []
+        for assignment in Assignment.get_list():
+            if assignment.get_submition_content(username):
+                content = assignment.get_submition_content(username)
+            else:
+                content = 'You dont submit this assignment yet.'
+            info.append([assignment.get_title(), content])
+        return info
+
     def list_assignment_grades(self):
         '''
         Returns and prints out assignment grades for student_username
@@ -14,6 +30,9 @@ class StudentController(UserController):
         student_assignment_grade = []
         for assignment in Assignment.get_list():
             grade = assignment.list_assignment_grades(self.user.get_username())
+            if not grade[1]:
+                grade[1] = '---'
+
             student_assignment_grade.append(grade)
         return student_assignment_grade
 
@@ -37,17 +56,22 @@ class StudentController(UserController):
             option = input('\nChoose the option:')
             if option == '1':
                 view.clear()
+                view.print_assignments_list(session.list_assignment())
+                input('\nPress any key to back')
+            elif option == '2':
+                view.clear()
                 grades = session.list_assignment_grades()
-                print('Your assignments:'
-                      '\n')
                 view.print_assignment_grades(grades)
                 input('\nPress any key to back')
                 continue
-            elif option == '2':
+            elif option == '3':
                 view.clear()
-                assignment_title = input('Enter assignment title to submit:')
+                assignments_list = session.list_assignment_title_content(session.user.get_username())
+                view.print_two_demention_list(assignments_list)
+                assignment_title = input('\nEnter assignment title to submit:')
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
+                input('\nPress any key to back')
             elif option == '0':
                 UserController.sign_out()
                 return

@@ -15,18 +15,17 @@ class View:
         username = input('Enter your username:')
         if username == '0':
             sys.exit()
-            password = input('Enter your password:')
-            if password == '0':
-                sys.exit()
-                return username, password
+        password = input('Enter your password:')
+        return username, password
 
     @staticmethod
     def student_menu():
         View.clear()
         print('''
         -----------MENU-----------
-        1. List your assignments
-        2. Submit assignment
+        1. List assignments
+        2. Check grades
+        3. Submit assignment
         0. Exit
         ''')
 
@@ -79,6 +78,11 @@ class View:
                        tablefmt="fancy_grid", stralign="center"))
 
     @staticmethod
+    def print_assignments_list(assignments_list):
+        headers = ['Title', 'Due_date', 'description']
+        print (tabulate(assignments_list, headers, tablefmt="fancy_grid"))
+
+    @staticmethod
     def print_user_list(user_list):
         headers = ['Index', 'First name', 'Last name', 'User name']
         print (tabulate(user_list, headers, tablefmt="fancy_grid"))
@@ -123,6 +127,11 @@ class View:
         for user in user_list:
             n += 1
             print('{}. {} {}'.format(n, user[0], user[1]))
+
+    @staticmethod
+    def print_two_demention_list(printed_list):
+        for index, sub_list in enumerate(printed_list):
+            print('{}. {}'.format(index, ' - '.join(sub_list)))
 
     @staticmethod
     def clear():

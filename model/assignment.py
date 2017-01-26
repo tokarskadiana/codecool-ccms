@@ -52,7 +52,7 @@ class Assignment:
 
         Returns:str
         '''
-        return '{}, {}, {}'.format(self.title, self.due_date, self.description)
+        return '{} {} {}'.format(self.title, self.due_date, self.description)
 
     def get_title(self):
         return self.title
@@ -66,20 +66,24 @@ class Assignment:
         '''
         return cls.list_assignment
 
+    def get_submition_content(self, user_name):
+        if self.submit_list:
+            for submition in self.submit_list:
+                if submition.get_student_username() == user_name:
+                    return submition.get_content()
+
     def submit_assignment(self, user_name, content):
         '''
         Make able to submit assigment to students.
 
-        Returns: bool/int
+        Returns: bool
         '''
         if self.submit_list:
             for submition in self.submit_list:
                 if submition.get_student_username() == user_name:
                     if submition.change_content(content):
-                        return 'Ok'
-                    return 'no 1'
-                return 'no 2'
-        return 'no 3'
+                        return True
+        return False
 
     def grade_assigment(self, user_name, grade):
         '''

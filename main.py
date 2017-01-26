@@ -18,8 +18,8 @@ def main():
     DatabaseController.DatabaseFromCSV()
 
     log_in_input = view.main_menu()
-    username = 'dupa.dupa'  # log_in_input[0]
-    password = 'dupa'  # log_in_input[1]
+    username = 'Clarence.Wagner'  # log_in_input[0]
+    password = '20gNFX'  # log_in_input[1]
     user = UserController.log_in(username, password)
     if type(user) == Student:
         StudentController.student_session(user)
