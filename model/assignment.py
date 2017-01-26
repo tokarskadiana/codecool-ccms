@@ -30,7 +30,7 @@ class Assignment:
         if not submit_list:
             if Student.list_student():
                 for student in Student.list_student():
-                    submit_list.append(Submition.create(student.name))
+                    submit_list.append(Submition.create(student.username))
                 return submit_list
         return submit_list
 

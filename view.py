@@ -50,8 +50,15 @@ class View:
                     print('{} {} {} {}'.format(index, student_subb[0], student_subb[1], student_subb[2]))
 
     @staticmethod
-    def display_students():
-        
+    def display_students(students_list):
+        for index, student in enumerate(students_list):
+            print('{} {} {}'.format(index, student.first_name, student.last_name))
+
+    @staticmethod
+    def display_static_present(list):
+        if list:
+            for key, value in list:
+                print('{} {}'.format(key, value))
 
     @staticmethod
     def menager_menu():

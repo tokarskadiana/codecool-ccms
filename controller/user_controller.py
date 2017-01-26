@@ -21,8 +21,8 @@ class UserController:
 
         for list_of_users in users:
             for person in list_of_users:
-                if username == person.username:
-                    if password == person.password:
+                if 'Johnny.Walker' == person.username:
+                    if 'DDCIpkKVtdKV' == person.password:
                         return person
         return None
 

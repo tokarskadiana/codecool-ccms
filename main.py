@@ -19,7 +19,7 @@ def student_session(user):
         view.student_menu()
         option = input('\nChoose the option:')
         if option == '1':
-
+            pass
         elif option == '2':
             pass
         elif option == '0':
@@ -49,14 +49,25 @@ def mentor_session(user):
             pass
 
         elif option == '4':
+            first_name = input('first name: ')
+            last_name = input('last name: ')
+            password = input('password: ')
+            MentorController.add_student(first_name, last_name, password)
 
 
         elif option == '5':
-            pass
+            view.display_students(Student.list_of_students)
+            number = input('number of student: ')
+            telephone = input('telephone: ')
+            mail = input('mail: ')
+            MentorController.edit_student(number, telephone, mail)
+
         elif option == '6':
-            pass
+            view.display_students(Student.list_of_students)
+            number = input('number of student: ')
+            MentorController.remove_student(number)
         elif option == '7':
-            pass
+            view.display_static_present(MentorController.view_presence_statistic())
         elif option == '0':
             UserController.sign_out()
             return
