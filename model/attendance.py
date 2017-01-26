@@ -15,7 +15,7 @@ class Attendance:
         :param username(str): username of student
         :param present(int): change value of student presence (0 or 1)
         """
-        if present in range(2):
+        if present == '0' or present == '1':
             self.student_presence[username] = present
 
     @staticmethod
@@ -55,17 +55,4 @@ class Attendance:
                     percent_of_presence[student] = int(present)
         for student, attendance in percent_of_presence.items():
             percent_of_presence[student] = str(int((attendance/len(Attendance.list_of_attendance))*100))
-        # print(percent_of_presence)
         return percent_of_presence
-
-# g = Attendance('10.10.2015')
-# g.check_attendance('przemek', 1)
-# g.check_attendance('patrycja', 0)
-# g.add()
-# w = Attendance('11.10.2015')
-# w.check_attendance('przemek', 1)
-# w.check_attendance('patrycja', 1)
-# w.add()
-# Attendance.present_statistic()
-# Attendance.list_attendance('patrycja')
-#
