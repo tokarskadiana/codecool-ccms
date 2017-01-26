@@ -4,6 +4,7 @@ from model.assignment import Assignment
 from controller.employee_controller import EmployeeController
 import view
 from model.student import Student
+from  .user_controller import UserController
 
 
 class MentorController(EmployeeController):
