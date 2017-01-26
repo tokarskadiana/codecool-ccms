@@ -1,6 +1,8 @@
 from controller.employee_controller import EmployeeController
+from controller.user_controller import UserController
 from model.mentor import Mentor
 from model.user import Employee
+import view
 
 class MenagerController(EmployeeController):
 
@@ -39,11 +41,11 @@ class MenagerController(EmployeeController):
     def manager_session(user):
         session = MenagerController(user)
         while True:
-            view.menager_menu()
+            view.View.menager_menu()
             option = input('\nChoose the option:')
             if option == '1':
                 list_mentors = session.list_mentor()
-                view.print_mentors_list(list_mentors)
+                view.View.print_mentors_list(list_mentors)
             elif option == '2':
                 first_name = input('Enter first name:')
                 last_name = input('Enter last name:')
@@ -55,7 +57,7 @@ class MenagerController(EmployeeController):
                 password = input('Enter password:')
                 print(session.add_assistant(first_name, last_name, password))
             elif option == '4':
-                view.edit_menu()
+                view.View.edit_menu()
                 mentor = input('Enter user_name:')
                 parameter = input('Enter what you want to edit:')
                 new_value = input('Enter new value:')
