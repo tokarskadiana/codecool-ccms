@@ -59,7 +59,8 @@ class View:
     def show_full_name(user_list):
         n = 0
         for user in user_list:
-            print('{}. {} {}'.format(n + 1, user[0], user[1]))
+            n += 1
+            print('{}. {} {}'.format(n , user[0], user[1]))
 
 
 

@@ -79,24 +79,7 @@ def manager_session(user):
             continue
 
 
-def employee_session(user):
-    session = EmployeeController(user)
-    while True:
-        view.employee_menu()
-        option = input('\nChoose the option:')
-        if option == '1':
-            student_list = session.list_students()
-            view.show_full_name(student_list)
-            user_index = int(input('For more details give the number of person: '))
-            if user_index -1 > len(student_list):
-                    raise ValueError
-            view.show_details(student_list[user_index -1])
-        elif option == '0':
-            UserController.sign_out()
-            return
-        else:
-            print('Enter valid option.')
-            continue
+
 
 
 def date_base():
@@ -122,7 +105,7 @@ def main():
     elif type(user) == Manager:
         manager_session(user)
     elif type(user) == Employee:
-        employee_session(user)
+        EmployeeController.employee_session(user)
     else:
         main()
 
