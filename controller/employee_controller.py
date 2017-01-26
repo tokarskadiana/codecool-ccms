@@ -1,7 +1,6 @@
 from controller.user_controller import UserController
 from model.student import Student
-from view import View as view
-
+import view
 
 class EmployeeController(UserController):
 
@@ -17,20 +16,20 @@ class EmployeeController(UserController):
     def employee_session(user):
         session = EmployeeController(user)
         while True:
-            view.employee_menu()
+            view.View.employee_menu()
             option = input('\nChoose the option:')
             if option == '1':
                 student_list = session.list_students()
-                view.show_full_name(student_list)
+                view.View.show_full_name(student_list)
                 user_index = input('For more details give the number of person: ')
                 try:
                     user_index = int(user_index)
                     if user_index - 1 > len(student_list):
                         print('Wrong number')
                         continue
-                    view.clear()
+                    view.View.clear()
                     print('Student details:')
-                    view.show_details(student_list[user_index - 1])
+                    view.View.show_details(student_list[user_index - 1])
                     input('\nPress any key to back.')
                 except ValueError:
                     print('Wrong number')

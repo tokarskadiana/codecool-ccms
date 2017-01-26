@@ -6,7 +6,8 @@ class Mentor(Employee):
 
     @classmethod
     def add_mentor(cls, password, first_name, last_name, telephone=None, mail=None):
-        m = Mentor(password, first_name, last_name, telephone, mail)
+        password_coded = cls.encodeBase64(password)
+        m = Mentor(password_coded, first_name, last_name, telephone, mail)
         cls.mentors_list.append(m)
 
     def edit_mentor(self, **kwargs):

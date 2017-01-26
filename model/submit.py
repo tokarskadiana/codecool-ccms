@@ -11,7 +11,7 @@ class Submition:
         self.grade = grade
 
     @classmethod
-    def create(cls, student_username, content=None, grade=None):
+    def create(cls, student_username, content='', grade=''):
         '''
         Make new submition.
 
@@ -49,7 +49,7 @@ class Submition:
 
         Returns: boolean
         '''
-        if self.grade is None:
+        if not self.grade:
             self.grade = new_grade
             return True
         return False
@@ -60,7 +60,7 @@ class Submition:
 
         Returns: boolean
         '''
-        if self.content is None:
+        if not self.content:
             self.content = new_content
             return True
         return False
