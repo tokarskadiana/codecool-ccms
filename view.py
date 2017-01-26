@@ -24,9 +24,10 @@ class View:
 
     @staticmethod
     def print_assignment_grades(assignment_grades):
-        headers = ['Assiment', 'Grade']
-        print(tabulate(assignment_grades, headers,
-                       tablefmt="fancy_grid", stralign="center"))
+        # headers = ['Assiment', 'Grade']
+        # print(tabulate(assignment_grades, headers,
+        #                tablefmt="fancy_grid", stralign="center"))
+        print(assignment_grades)
 
     @staticmethod
     def main_menu():
@@ -72,10 +73,11 @@ class View:
         for index, student in enumerate(students_list):
             print('{} {} {}'.format(index, student.first_name, student.last_name))
 
+
     @staticmethod
-    def display_static_present(list):
-        if list:
-            for key, value in list:
+    def display_static_present(list_stat):
+        if list_stat:
+            for key, value in list_stat.items():
                 print('{} {}'.format(key, value))
 
     @staticmethod

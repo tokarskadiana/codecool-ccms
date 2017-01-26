@@ -124,7 +124,7 @@ class Database(object):
             submit.append(item.student_username)
             submit.append(item.content)
             submit.append(item.grade)
-
+        print('added')
         return submit
 
     @classmethod

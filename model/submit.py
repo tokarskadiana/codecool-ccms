@@ -11,7 +11,7 @@ class Submition:
         self.grade = grade
 
     @classmethod
-    def create(cls, student_username, content=None, grade=None):
+    def create(cls, student_username, content='', grade=''):
         '''
         Make new submition.
 
