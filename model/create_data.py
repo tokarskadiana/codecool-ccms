@@ -1,15 +1,15 @@
-from user import User
-# from mentor import Mentor
-from student import Student
-from assignment import Assignment
-from submit import Submition
-from attendance import Attendance
+from model.user import User
+from model.mentor import Mentor
+from model.student import Student
+from model.assignment import Assignment
+from model.submit import Submition
+from model.attendance import Attendance
 
 import csv
 
 class Database(object):
 
-    default_path = '../data_base/'
+    default_path = 'data_base/'
 
     @classmethod
     def create_user_from_csv(cls,filename, user_type = User):
@@ -33,26 +33,6 @@ class Database(object):
         return object_user_list
 
 
-    @classmethod
-    def save_user_to_csv(cls,filename, user_type = User):
-        """
-        Static method for reading csv file and create list of users objects
-        :param filename:
-        :return: List of Objects
-        """
-        count_record = 0
-        file = cls.default_path + filename
-        object_user_list = []
-        with open(file, newline='') as csvfile:
-
-            user_reader = csv.reader(csvfile, delimiter=',')
-
-            for element in user_reader:
-                count_record += 1
-                temp_data = user_type(element[0], element[1], element[2], element[3], element[4])
-                object_user_list.append(temp_data)
-
-        return object_user_list
 
     @classmethod
     def save_user_to_csv(cls,filename , table):
@@ -199,7 +179,6 @@ class Database(object):
 
     @staticmethod
     def attendance_data_save(row):
-        print(row.__dict__)
         attendance_list = row.student_presence
 
         attendance = [row.date]

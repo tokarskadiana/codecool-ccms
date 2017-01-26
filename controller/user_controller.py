@@ -2,8 +2,8 @@ from model.mentor import Mentor
 from model.student import Student
 from model.manager import Manager
 from model.user import Employee
-
-
+from controller.database_controller import DatabaseController
+import sys
 class UserController:
 
     def __init__(self, user):
@@ -28,6 +28,6 @@ class UserController:
 
     @classmethod
     def sign_out(cls):
-        # save data to file
-        # call main() function
-        pass
+        DatabaseController.DatabaseToCSV()
+        sys.exit()
+

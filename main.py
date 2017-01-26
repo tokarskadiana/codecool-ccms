@@ -8,6 +8,7 @@ from controller.user_controller import UserController
 from controller.mentor_controller import MentorController
 from controller.menager_controller import MenagerController
 from controller.employee_controller import EmployeeController
+from controller.database_controller import DatabaseController
 from view import View as view
 
 
@@ -106,7 +107,8 @@ def date_base():
 
 
 def main():
-    date_base()
+    DatabaseController.DatabaseFromCSV()
+
     log_in_input = view.main_menu()
     username = log_in_input[0]
     password = log_in_input[1]
