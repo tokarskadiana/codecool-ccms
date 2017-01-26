@@ -11,20 +11,18 @@ class MentorController(EmployeeController):
         assignment.Assignment.create(title, description, due_date)
 
     @staticmethod
-    def grade_assignment(number, student_number, grade):
-        ass = assignment.Assignment.return_ass(number)
-
-        ass.grade_assigment()
-
-
-
+    def grade_assignment(assiment_title, student_username, grade):
+        for assiment in Assignment.get_list():
+            if assiment.get_title() == assiment_title:
+                assiment.grade_assigment(student_username, grade)
+                return ('You grade assigment.')
 
     @staticmethod
     def check_attendence(day):
         atta = attendance.Attendance(day, {})
         for person in student.Student.list_of_students:
             ask = input('0 or 1')
-            print('{} {}'.format(person.first_name,person.last_name))
+            print('{} {}'.format(person.first_name, person.last_name))
             atta.check_attendance(person.username, int(ask))
     # +add_student(first_name, last_name, password): str
 

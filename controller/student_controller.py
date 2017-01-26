@@ -1,7 +1,10 @@
 from controller.user_controller import UserController
 from model.assignment import Assignment
+from view import View as view
+
 
 class StudentController(UserController):
+
     def list_assignment_grades(self):
         '''
         Returns and prints out assignment grades for student_username
@@ -20,7 +23,8 @@ class StudentController(UserController):
         '''
         for assignment in Assignment.get_list():
             if assignment.get_title() == assignment_title:
-                submit = assignment.submit_assignment(self.user.get_username(), content)
+                submit = assignment.submit_assignment(
+                    self.user.get_username(), content)
                 if submit:
                     return 'Your submit was added.'
         return 'Something went wrong, your submit wasn\'t added.'
@@ -33,6 +37,7 @@ class StudentController(UserController):
             option = input('\nChoose the option:')
             if option == '1':
                 grades = session.list_assignment_grades()
+                # print(grades)
                 view.print_assignment_grades(grades)
             elif option == '2':
                 assignment_title = input('Enter assiment title to submit:')

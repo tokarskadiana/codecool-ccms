@@ -33,48 +33,13 @@ def mentor_session(user):
             pass
 
         elif option == '4':
-
+            pass
         elif option == '5':
             pass
         elif option == '6':
             pass
         elif option == '7':
             pass
-        elif option == '0':
-            UserController.sign_out()
-            return
-        else:
-            print('Enter valid option.')
-            continue
-
-
-def manager_session(user):
-    session = MenagerController(user)
-    while True:
-        view.menager_menu()
-        option = input('\nChoose the option:')
-        if option == '1':
-            list_mentors = session.list_mentor()
-            view.print_mentors_list(list_mentors)
-        elif option == '2':
-            first_name = input('Enter first name:')
-            last_name = input('Enter last name:')
-            password = input('Enter password:')
-            print(session.add_mentor(first_name, last_name, password))
-        elif option == '3':
-            first_name = input('Enter first name:')
-            last_name = input('Enter last name:')
-            password = input('Enter password:')
-            print(session.add_assistant(first_name, last_name, password))
-        elif option == '4':
-            view.edit_menu()
-            mentor = input('Enter user_name:')
-            parameter = input('Enter what you want to edit:')
-            new_value = input('Enter new value:')
-            print(session.edit_mentor(mentor, parameter, new_value))
-        elif option == '5':
-            mentor = input('Enter mentors username you want to delete:')
-            print(session.remove_mentor(mentor))
         elif option == '0':
             UserController.sign_out()
             return
@@ -95,7 +60,7 @@ def main():
     elif type(user) == Mentor:
         mentor_session(user)
     elif type(user) == Manager:
-        manager_session(user)
+        MenagerController.manager_session(user)
     elif type(user) == Employee:
         EmployeeController.employee_session(user)
     else:

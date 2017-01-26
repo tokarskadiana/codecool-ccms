@@ -20,9 +20,10 @@ class View:
 
     @staticmethod
     def print_assignment_grades(assignment_grades):
-        headers = ['Assiment', 'Grade']
-        print(tabulate(assignment_grades, headers,
-                       tablefmt="fancy_grid", stralign="center"))
+        # headers = ['Assiment', 'Grade']
+        # print(tabulate(assignment_grades, headers,
+        #                tablefmt="fancy_grid", stralign="center"))
+        print(assignment_grades)
 
     @staticmethod
     def main_menu():
@@ -61,6 +62,7 @@ class View:
 
     @staticmethod
     def display_students():
+        pass
 
     @staticmethod
     def menager_menu():
