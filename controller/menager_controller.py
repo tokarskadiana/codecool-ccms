@@ -1,10 +1,11 @@
-from employee_controller import EmployeeController
+from controller.employee_controller import EmployeeController
 from model import mentor
+
 
 class MenagerController(EmployeeController):
 
     def list_mentor(self):
-        mentor.Mentor.list_mentors() #return list of mentors (obcj)
+        mentor.Mentor.list_mentors()  # return list of mentors (obcj)
 
     def view_mentors_details(self, username):
         for person in mentor.Mentor.mentors_list:
@@ -24,6 +25,5 @@ class MenagerController(EmployeeController):
     def remove_mentor(objc):
         for person in mentor.Mentor.mentors_list:
             if objc.username == person.username:
-                mentor.Mentor.delete_mentor(objc.username) #returns list of mentors ???
-
-        
+                # returns list of mentors ???
+                mentor.Mentor.delete_mentor(objc.username)
