@@ -1,21 +1,30 @@
 from model import student
 from model import attendance
+from model import assignment
 from controller.employee_controller import EmployeeController
 
 
 class MentorController(EmployeeController):
 
-    def add_assiment(self):
-        pass
+    @staticmethod
+    def add_assiment(title, description, due_date):
+        assignment.Assignment.create(title, description, due_date)
 
-    def grade_assignment(self):
-        pass
+    @staticmethod
+    def grade_assignment(number, student_number, grade):
+        ass = assignment.Assignment.return_ass(number)
+
+        ass.grade_assigment()
+
+
+
 
     @staticmethod
     def check_attendence(day):
         atta = attendance.Attendance(day, {})
         for person in student.Student.list_of_students:
             ask = input('0 or 1')
+            print('{} {}'.format(person.first_name,person.last_name))
             atta.check_attendance(person.username, int(ask))
     # +add_student(first_name, last_name, password): str
 
