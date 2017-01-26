@@ -20,9 +20,9 @@ class DatabaseController:
 
     @staticmethod
     def DatabaseToCSV():
-        Database.save_user_to_csv('manager.csv', Manager.managers_list)
-        Database.save_user_to_csv('mentors.csv', Mentor.mentors_list)
-        Database.save_user_to_csv('employe.csv', Employee.employee_list)
-        Database.save_user_to_csv('students.csv', Student.list_of_students)
-        Database.save_assignment_to_csv('assigment.csv', Assignment.list_assignment)
-        Database.save_attendance_to_csv('attendance.csv', Attendance.list_of_attendance)
+        Database.save_user_to_csv('manager1.csv', Manager.managers_list)
+        Database.save_user_to_csv('mentors1.csv', Mentor.mentors_list)
+        Database.save_user_to_csv('employe1.csv', Employee.employee_list)
+        Database.save_user_to_csv('students1.csv', Student.list_of_students)
+        Database.save_assignment_to_csv('assigment1.csv', Assignment.list_assignment)
+        Database.save_attendance_to_csv('attendance1.csv', Attendance.list_of_attendance)

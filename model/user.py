@@ -1,5 +1,7 @@
-class User:
+import base64
 
+class User:
+    line = 0
     def __init__(self, password, first_name, last_name, telephone, mail):
         self.username = '{}.{}'.format(first_name, last_name)
         self.password = password
@@ -7,6 +9,36 @@ class User:
         self.last_name = last_name
         self.telephone = telephone
         self.mail = mail
+
+    # @staticmethod
+    # def encodeBase64(password):
+    #     # test = base64.standard_b64encode(password.encode('utf-8'))
+    #     # print(test)
+    #     # test2 = str(test)
+    #     # print(test2).strip('\\')
+    #     # test3 = bytes(test2.encode('utf-8'))
+    #     # print(base64.standard_b64decode(test3))
+    #     print(str(base64.standard_b64encode(password.encode('utf-8'))))
+    #     return str(base64.standard_b64encode(password.encode('utf-8')))
+    #
+    # @staticmethod
+    # def decodeBase64(password):
+    #     User.line += 1
+    #     print(User.line)
+    #     passwd = password
+    #     # print(passwd)
+    #     # print(type(passwd))
+    #     passwd_strip = passwd.strip('\\')
+    #     passwd_strip = passwd_strip[2:]
+    #     # print(passwd_strip)
+    #
+    #     striped_password = passwd_strip.encode('utf-8')
+    #     # print(type(striped_password))
+    #     # print(striped_password)
+    #     # print(base64.standard_b64decode(password).decode('utf-8'))
+    #     print(str(base64.standard_b64decode(striped_password)))
+    #     return str(base64.standard_b64decode(striped_password))
+
 
     @classmethod
     def log_in(cls, username=None, password=None):

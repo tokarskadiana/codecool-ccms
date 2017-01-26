@@ -100,6 +100,8 @@ def date_base():
     Student.add_student('dupa', 'diana', 'd')
     Manager.add_manager('dupa', 'Jurek', 'K')
 
+# X0ChACq,Wanda,Ward,86-(541)543-7895,wward0@utexas.edu
+
 
 def main():
     DatabaseController.DatabaseFromCSV()
