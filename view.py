@@ -5,7 +5,6 @@ import os
 from controller.mentor_controller import MentorController
 
 
-
 class View:
 
     @staticmethod
@@ -24,10 +23,9 @@ class View:
 
     @staticmethod
     def print_assignment_grades(assignment_grades):
-        # headers = ['Assiment', 'Grade']
-        # print(tabulate(assignment_grades, headers,
-        #                tablefmt="fancy_grid", stralign="center"))
-        print(assignment_grades)
+        headers = ['Assiment', 'Grade']
+        print(tabulate(assignment_grades, headers,
+                       tablefmt="fancy_grid", stralign="center"))
 
     @staticmethod
     def main_menu():
@@ -44,6 +42,7 @@ class View:
 
     @staticmethod
     def mentor_menu():
+        View.clear()
         print('''
         -----------MENU-----------
         1. Check attendance
@@ -66,13 +65,13 @@ class View:
         details = MentorController.display_assignment(number)
 
         for content in details:
-            print('{} {} {} {}'.format(content[0], content[1], content[2], content[3]))
+            print('{} {} {} {}'.format(
+                content[0], content[1], content[2], content[3]))
 
     @staticmethod
     def display_students(students_list):
         for index, student in enumerate(students_list):
             print('{} {} {}'.format(index, student.first_name, student.last_name))
-
 
     @staticmethod
     def display_static_present(list_stat):
@@ -82,6 +81,7 @@ class View:
 
     @staticmethod
     def menager_menu():
+        View.clear()
         print('''
         -----------MENU-----------
         1. List mentors
@@ -103,8 +103,8 @@ class View:
 
     @staticmethod
     def print_mentors_list(mentors_list):
-        for mentor in mentors_list:
-            print (mentor)
+        headers = ['Index', 'First name', 'Last name', 'User name']
+        print (tabulate(mentors_list, headers, tablefmt="fancy_grid"))
 
     @staticmethod
     def edit_menu():
@@ -127,10 +127,14 @@ class View:
         print(
             '\n\t{} {}, phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
 
-
     @staticmethod
     def clear():
         """
         Clears screen for better display
         """
         os.system('cls' if os.name == 'nt' else 'clear')
+
+    @staticmethod
+    def show_user_details(user):
+        headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
+        print(tabulate([list(user)], headers, tablefmt="fancy_grid"))

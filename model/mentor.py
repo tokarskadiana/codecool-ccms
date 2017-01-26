@@ -18,10 +18,8 @@ class Mentor(Employee):
 
         return self.__dict__.items()
 
-    def view_mentor_details(self, username):
-        for mentor in self.mentors_list:
-            if username == mentor.username:
-                return [self.username, self.first_name, self.last_name, self.telephone, self.mail]
+    def view_mentor_details(self):
+        return self.first_name, self.last_name, self.username, self.telephone, self.mail
 
     @staticmethod
     def delete_mentor(username):
@@ -36,7 +34,7 @@ class Mentor(Employee):
         return Mentor.mentors_list
 
     def __str__(self):
-        return ('{} {}'.format(self.first_name, self.last_name))
+        return ('{} {} {}'.format(self.first_name, self.last_name, self.username))
 
     def get_username(self):
         return self.username

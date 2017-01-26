@@ -1,7 +1,9 @@
 import base64
 
+
 class User:
     line = 0
+
     def __init__(self, password, first_name, last_name, telephone, mail):
         self.username = '{}.{}'.format(first_name, last_name)
         self.password = self.decodeBase64(password)
@@ -13,29 +15,22 @@ class User:
 
     @staticmethod
     def encodeBase64(password):
-        # print(password)
         encoded_pwd = base64.encodebytes(password.encode())
-        # print(encoded_pwd)
         encoded_pwd = str(encoded_pwd)
 
         return encoded_pwd
 
     @staticmethod
     def decodeBase64(password):
-        print(password)
-        passwd_striped = password.replace('\\n','')
-        print(passwd_striped)
-        passwd  = passwd_striped[2:]
+        passwd_striped = password.replace('\\n', '')
+        passwd = passwd_striped[2:]
         passwd = passwd[:-1]
         passwd = passwd.encode()
-        # print(passwd)
         decoded_pwd = base64.standard_b64decode(passwd).decode()
-        print(decoded_pwd)
         return decoded_pwd
 
-
     @classmethod
-    def log_in(cls, username=None, password=None):
+    def log_in(cls, username, password):
         from mentor import Mentor
         from student import Student
         from manager import Manager
@@ -62,7 +57,7 @@ class Employee(User):
     employee_list = []
 
     @classmethod
-    def create(cls, password, first_name, last_name, telephone=None, mail=None):
+    def create(cls, password, first_name, last_name, telephone='', mail=''):
         password_coded = cls.encodeBase64(password)
         empl = Employee(password_coded, first_name, last_name, telephone, mail)
         cls.employee_list.append(empl)
