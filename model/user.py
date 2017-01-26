@@ -1,8 +1,19 @@
 import base64
 
 class User:
+    """
+    This class represent all users of this program
+    """
     line = 0
     def __init__(self, password, first_name, last_name, telephone, mail):
+        """
+        Constructs User object
+        :param password:
+        :param first_name:
+        :param last_name:
+        :param telephone:
+        :param mail:
+        """
         self.username = '{}.{}'.format(first_name, last_name)
         self.password = self.decodeBase64(password)
         # self.password = password
@@ -13,6 +24,11 @@ class User:
 
     @staticmethod
     def encodeBase64(password):
+        """
+
+        :param password:
+        :return:
+        """
         # print(password)
         encoded_pwd = base64.encodebytes(password.encode())
         # print(encoded_pwd)
