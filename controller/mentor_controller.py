@@ -10,7 +10,6 @@ class MentorController(EmployeeController):
     def add_assiment(title, description, due_date):
         assignment.Assignment.create(title, description, due_date)
 
-    @staticmethod
     def grade_assignment(assiment_title, student_username, grade):
         for assiment in Assignment.get_list():
             if assiment.get_title() == assiment_title:
