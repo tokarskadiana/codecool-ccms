@@ -33,6 +33,10 @@ def mentor_session(user):
             view.display_assigments()
             number = input('write number of ass: ')
             view.display_ass(number)
+            title = input('title: ')
+            u_name = input('username')
+            grade = input('grade')
+            print(session.grade_assignment(title, u_name, grade))
 
         elif option == '4':
             first_name = input('first name: ')
