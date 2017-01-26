@@ -9,6 +9,7 @@ from controller.user_controller import UserController
 from controller.mentor_controller import MentorController
 from controller.menager_controller import MenagerController
 from controller.employee_controller import EmployeeController
+from controller.database_controller import DatabaseController
 from view import View as view
 
 
@@ -93,7 +94,12 @@ def employee_session(user):
         view.employee_menu()
         option = input('\nChoose the option:')
         if option == '1':
-            pass
+            student_list = session.list_students()
+            view.show_full_name(student_list)
+            user_index = int(input('For more details give the number of person: '))
+            if user_index -1 > len(student_list):
+                    raise ValueError
+            view.show_details(student_list[user_index -1])
         elif option == '0':
             UserController.sign_out()
             return
@@ -108,9 +114,12 @@ def date_base():
     Student.add_student('dupa', 'diana', 'd')
     Manager.add_manager('dupa', 'Jurek', 'K')
 
+# X0ChACq,Wanda,Ward,86-(541)543-7895,wward0@utexas.edu
+
 
 def main():
-    date_base()
+    DatabaseController.DatabaseFromCSV()
+
     log_in_input = view.main_menu()
     username = log_in_input[0]
     password = log_in_input[1]
