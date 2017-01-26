@@ -3,6 +3,7 @@ from model import attendance
 from model.assignment import Assignment
 from controller.employee_controller import EmployeeController
 import view
+from model.student import Student
 
 
 class MentorController(EmployeeController):
@@ -87,7 +88,7 @@ class MentorController(EmployeeController):
                 MentorController.add_student(first_name, last_name, password)
 
             elif option == '5':
-                view.View.display_students(Student.list_of_students)
+                view.View.display_students(student.Student.list_of_students)
                 number = input('number of student: ')
                 telephone = input('telephone: ')
                 mail = input('mail: ')

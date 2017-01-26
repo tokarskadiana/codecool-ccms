@@ -73,10 +73,8 @@ class View:
         for index, student in enumerate(students_list):
             print('{} {} {}'.format(index, student.first_name, student.last_name))
 
-    @staticmethod
-    def display_students():
-        pass
 
+    @staticmethod
     def display_static_present(list_stat):
         if list_stat:
             for key, value in list_stat.items():
