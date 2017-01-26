@@ -52,3 +52,7 @@ class Student(User):
         """
         list_det = [self.first_name, self.last_name, self.username, self.telephone, self.mail]
         return list_det
+
+    def get_full_name(self):
+        return [self.first_name, self.last_name]
+
