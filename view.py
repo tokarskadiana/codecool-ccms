@@ -1,4 +1,8 @@
+from tabulate import tabulate
+
+
 class View:
+
     @staticmethod
     def print_assignment_grades(list_assignment_grades):
         for item in list_assignment_grades:
@@ -12,6 +16,12 @@ class View:
         2. Submit assignment
         0. Exit
         ''')
+
+    @staticmethod
+    def print_assignment_grades(assignment_grades):
+        headers = ['Assiment', 'Grade']
+        print(tabulate(assignment_grades, headers,
+                       tablefmt="fancy_grid", stralign="center"))
 
     @staticmethod
     def main_menu():
@@ -52,4 +62,17 @@ class View:
         -----------MENU-----------
         1. List student
         0. Exit
+        ''')
+
+    @staticmethod
+    def print_mentors_list(mentors_list):
+        for mentor in mentors_list:
+            print (mentor)
+
+    @staticmethod
+    def edit_menu():
+        print('''
+        You can edit following parameters:
+            - telephone
+            - mail
         ''')
