@@ -23,8 +23,8 @@ class MentorController(EmployeeController):
     def check_attendence(day):
         atta = attendance.Attendance(day, {})
         for person in student.Student.list_of_students:
+            print('{} {}'.format(person.first_name, person.last_name))
             ask = input('0 or 1')
-            print('{} {}'.format(person.first_name,person.last_name))
             atta.check_attendance(person.username, int(ask))
     # +add_student(first_name, last_name, password): str
 
@@ -34,18 +34,25 @@ class MentorController(EmployeeController):
 
     # +edit_student(Student_obj: obj, options_to_change: ** kwargs)
     @staticmethod
-    def edit_student(person, first_name, last_name, telephone, mail):
-        student.Student.edit_student(
-            person, first_name='', last_name='', telephone='', mail='')
+    def edit_student(number, telep, mai):
+        for index, stu in enumerate(student.Student.list_of_students):
+            if str(index) == number:
+                stu.edit_student(telephone=telep, mail=mai)
 
     # +remove_student(Stud_obj:obj):str
     @staticmethod
-    def remove_student(person):
-        for adept in student.Student.list_of_students:
-            if person.username == adept.username:
-                student.Student.delete_student(adept.username)
+    def remove_student(number):
+        for index, stu in enumerate(student.Student.list_of_students):
+            if str(index) == number:
+                student.Student.delete_student(stu.username)
 
     # view_presence_statistic(days number:int);str
     @staticmethod
     def view_presence_statistic():
-        attendance.Attendance.present_statistic()
+        return attendance.Attendance.present_statistic()
+
+    @staticmethod
+    def display_assignment(number):
+        for index, ass in enumerate(assignment.Assignment.list_assignment):
+            if str(index) == number:
+                return ass.view_details()
