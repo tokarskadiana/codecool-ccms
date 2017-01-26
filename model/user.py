@@ -19,7 +19,9 @@ class User:
         from manager import Manager
 
         users = [Mentor.mentors_list,
-                 Student.list_of_students, Employee.employee_list]
+                 Student.list_of_students,
+                 Employee.employee_list,
+                 Manager.managers_list]
 
         for list_of_users in users:
             for person in list_of_users:
