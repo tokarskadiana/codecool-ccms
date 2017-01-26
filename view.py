@@ -1,5 +1,7 @@
 from tabulate import tabulate
 from model.assignment import Assignment
+import sys
+import os
 
 
 class View:
@@ -26,9 +28,15 @@ class View:
 
     @staticmethod
     def main_menu():
+        View.clear()
         print('Welcome in CodeCool Management System')
+        print('\nTo EXIT program press "0"\n')
         username = input('Enter your username:')
+        if username == '0':
+            sys.exit()
         password = input('Enter your password:')
+        if password == '0':
+            sys.exit()
         return username, password
 
     @staticmethod
@@ -61,6 +69,7 @@ class View:
 
     @staticmethod
     def display_students():
+        pass
 
     @staticmethod
     def menager_menu():
@@ -76,6 +85,7 @@ class View:
 
     @staticmethod
     def employee_menu():
+        View.clear()
         print('''
         -----------MENU-----------
         1. List student
@@ -97,6 +107,7 @@ class View:
 
     @staticmethod
     def show_full_name(user_list):
+        View.clear()
         n = 0
         for user in user_list:
             n += 1
@@ -105,4 +116,12 @@ class View:
     @staticmethod
     def show_details(user):
         print(
-            '{} {} phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
+            '\n\t{} {}, phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
+
+
+    @staticmethod
+    def clear():
+        """
+        Clears screen for better display
+        """
+        os.system('cls' if os.name == 'nt' else 'clear')

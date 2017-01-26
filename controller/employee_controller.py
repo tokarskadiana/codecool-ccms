@@ -25,10 +25,13 @@ class EmployeeController(UserController):
                 user_index = input('For more details give the number of person: ')
                 try:
                     user_index = int(user_index)
-                    if user_index -1 > len(student_list):
+                    if user_index - 1 > len(student_list):
                         print('Wrong number')
                         continue
-                    view.show_details(student_list[user_index -1])
+                    view.clear()
+                    print('Student details:')
+                    view.show_details(student_list[user_index - 1])
+                    input('\nPress any key to back.')
                 except ValueError:
                     print('Wrong number')
 
