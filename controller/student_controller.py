@@ -40,7 +40,7 @@ class StudentController(UserController):
                 # print(grades)
                 view.print_assignment_grades(grades)
             elif option == '2':
-                assignment_title = input('Enter assiment title to submit:')
+                assignment_title = input('Enter assignment title to submit:')
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
             elif option == '0':

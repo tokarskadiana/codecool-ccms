@@ -30,16 +30,29 @@ def mentor_session(user):
             MentorController.add_assiment(title, description, due_date)
 
         elif option == '3':
-            pass
+            view.display_assigments()
+            number = input('write number of ass: ')
+            view.display_ass(number)
 
         elif option == '4':
-            pass
+            first_name = input('first name: ')
+            last_name = input('last name: ')
+            password = input('password: ')
+            MentorController.add_student(first_name, last_name, password)
+            
         elif option == '5':
-            pass
+            view.display_students(Student.list_of_students)
+            number = input('number of student: ')
+            telephone = input('telephone: ')
+            mail = input('mail: ')
+            MentorController.edit_student(number, telephone, mail)
+
         elif option == '6':
-            pass
+            view.display_students(Student.list_of_students)
+            number = input('number of student: ')
+            MentorController.remove_student(number)
         elif option == '7':
-            pass
+            view.display_static_present(MentorController.view_presence_statistic())
         elif option == '0':
             UserController.sign_out()
             return
