@@ -5,7 +5,7 @@ from controller.employee_controller import EmployeeController
 from controller.user_controller import UserController
 import view
 from model.student import Student
-from  .user_controller import UserController
+from .user_controller import UserController
 
 
 class MentorController(EmployeeController):
@@ -25,9 +25,12 @@ class MentorController(EmployeeController):
         atta = attendance.Attendance(day, {})
         for person in student.Student.list_of_students:
             print('{} {}'.format(person.first_name, person.last_name))
-            ask = input('0 or 1')
-            print('{} {}'.format(person.first_name, person.last_name))
-            atta.check_attendance(person.username, int(ask))
+            while True:
+                ask = input('0 or 1')
+                if ask == '0' or ask == '1':
+                    break
+            atta.check_attendance(person.username, ask)
+        atta.add()
 
     @staticmethod
     def add_student(first_name, last_name, password):
