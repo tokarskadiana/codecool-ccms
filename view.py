@@ -65,9 +65,10 @@ class View:
     @staticmethod
     def display_ass(number):
         details = MentorController.display_assignment(number)
-
-        for content in details:
-            print('{} {} {} {}'.format(content[0], content[1], content[2], content[3]))
+        if details:
+            for content in details:
+                print('{} {} {} {}'.format(content[0], content[1], content[2], content[3]))
+                return True
 
     @staticmethod
     def display_students(students_list):

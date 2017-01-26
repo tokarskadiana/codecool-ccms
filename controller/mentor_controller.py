@@ -17,8 +17,11 @@ class MentorController(EmployeeController):
     def grade_assignment(self, assiment_title, student_username, grade):
         for assiment in Assignment.get_list():
             if assiment.get_title() == assiment_title:
-                assiment.grade_assigment(student_username, grade)
-                return ('You grade assigment.')
+                try:
+                    if assiment.grade_assigment(student_username, grade):
+                        return 'You grade assigment.'
+                except:
+                    return 'There is no student with given username'
 
     @staticmethod
     def check_attendence(day):
@@ -60,6 +63,7 @@ class MentorController(EmployeeController):
         for index, ass in enumerate(Assignment.list_assignment):
             if str(index) == number:
                 return ass.view_details()
+        return False
 
     @staticmethod
     def mentor_session(user):
@@ -80,11 +84,11 @@ class MentorController(EmployeeController):
             elif option == '3':
                 view.View.display_assigments()
                 number = input('write number of ass: ')
-                view.View.display_ass(number)
-                title = input('title: ')
-                u_name = input('username')
-                grade = input('grade')
-                print(session.grade_assignment(title, u_name, grade))
+                if view.View.display_ass(number):
+                    title = input('title: ')
+                    u_name = input('username')
+                    grade = input('grade')
+                    print(session.grade_assignment(title, u_name, grade))
 
             elif option == '4':
                 first_name = input('first name: ')
