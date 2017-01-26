@@ -33,7 +33,7 @@ def mentor_session(user):
             pass
 
         elif option == '4':
-
+            pass
         elif option == '5':
             pass
         elif option == '6':

@@ -4,40 +4,34 @@ class User:
     line = 0
     def __init__(self, password, first_name, last_name, telephone, mail):
         self.username = '{}.{}'.format(first_name, last_name)
-        self.password = password
+        self.password = self.decodeBase64(password)
+        # self.password = password
         self.first_name = first_name
         self.last_name = last_name
         self.telephone = telephone
         self.mail = mail
 
-    # @staticmethod
-    # def encodeBase64(password):
-    #     # test = base64.standard_b64encode(password.encode('utf-8'))
-    #     # print(test)
-    #     # test2 = str(test)
-    #     # print(test2).strip('\\')
-    #     # test3 = bytes(test2.encode('utf-8'))
-    #     # print(base64.standard_b64decode(test3))
-    #     print(str(base64.standard_b64encode(password.encode('utf-8'))))
-    #     return str(base64.standard_b64encode(password.encode('utf-8')))
-    #
-    # @staticmethod
-    # def decodeBase64(password):
-    #     User.line += 1
-    #     print(User.line)
-    #     passwd = password
-    #     # print(passwd)
-    #     # print(type(passwd))
-    #     passwd_strip = passwd.strip('\\')
-    #     passwd_strip = passwd_strip[2:]
-    #     # print(passwd_strip)
-    #
-    #     striped_password = passwd_strip.encode('utf-8')
-    #     # print(type(striped_password))
-    #     # print(striped_password)
-    #     # print(base64.standard_b64decode(password).decode('utf-8'))
-    #     print(str(base64.standard_b64decode(striped_password)))
-    #     return str(base64.standard_b64decode(striped_password))
+    @staticmethod
+    def encodeBase64(password):
+        # print(password)
+        encoded_pwd = base64.encodebytes(password.encode())
+        # print(encoded_pwd)
+        encoded_pwd = str(encoded_pwd)
+
+        return encoded_pwd
+
+    @staticmethod
+    def decodeBase64(password):
+        print(password)
+        passwd_striped = password.replace('\\n','')
+        print(passwd_striped)
+        passwd  = passwd_striped[2:]
+        passwd = passwd[:-1]
+        passwd = passwd.encode()
+        # print(passwd)
+        decoded_pwd = base64.standard_b64decode(passwd).decode()
+        print(decoded_pwd)
+        return decoded_pwd
 
 
     @classmethod
@@ -69,7 +63,8 @@ class Employee(User):
 
     @classmethod
     def create(cls, password, first_name, last_name, telephone=None, mail=None):
-        empl = Employee(password, first_name, last_name, telephone, mail)
+        password_coded = cls.encodeBase64(password)
+        empl = Employee(password_coded, first_name, last_name, telephone, mail)
         cls.employee_list.append(empl)
 
     @classmethod

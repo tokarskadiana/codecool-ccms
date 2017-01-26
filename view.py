@@ -61,6 +61,7 @@ class View:
 
     @staticmethod
     def display_students():
+        pass
 
     @staticmethod
     def menager_menu():

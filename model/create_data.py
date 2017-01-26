@@ -1,6 +1,8 @@
 from model.user import User
+from model.user import Employee
 from model.mentor import Mentor
 from model.student import Student
+from model.manager import Manager
 from model.assignment import Assignment
 from model.submit import Submition
 from model.attendance import Attendance
@@ -49,13 +51,14 @@ class Database(object):
         file = cls.default_path + filename
         with open(file, "w") as file:
             for record in table:
+                print(record)
                 row = ','.join(cls.user_data(record))
                 file.write(row + "\n")
 
     @staticmethod
     def user_data(row):
-
-        return [row.password,row.first_name,row.last_name,row.telephone,row.mail]
+        coded = User.encodeBase64(row.password)
+        return [coded,row.first_name,row.last_name,row.telephone,row.mail]
 
 
     @classmethod
@@ -142,7 +145,7 @@ class Database(object):
 
                 temp_data = cls.attendance_data_read(element)
                 object_attendance_list.append(temp_data)
-                Attendance.add(temp_data)
+                # Attendance.add(temp_data)
         return object_attendance_list
 
 
