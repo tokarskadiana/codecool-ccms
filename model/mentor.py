@@ -36,3 +36,6 @@ class Mentor(Employee):
 
     def __str__(self):
         return ('{} {}'.format(self.first_name, self.last_name))
+
+    def get_username(self):
+        return self.username
