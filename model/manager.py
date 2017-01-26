@@ -1,7 +1,7 @@
-from user import User
+from model.user import Employee
 
 
-class Manager(User):
+class Manager(Employee):
     managers_list = []
 
     @classmethod
@@ -9,3 +9,6 @@ class Manager(User):
         m = Manager(password, first_name, last_name, telephone, mail)
         cls.managers_list.append(m)
 
+    @classmethod
+    def list_manager(cls):
+        return cls.managers_list

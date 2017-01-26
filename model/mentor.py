@@ -1,8 +1,7 @@
-from user import User
+from model.user import Employee
 
 
-
-class Mentor(User):
+class Mentor(Employee):
     mentors_list = []
 
     @classmethod
@@ -37,23 +36,3 @@ class Mentor(User):
 
     def __str__(self):
         return ('{} {}'.format(self.first_name, self.last_name))
-
-
-
-#
-# Mentor.add_mentor('password', 'Marcin', 'Dupa', '123', '@@@')
-# Mentor.add_mentor('password', 'dupa', 'Dupa', '345', '@@@')
-# lista = Mentor.mentors_list
-#
-# print(lista)
-# print(Mentor.mentors_list[0].first_name)
-# Mentor.delete_mentor('dupa.Dupa')
-# print(lista)
-# Mentor.mentors_list[0].edit_mentor(first_name='Dupaaaaaaaaa')
-#
-# # Mentor.edit_mentor(Mentor.mentors_list[0], first_name='dupaaaaaaaaaaaaaaaaaaa')
-# print(lista)
-# print(Mentor.mentors_list[0].first_name)
-
-
-

@@ -1,4 +1,5 @@
-from user_controller import UserController
+from controller.user_controller import UserController
+
 
 class StudentController(UserController):
     def list_assignment_grades(self):
