@@ -55,3 +55,6 @@ class Student(User):
 
     def get_username(self):
         return self.username
+
+    def get_full_name(self):
+        return [self.first_name, self.last_name]

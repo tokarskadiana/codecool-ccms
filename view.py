@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from model.assignment import Assignment
 
 
 class View:
@@ -40,9 +41,26 @@ class View:
         4. Add student
         5. Edit student
         6. Delete student
-        7. View presense statistics
+        7. View presence statistics
         0. Exit
         ''')
+
+    @staticmethod
+    def display_assigments():
+        for index, ass in enumerate(sorted((Assignment.list_assignment))):
+            print('{} {} {}'.format(index, ass.title, ass.due_date))
+
+    @staticmethod
+    def display_ass(number):
+        for index, ass in enumerate(sorted(Assignment.list_assignment)):
+            if str(index) == number:
+                details = ass.view_details()
+                for index, student_subb in enumerate(details):
+                    print('{} {} {} {}'.format(index, student_subb[
+                          0], student_subb[1], student_subb[2]))
+
+    @staticmethod
+    def display_students():
 
     @staticmethod
     def menager_menu():
@@ -76,3 +94,15 @@ class View:
             - telephone
             - mail
         ''')
+
+    @staticmethod
+    def show_full_name(user_list):
+        n = 0
+        for user in user_list:
+            n += 1
+            print('{}. {} {}'.format(n, user[0], user[1]))
+
+    @staticmethod
+    def show_details(user):
+        print(
+            '{} {} phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))

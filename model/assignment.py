@@ -121,3 +121,14 @@ class Assignment:
             if submit.get_student_username() == student_username:
                 return [self.title, submit.get_grade()]
         return None
+
+    @staticmethod
+    def return_ass(number):
+        """
+
+        :param number:
+        :return:
+        """
+        for index, ass in enumerate(sorted(Assignment.list_assignment)):
+            if str(index) == number:
+                return ass
