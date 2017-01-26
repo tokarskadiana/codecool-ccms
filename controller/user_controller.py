@@ -30,4 +30,3 @@ class UserController:
     def sign_out(cls):
         DatabaseController.DatabaseToCSV()
         sys.exit()
-

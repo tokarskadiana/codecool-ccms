@@ -77,9 +77,9 @@ class View:
     def display_students():
         pass
 
-    def display_static_present(list):
-        if list:
-            for key, value in list:
+    def display_static_present(list_stat):
+        if list_stat:
+            for key, value in list_stat.items():
                 print('{} {}'.format(key, value))
 
     @staticmethod
