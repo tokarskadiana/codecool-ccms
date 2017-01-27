@@ -20,6 +20,7 @@ def main():
     log_in_input = view.main_menu()
     username = log_in_input[0]
     password = log_in_input[1]
+
     user = UserController.log_in(username, password)
     if type(user) == Student:
         StudentController.student_session(user)

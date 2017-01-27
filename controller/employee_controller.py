@@ -7,6 +7,7 @@ class EmployeeController(UserController):
 
     def list_students(self):
         """
+        Create list of student with detail data
         Returns list of students.
         :return (list): list of students objc
         """
@@ -23,7 +24,7 @@ class EmployeeController(UserController):
     @staticmethod
     def employee_session(user):
         """
-        Start employee menu.
+        Run employee menu and session
         :param user (objc): employee objc
         """
         session = EmployeeController(user)
@@ -53,6 +54,6 @@ class EmployeeController(UserController):
 
             elif option == '0':
                 UserController.sign_out()
-                return
+                # return
             else:
                 continue
