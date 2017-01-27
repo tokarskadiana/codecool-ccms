@@ -6,6 +6,10 @@ class EmployeeController(UserController):
 
     @staticmethod
     def list_students():
+        """
+        Returns list of students.
+        :return (list): list of students objc
+        """
         list_of_details = []
         for student in Student.list_student():
             list_of_details.append(student.view_details())
@@ -14,6 +18,10 @@ class EmployeeController(UserController):
 
     @staticmethod
     def employee_session(user):
+        """
+        Start employee menu.
+        :param user (objc): employee objc
+        """
         session = EmployeeController(user)
         while True:
             view.View.employee_menu()

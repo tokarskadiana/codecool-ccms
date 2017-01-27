@@ -25,8 +25,8 @@ class User:
     @staticmethod
     def encodeBase64(password):
         """
-
-        :param password:
+        Code given password.
+        :param password (str): password
         :return:
         """
         # print(password)
@@ -38,6 +38,11 @@ class User:
 
     @staticmethod
     def decodeBase64(password):
+        """
+        Decode given password.
+        :param password: password to decode
+        :return: decoded password
+        """
         print(password)
         passwd_striped = password.replace('\\n','')
         print(passwd_striped)
@@ -52,6 +57,12 @@ class User:
 
     @classmethod
     def log_in(cls, username=None, password=None):
+        """
+        Check if given username and password are in data base.
+        :param username (str): username
+        :param password (str): password
+        :return (objc): objc with given parameters
+        """
         from mentor import Mentor
         from student import Student
         from manager import Manager
@@ -70,6 +81,9 @@ class User:
 
     @classmethod
     def sign_out(cls):
+        """
+        Sing out user.
+        """
         # save data to file
         cls.log_in()
 
@@ -79,15 +93,35 @@ class Employee(User):
 
     @classmethod
     def create(cls, password, first_name, last_name, telephone=None, mail=None):
+        """
+        Create employee objc.
+        :param password (str):
+        :param first_name (str):
+        :param last_name (str):
+        :param telephone (str):
+        :param mail (str):
+        """
         password_coded = cls.encodeBase64(password)
         empl = Employee(password_coded, first_name, last_name, telephone, mail)
         cls.employee_list.append(empl)
 
     @classmethod
     def add_employee(cls, password, first_name, last_name, telephone, mail):
+        """
+        Add employee objc.
+        :param password (str):
+        :param first_name (str):
+        :param last_name (str):
+        :param telephone (str):
+        :param mail (str):
+        """
         e = Employee(password, first_name, last_name, telephone, mail)
         cls.employee_list.append(e)
 
     @classmethod
     def list_employee(cls):
+        """
+        Return list of employee.
+        :return (list): list of employee
+        """
         return cls.employee_list
