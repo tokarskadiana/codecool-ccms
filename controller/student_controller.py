@@ -4,6 +4,7 @@ from view import View as view
 
 
 class StudentController(UserController):
+    """Class which controls user behaviour"""
 
     def list_assignment_grades(self):
         '''
@@ -20,6 +21,7 @@ class StudentController(UserController):
     def submit_assignment(self, assignment_title, content):
         '''
         Submit assignment as a student
+        return: string
         '''
         for assignment in Assignment.get_list():
             if assignment.get_title() == assignment_title:
@@ -32,6 +34,11 @@ class StudentController(UserController):
 
     @staticmethod
     def student_session(user):
+        """
+        Static method show menu of user
+        :param user:
+        :return: None
+        """
         session = StudentController(user)
         while True:
             view.student_menu()
