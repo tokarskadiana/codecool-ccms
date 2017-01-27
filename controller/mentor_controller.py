@@ -175,7 +175,7 @@ class MentorController(EmployeeController):
                 input('\nEnter some key to get back:')
 
             elif option == '7':
-                return view.View.display_static_present(session.view_presence_statistic())
+                print(view.View.display_static_present(session.view_presence_statistic()))
             elif option == '0':
                 UserController.sign_out()
                 return
