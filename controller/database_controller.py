@@ -8,11 +8,11 @@ from model.attendance import Attendance
 
 
 class DatabaseController:
-
+    """Class which control database save/read"""
     @staticmethod
     def DatabaseFromCSV():
         """
-
+        Initialize database for CCmS
         :return:
         """
         Manager.managers_list = Database.create_user_from_csv('manager1.csv',Manager)
@@ -25,7 +25,7 @@ class DatabaseController:
     @staticmethod
     def DatabaseToCSV():
         """
-
+        Save database to csv files
         :return:
         """
         Database.save_user_to_csv('manager1.csv', Manager.managers_list)
