@@ -48,6 +48,7 @@ class StudentController(UserController):
                     return 'Your submit was added.'
         return 'Something went wrong, your submit wasn\'t added.'
 
+
     @staticmethod
     def student_session(user):
         session = StudentController(user)

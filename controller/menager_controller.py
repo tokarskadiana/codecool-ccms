@@ -8,6 +8,10 @@ import view
 class MenagerController(EmployeeController):
 
     def list_mentor(self):
+        """
+
+        :return:
+        """
         mentor_list = []
         for index, mentor in enumerate(Mentor.list_mentors()):
             mentor_list.append([index] + str(mentor).split())

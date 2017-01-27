@@ -55,6 +55,10 @@ class Student(User):
         return list_det
 
     def get_username(self):
+        """
+        Returns username of objc.
+        :return (str): username of objc
+        """
         return self.username
 
     def __str__(self):
