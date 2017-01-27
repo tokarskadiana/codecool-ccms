@@ -19,6 +19,12 @@ class UserController:
 
     @classmethod
     def log_in(cls, username, password):
+        """
+        Check if given username and password exist in data base.
+        :param username (str): username
+        :param password (str): password
+        :return (objc): objc with given attr
+        """
         users = [Mentor.list_mentors(),
                  Student.list_student(), Employee.list_employee(), Manager.list_manager()]
 
@@ -31,5 +37,8 @@ class UserController:
 
     @classmethod
     def sign_out(cls):
+        """
+        Save data to files.
+        """
         DatabaseController.DatabaseToCSV()
         sys.exit()

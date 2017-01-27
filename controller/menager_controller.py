@@ -4,8 +4,8 @@ from model.mentor import Mentor
 from model.user import Employee
 import view
 
-class MenagerController(EmployeeController):
 
+class MenagerController(EmployeeController):
     def list_mentor(self):
         """
         Returns list of mentors objc.
@@ -18,29 +18,56 @@ class MenagerController(EmployeeController):
 
     def view_mentors_details(self, username):
         """
-
-        :param username:
-        :return:
+        Returns details of student objc by given username.
+        :param username (str): username of objc
+        :return (list): list of details
         """
         for person in mentor.Mentor.mentors_list:
             if person.username == username:
                 mentor.Mentor.view_mentor_details(person, person.username)
 
     def edit_mentor(self, username, parameter, new_value):
+        """
+        Edit attr of mentor objc by given username.
+        :param username (str): mentor username
+        :param parameter (str): name of attr
+        :param new_value (str): new value of attr
+        :return (str): returns message
+        """
         for mentor in Mentor.list_mentors():
             if mentor.get_username() == username:
                 mentor.edit_mentor(parameter=new_value)
                 return '{} was edited.'.format(mentor)
+
     def add_mentor(self, first_name, last_name, password):
+        """
+        Create mentor and add to mentor list in class.
+        :param first_name (str): first name of mentor
+        :param last_name (str): last name of mentor
+        :param password (str): password of mentor
+        :return (str): returns message
+        """
         Mentor.add_mentor(password, first_name, last_name)
         return 'Mentor was added.'
 
     def add_assistant(self, first_name, last_name, password):
+        """
+        Add assistant to list of employee.
+        :param first_name (str): first name of assistant
+        :param last_name (str): last name of assistant
+        :param password (str): password of assistant
+        :return (str): returns message
+        """
         Employee.create(first_name, last_name, password)
         return 'Assistant was added.'
-    # +remove_mentor(Mentor_obj:obj):str
+
     @staticmethod
     def remove_mentor(username):
+        """
+        Remove mentor from mentor list.
+        :param username: returns
+        :return: returns message
+        """
         for mentor in Mentor.list_mentors():
             if mentor.get_username() == username:
                 mentor.delete_mentor(username)
@@ -48,6 +75,10 @@ class MenagerController(EmployeeController):
 
     @staticmethod
     def manager_session(user):
+        """
+        Start manager menu.
+        :param user (objc): mentor objc
+        """
         session = MenagerController(user)
         while True:
             view.View.menager_menu()
