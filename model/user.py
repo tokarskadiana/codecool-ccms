@@ -2,17 +2,17 @@ import base64
 
 class User:
     """
-    This class represent all users of this program
+    This class representing User class
     """
     line = 0
     def __init__(self, password, first_name, last_name, telephone, mail):
         """
         Constructs User object
-        :param password:
-        :param first_name:
-        :param last_name:
-        :param telephone:
-        :param mail:
+        :param password: (str) store of password of User object
+        :param first_name: (str) store of first name of User object
+        :param last_name: (str) store of last name of User object
+        :param telephone: (str) store of phone number of User object
+        :param mail: (str) store of e-mail address of User object
         """
         self.username = '{}.{}'.format(first_name, last_name)
         self.password = self.decodeBase64(password)
@@ -25,9 +25,9 @@ class User:
     @staticmethod
     def encodeBase64(password):
         """
-        Code given password.
-        :param password (str): password
-        :return:
+        Static method to encode user password
+        :param password: (str) password
+        :return: (str) encoded password
         """
         # print(password)
         encoded_pwd = base64.encodebytes(password.encode())
@@ -39,8 +39,8 @@ class User:
     @staticmethod
     def decodeBase64(password):
         """
-        Decode given password.
-        :param password: password to decode
+        Static method for decoding encoded password
+        :param password: (str) encoded password
         :return: decoded password
         """
         print(password)
@@ -79,22 +79,20 @@ class User:
                         return person
         return False
 
-    @classmethod
-    def sign_out(cls):
-        """
-        Sing out user.
-        """
-        # save data to file
-        cls.log_in()
 
 
 class Employee(User):
+    """
+    This class representing Employee class
+    """
     employee_list = []
 
     @classmethod
-    def create(cls, password, first_name, last_name, telephone=None, mail=None):
+    def create(cls, password, first_name, last_name, telephone='', mail=''):
         """
-        Create employee objc.
+        Create new employee object
+        def create(cls, password, first_name, last_name, telephone=None, mail=None):
+
         :param password (str):
         :param first_name (str):
         :param last_name (str):
@@ -108,6 +106,7 @@ class Employee(User):
     @classmethod
     def add_employee(cls, password, first_name, last_name, telephone, mail):
         """
+        Add new employee
         Add employee objc.
         :param password (str):
         :param first_name (str):
@@ -121,7 +120,7 @@ class Employee(User):
     @classmethod
     def list_employee(cls):
         """
-        Return list of employee.
-        :return (list): list of employee
+        Class method for return list of employers (assistants)
+        :return: (list) list of employers
         """
         return cls.employee_list

@@ -4,7 +4,6 @@ from model.mentor import Mentor
 from model.user import Employee
 import view
 
-
 class MenagerController(EmployeeController):
     def list_mentor(self):
         """
