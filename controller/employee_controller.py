@@ -2,10 +2,15 @@ from controller.user_controller import UserController
 from model.student import Student
 import view
 
+
 class EmployeeController(UserController):
 
     @staticmethod
     def list_students():
+        """
+        Create list of student with detail data
+        :return: (list) list of students details
+        """
         list_of_details = []
         for student in Student.list_student():
             list_of_details.append(student.view_details())
@@ -14,6 +19,10 @@ class EmployeeController(UserController):
 
     @staticmethod
     def employee_session(user):
+        """
+        Run employee menu and session
+        :param user:
+        """
         session = EmployeeController(user)
         while True:
             view.View.employee_menu()
@@ -36,7 +45,7 @@ class EmployeeController(UserController):
 
             elif option == '0':
                 UserController.sign_out()
-                return
+                # return
             else:
                 print('Enter valid option.')
                 continue

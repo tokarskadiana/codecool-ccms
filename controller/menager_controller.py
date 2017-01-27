@@ -4,34 +4,73 @@ from model.mentor import Mentor
 from model.user import Employee
 import view
 
+
 class MenagerController(EmployeeController):
+    """
+
+    """
 
     def list_mentor(self):
+        """
+
+        :return:
+        """
         mentor_list = []
         for index, mentor in enumerate(Mentor.list_mentors()):
             mentor_list.append('{}. {}'.format(index + 1, mentor))
         return mentor_list
 
     def view_mentors_details(self, username):
+        """
+
+        :param username:
+        :return:
+        """
         for person in mentor.Mentor.mentors_list:
             if person.username == username:
                 mentor.Mentor.view_mentor_details(person, person.username)
 
     def edit_mentor(self, username, parameter, new_value):
+        """
+
+        :param username:
+        :param parameter:
+        :param new_value:
+        :return:
+        """
         for mentor in Mentor.list_mentors():
             if mentor.get_username() == username:
                 mentor.edit_mentor(parameter=new_value)
                 return '{} was edited.'.format(mentor)
     def add_mentor(self, first_name, last_name, password):
+        """
+
+        :param first_name:
+        :param last_name:
+        :param password:
+        :return:
+        """
         Mentor.add_mentor(password, first_name, last_name)
         return 'Mentor was added.'
 
     def add_assistant(self, first_name, last_name, password):
+        """
+
+        :param first_name:
+        :param last_name:
+        :param password:
+        :return:
+        """
         Employee.create(first_name, last_name, password)
         return 'Assistant was added.'
     # +remove_mentor(Mentor_obj:obj):str
     @staticmethod
     def remove_mentor(username):
+        """
+
+        :param username:
+        :return:
+        """
         for mentor in Mentor.list_mentors():
             if mentor.get_username() == username:
                 mentor.delete_mentor(username)
@@ -39,6 +78,11 @@ class MenagerController(EmployeeController):
 
     @staticmethod
     def manager_session(user):
+        """
+
+        :param user:
+        :return:
+        """
         session = MenagerController(user)
         while True:
             view.View.menager_menu()

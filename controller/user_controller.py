@@ -19,6 +19,12 @@ class UserController:
 
     @classmethod
     def log_in(cls, username, password):
+        """
+        This class method checking if username and password are correct for user
+        :param username: (str)
+        :param password: (str)
+        :return: user object
+        """
         users = [Mentor.list_mentors(),
                  Student.list_student(), Employee.list_employee(), Manager.list_manager()]
 
@@ -31,5 +37,8 @@ class UserController:
 
     @classmethod
     def sign_out(cls):
+        """
+        Saving data to file and exit the program
+        """
         DatabaseController.DatabaseToCSV()
         sys.exit()
