@@ -32,7 +32,7 @@ class User:
         """
         encoded_pwd = base64.encodebytes(password.encode())
         encoded_pwd = str(encoded_pwd)
-
+        print(encoded_pwd)
         return encoded_pwd
 
     @staticmethod
