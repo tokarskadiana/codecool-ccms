@@ -14,7 +14,7 @@ class Database(object):
     """
     This class represents Database connection/reading/saving
     """
-    default_path = 'data_base/' # default path to csv folder
+    default_path = 'data_base/'  # default path to csv folder
 
     @classmethod
     def create_user_from_csv(cls, filename, user_type=User):
@@ -27,13 +27,11 @@ class Database(object):
         file = cls.default_path + filename
         object_user_list = []
         with open(file, newline='') as csvfile:
-
             user_reader = csv.reader(csvfile, delimiter=',')
 
             for element in user_reader:
-                count_record += 1
                 temp_data = user_type(element[0], element[1], element[
-                                      2], element[3], element[4])
+                    2], element[3], element[4])
                 object_user_list.append(temp_data)
 
         return object_user_list
@@ -50,7 +48,6 @@ class Database(object):
         file = cls.default_path + filename
         with open(file, "w") as file:
             for record in table:
-
                 row = ','.join(cls.user_data(record))
                 file.write(row + "\n")
 
@@ -75,7 +72,6 @@ class Database(object):
         file = cls.default_path + filename
         object_assignment_list = []
         with open(file, newline='') as csvfile:
-
             assignment_reader = csv.reader(csvfile, delimiter=',')
 
             for element in assignment_reader:
@@ -98,7 +94,6 @@ class Database(object):
 
         with open(file, "w") as file:
             for record in table:
-
                 row = ','.join(cls.assignment_data_save(record))
                 file.write(row + "\n")
 
@@ -149,7 +144,6 @@ class Database(object):
             attendance_reader = csv.reader(csvfile, delimiter=',')
 
             for element in attendance_reader:
-                count_record += 1
 
                 temp_data = cls.attendance_data_read(element)
                 object_attendance_list.append(temp_data)
@@ -183,7 +177,6 @@ class Database(object):
         file = cls.default_path + filename
         with open(file, "w") as file:
             for record in table:
-
                 row = ','.join(cls.attendance_data_save(record))
                 file.write(row + "\n")
 
