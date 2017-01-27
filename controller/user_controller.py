@@ -21,8 +21,8 @@ class UserController:
     def log_in(cls, username, password):
         """
         This class method checking if username and password are correct for user
-        :param username: (str)
-        :param password: (str)
+        :param username: (str) store user name
+        :param password: (str) store user password
         :return: user object
         """
         users = [Mentor.list_mentors(),
