@@ -9,7 +9,8 @@ class EmployeeController(UserController):
     def list_students():
         """
         Create list of student with detail data
-        :return: (list) list of students details
+        Returns list of students.
+        :return (list): list of students objc
         """
         list_of_details = []
         for student in Student.list_student():
@@ -21,7 +22,7 @@ class EmployeeController(UserController):
     def employee_session(user):
         """
         Run employee menu and session
-        :param user:
+        :param user (objc): employee objc
         """
         session = EmployeeController(user)
         while True:

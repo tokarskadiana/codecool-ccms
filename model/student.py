@@ -56,7 +56,15 @@ class Student(User):
         return list_det
 
     def get_username(self):
+        """
+        Returns username of objc.
+        :return (str): username of objc
+        """
         return self.username
 
     def get_full_name(self):
+        """
+        Returns full name of objc.
+        :return (list): full name
+        """
         return [self.first_name, self.last_name]

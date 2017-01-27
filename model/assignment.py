@@ -37,7 +37,7 @@ class Assignment:
         '''
         Make new assignment and add it to assigment list.
 
-        Returns: str
+        Returns: boolean value
         '''
         assigment = cls(title, description, due_date, submit_list)
         cls.list_assignment.append(
@@ -124,9 +124,9 @@ class Assignment:
     @staticmethod
     def return_ass(number):
         """
-
-        :param number:
-        :return:
+        Return assignment objc by given index in list.
+        :param number: index of objc
+        :return: objc
         """
         for index, ass in enumerate(Assignment.list_assignment):
             if str(index) == number:

@@ -11,7 +11,10 @@ class DatabaseController:
 
     @staticmethod
     def DatabaseFromCSV():
+        """
 
+        :return:
+        """
         Manager.managers_list = Database.create_user_from_csv('manager1.csv',Manager)
         Mentor.mentors_list = Database.create_user_from_csv('mentors1.csv', Mentor)
         Employee.employee_list = Database.create_user_from_csv('employe1.csv', Employee)
@@ -21,6 +24,10 @@ class DatabaseController:
 
     @staticmethod
     def DatabaseToCSV():
+        """
+
+        :return:
+        """
         Database.save_user_to_csv('manager1.csv', Manager.managers_list)
         Database.save_user_to_csv('mentors1.csv', Mentor.mentors_list)
         Database.save_user_to_csv('employe1.csv', Employee.employee_list)

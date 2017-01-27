@@ -54,38 +54,34 @@ class User:
         print(decoded_pwd)
         return decoded_pwd
 
-    # DO WYWALENIA!?
-    # @classmethod
-    # def log_in(cls, username=None, password=None):
-    #     '''
-    #     Class method for
-    #     :param username:
-    #     :param password:
-    #     :return:
-    #     '''
-    #     from mentor import Mentor
-    #     from student import Student
-    #     from manager import Manager
-    #
-    #     users = [Mentor.mentors_list,
-    #              Student.list_of_students,
-    #              Employee.employee_list,
-    #              Manager.managers_list]
-    #
-    #     for list_of_users in users:
-    #         for person in list_of_users:
-    #             if username == person.username:
-    #                 if password == person.password:
-    #                     return person
-    #     return False
-    #
-    # @classmethod
-    # def sign_out(cls):
-    #     # save data to file
-    #     cls.log_in()
+
+    @classmethod
+    def log_in(cls, username=None, password=None):
+        """
+        Check if given username and password are in data base.
+        :param username (str): username
+        :param password (str): password
+        :return (objc): objc with given parameters
+        """
+        from mentor import Mentor
+        from student import Student
+        from manager import Manager
+
+        users = [Mentor.mentors_list,
+                 Student.list_of_students,
+                 Employee.employee_list,
+                 Manager.managers_list]
+
+        for list_of_users in users:
+            for person in list_of_users:
+                if username == person.username:
+                    if password == person.password:
+                        return person
+        return False
 
 
-class Employee(User):      # nie zapisuje nowego Employee do csv? (do csv1 zapisuje bez imienia)
+
+class Employee(User):
     """
     This class representing Employee class
     """
@@ -94,7 +90,14 @@ class Employee(User):      # nie zapisuje nowego Employee do csv? (do csv1 zapis
     @classmethod
     def create(cls, password, first_name, last_name, telephone='', mail=''):
         """
-        Create new employee user
+        Create new employee object
+        def create(cls, password, first_name, last_name, telephone=None, mail=None):
+
+        :param password (str):
+        :param first_name (str):
+        :param last_name (str):
+        :param telephone (str):
+        :param mail (str):
         """
         password_coded = cls.encodeBase64(password)
         empl = Employee(password_coded, first_name, last_name, telephone, mail)
@@ -104,6 +107,12 @@ class Employee(User):      # nie zapisuje nowego Employee do csv? (do csv1 zapis
     def add_employee(cls, password, first_name, last_name, telephone, mail):
         """
         Add new employee
+        Add employee objc.
+        :param password (str):
+        :param first_name (str):
+        :param last_name (str):
+        :param telephone (str):
+        :param mail (str):
         """
         e = Employee(password, first_name, last_name, telephone, mail)
         cls.employee_list.append(e)
