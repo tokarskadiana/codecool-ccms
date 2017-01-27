@@ -48,7 +48,6 @@ class StudentController(UserController):
                     return 'Your submit was added.'
         return 'Something went wrong, your submit wasn\'t added.'
 
-
     @staticmethod
     def student_session(user):
         session = StudentController(user)
@@ -67,7 +66,8 @@ class StudentController(UserController):
                 continue
             elif option == '3':
                 view.clear()
-                assignments_list = session.list_assignment_title_content(session.user.get_username())
+                assignments_list = session.list_assignment_title_content(
+                    session.user.get_username())
                 view.print_two_demention_list(assignments_list)
                 assignment_title = input('\nEnter assignment title to submit:')
                 content = input('Enter content of assignment:')

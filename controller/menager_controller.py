@@ -56,18 +56,23 @@ class MenagerController(EmployeeController):
                 list_mentors = session.list_mentor()
                 view.View.print_user_list(list_mentors)
                 if list_mentors:
-                    mentor_index = input('\nFor more details give the number of person or else to get back: ')
-                try:
-                    mentor_index = int(mentor_index)
-                    if mentor_index in range(len(list_mentors)):
-                        view.View.clear()
-                        view.View.show_user_details(session.view_mentors_details(mentor_index))
-                        input('\nPress any key to back:')
-                    else:
-                        print('Wrong number')
-                        continue
-                except ValueError:
-                    print('Enter a number')
+                    mentor_index = input(
+                        '\nFor more details give the number of person or else to get back: ')
+                    try:
+                        mentor_index = int(mentor_index)
+                        if mentor_index in range(len(list_mentors)):
+                            view.View.clear()
+                            view.View.show_user_details(
+                                session.view_mentors_details(mentor_index))
+                            input('\nPress any key to back:')
+                        else:
+                            print('Wrong number')
+                            continue
+                    except ValueError:
+                        print('Enter a number')
+                else:
+                    print('There no any empoyed mentor')
+                    input('\nPress any key to back:')
             elif option == '2':
                 view.View.clear()
                 first_name = input('Enter first name:')
@@ -93,7 +98,8 @@ class MenagerController(EmployeeController):
                     if mentor_index in range(len(list_mentors)):
                         parameter = input('Enter what you want to edit:')
                         new_value = input('Enter new value:')
-                        print(session.edit_mentor(mentor_index, parameter, new_value))
+                        print(session.edit_mentor(
+                            mentor_index, parameter, new_value))
                         back = input('\nEnter some key to get back:')
                     else:
                         print('Wrong number')
@@ -105,7 +111,8 @@ class MenagerController(EmployeeController):
                 list_mentors = session.list_mentor()
                 view.View.print_user_list(list_mentors)
                 if list_mentors:
-                    mentor_index = input('Enter mentor index which you want to remove:')
+                    mentor_index = input(
+                        'Enter mentor index which you want to remove:')
                 try:
                     mentor_index = int(mentor_index)
                     if mentor_index in range(len(list_mentors)):

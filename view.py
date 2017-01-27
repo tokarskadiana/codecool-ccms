@@ -100,11 +100,6 @@ class View:
             print('There is ampty.')
 
     @staticmethod
-    def display_assigments():
-        for index, ass in enumerate((Assignment.list_assignment)):
-            print('{} {} {}'.format(index, ass.title, ass.due_date))
-
-    @staticmethod
     def display_ass(number):
         details = MentorController.display_assignment(number)
         if details:

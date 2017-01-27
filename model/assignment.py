@@ -40,8 +40,7 @@ class Assignment:
         Returns: boolean value
         '''
         assigment = cls(title, description, due_date, submit_list)
-        cls.list_assignment.append(
-            cls(title, description, due_date, submit_list))
+        cls.list_assignment.append(assigment)
         if assigment in cls.list_assignment:
             return True
         return False
