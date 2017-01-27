@@ -7,7 +7,6 @@ class User:
     def __init__(self, password, first_name, last_name, telephone, mail):
         self.username = '{}.{}'.format(first_name, last_name)
         self.password = self.decodeBase64(password)
-        # self.password = password
         self.first_name = first_name
         self.last_name = last_name
         self.telephone = telephone

@@ -29,7 +29,7 @@ class EmployeeController(UserController):
                 user_index = input('\nFor more details give the number of person or else to get back: ')
                 try:
                     user_index = int(user_index)
-                    if user_index in range(len(student_list)+1):
+                    if user_index in range(len(student_list)):
                         view.View.clear()
                         view.View.show_user_details(session.view_details(user_index))
                         input('\nPress any key to back:')

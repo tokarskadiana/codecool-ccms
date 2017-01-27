@@ -68,24 +68,36 @@ class View:
 
     @staticmethod
     def show_user_details(user):
-        headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
-        print(tabulate([list(user)], headers, tablefmt="fancy_grid"))
+        if user:
+            headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
+            print(tabulate([list(user)], headers, tablefmt="fancy_grid"))
+        else:
+            print('There is ampty.')
 
     @staticmethod
     def print_assignment_grades(assignment_grades):
-        headers = ['Assiment', 'Grade']
-        print(tabulate(assignment_grades, headers,
-                       tablefmt="fancy_grid", stralign="center"))
+        if assignment_grades:
+            headers = ['Assiment', 'Grade']
+            print(tabulate(assignment_grades, headers,
+                           tablefmt="fancy_grid", stralign="center"))
+        else:
+            print('There is ampty.')
 
     @staticmethod
     def print_assignments_list(assignments_list):
-        headers = ['Title', 'Due_date', 'description']
-        print (tabulate(assignments_list, headers, tablefmt="fancy_grid"))
+        if assignments_list:
+            headers = ['Title', 'Due_date', 'description']
+            print (tabulate(assignments_list, headers, tablefmt="fancy_grid"))
+        else:
+            print('There is ampty.')
 
     @staticmethod
     def print_user_list(user_list):
-        headers = ['Index', 'First name', 'Last name', 'User name']
-        print (tabulate(user_list, headers, tablefmt="fancy_grid"))
+        if user_list:
+            headers = ['Index', 'First name', 'Last name', 'User name']
+            print (tabulate(user_list, headers, tablefmt="fancy_grid"))
+        else:
+            print('There is ampty.')
 
     @staticmethod
     def display_assigments():

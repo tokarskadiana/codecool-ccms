@@ -13,16 +13,18 @@ class MenagerController(EmployeeController):
             mentor_list.append([index] + str(mentor).split())
         return mentor_list
 
-    def view_mentors_details(self, username):
-        for mentor in Mentor.list_mentors():
-            if mentor.username == username:
-                return mentor.view_mentor_details()
+    def view_mentors_details(self, mentor_index):
+        return Mentor.list_mentors()[mentor_index].view_mentor_details()
 
-    def edit_mentor(self, username, parameter, new_value):
-        for mentor in Mentor.list_mentors():
-            if mentor.get_username() == username:
-                mentor.edit_mentor(parameter=new_value)
-                return '{} was edited.'.format(mentor)
+    def edit_mentor(self, mentor_index, parameter, new_value):
+        mentor = Mentor.list_mentors()[mentor_index]
+        if parameter == 'mail':
+            if mentor.edit_mentor(mail=new_value):
+                return '{} was edited.'.format(mentor.get_username())
+        if parameter == 'telephone':
+            if mentor.edit_mentor(telephone=new_value):
+                return '{} was edited.'.format(mentor.get_username())
+        return 'You dont edit mentor. Try again.'
 
     def add_mentor(self, first_name, last_name, password):
         Mentor.add_mentor(password, first_name, last_name)
@@ -33,11 +35,11 @@ class MenagerController(EmployeeController):
         return 'Assistant was added.'
 
     @staticmethod
-    def remove_mentor(username):
-        for mentor in Mentor.list_mentors():
-            if mentor.get_username() == username:
-                mentor.delete_mentor(username)
-                return '{} was deleted'.format(mentor)
+    def remove_mentor(mentor_index):
+        mentor = Mentor.list_mentors()[mentor_index]
+        if mentor.delete_mentor(mentor):
+            return 'Mentor was deleted'
+        return 'Mentor was\'t deleted'
 
     @staticmethod
     def manager_session(user):
@@ -48,14 +50,20 @@ class MenagerController(EmployeeController):
             if option == '1':
                 view.View.clear()
                 list_mentors = session.list_mentor()
-                view.View.print_mentors_list(list_mentors)
-                mentor = input('\nEnter mentor username to see details or x to get back:')
-                if mentor.lower() == 'x':
-                    pass
-                else:
-                    view.View.clear()
-                    view.View.show_user_details(session.view_mentors_details(mentor))
-                    back = input('\nEnter some key to get back:')
+                view.View.print_user_list(list_mentors)
+                if list_mentors:
+                    mentor_index = input('\nFor more details give the number of person or else to get back: ')
+                try:
+                    mentor_index = int(mentor_index)
+                    if mentor_index in range(len(list_mentors)):
+                        view.View.clear()
+                        view.View.show_user_details(session.view_mentors_details(mentor_index))
+                        input('\nPress any key to back:')
+                    else:
+                        print('Wrong number')
+                        continue
+                except ValueError:
+                    print('Enter a number')
             elif option == '2':
                 view.View.clear()
                 first_name = input('Enter first name:')
@@ -73,20 +81,37 @@ class MenagerController(EmployeeController):
             elif option == '4':
                 view.View.clear()
                 list_mentors = session.list_mentor()
-                view.View.print_mentors_list(list_mentors)
+                view.View.print_user_list(list_mentors)
                 view.View.edit_menu()
-                mentor = input('Enter user_name:')
-                parameter = input('Enter what you want to edit:')
-                new_value = input('Enter new value:')
-                print(session.edit_mentor(mentor, parameter, new_value))
-                back = input('\nEnter some key to get back:')
+                mentor_index = input('Enter mentor index:')
+                try:
+                    mentor_index = int(mentor_index)
+                    if mentor_index in range(len(list_mentors)):
+                        parameter = input('Enter what you want to edit:')
+                        new_value = input('Enter new value:')
+                        print(session.edit_mentor(mentor_index, parameter, new_value))
+                        back = input('\nEnter some key to get back:')
+                    else:
+                        print('Wrong number')
+                        continue
+                except ValueError:
+                    print('Enter a number')
             elif option == '5':
                 view.View.clear()
                 list_mentors = session.list_mentor()
-                view.View.print_mentors_list(list_mentors)
-                mentor = input('Enter mentors username you want to delete:')
-                print(session.remove_mentor(mentor))
-                back = input('\nEnter some key to get back:')
+                view.View.print_user_list(list_mentors)
+                if list_mentors:
+                    mentor_index = input('Enter mentor index which you want to remove:')
+                try:
+                    mentor_index = int(mentor_index)
+                    if mentor_index in range(len(list_mentors)):
+                        print(session.remove_mentor(mentor_index))
+                        back = input('\nEnter some key to get back:')
+                    else:
+                        print('Wrong number')
+                        continue
+                except ValueError:
+                    print('Enter a number')
             elif option == '0':
                 UserController.sign_out()
                 return
