@@ -8,8 +8,8 @@ class MenagerController(EmployeeController):
 
     def list_mentor(self):
         """
-
-        :return:
+        Returns list of mentors objc.
+        :return (list): list of mentors objc
         """
         mentor_list = []
         for index, mentor in enumerate(Mentor.list_mentors()):
@@ -17,6 +17,11 @@ class MenagerController(EmployeeController):
         return mentor_list
 
     def view_mentors_details(self, username):
+        """
+
+        :param username:
+        :return:
+        """
         for person in mentor.Mentor.mentors_list:
             if person.username == username:
                 mentor.Mentor.view_mentor_details(person, person.username)
