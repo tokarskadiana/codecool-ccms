@@ -36,6 +36,9 @@ class Database(object):
 
         return object_user_list
 
+    def __str__(self, *args, **kwargs):
+        return super().__str__(*args, **kwargs)
+
     @classmethod
     def save_user_to_csv(cls, filename, table):
         """
