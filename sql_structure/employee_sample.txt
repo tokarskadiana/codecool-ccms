@@ -1,3 +1,3 @@
-INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES (mateusz,ostafil,b'a2tr\n,123123123,mateusz@ostafil.pl,mateusz.ostafil,10000,mentor);
-INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES (jurek,mardaus,b'a2tr\n,123123123,jurek@mardaus.pl,jurek.mardaus,100000,manager);
-INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES (miriam,miriam,b'a2tr\n,123123123,miriam@miriam.pl,miriam.miriam,5000,employee);
+INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES ("mateusz","ostafil","b'a2tr\n","123123123","mateusz@ostafil.pl","mateusz.ostafil","10000","mentor");
+INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES ("jurek","mardaus","b'a2tr\n","123123123","jurek@mardaus.pl","jurek.mardaus","100000","manager");
+INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES ("miriam","miriam","b'a2tr\n","123123123","miriam@miriam.pl","miriam.miriam","5000","employee");
