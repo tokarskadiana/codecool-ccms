@@ -11,8 +11,9 @@ class EmployeeController(UserController):
         :return (list): list of students objc
         """
         list_student = []
-        for index, student in enumerate(Student.list_student()):
-            list_student.append([index]+str(student).split())
+        if Student.list_student():
+            for index, student in enumerate(Student.list_student()):
+                list_student.append([index]+str(student).split())
         return list_student
 
     def view_details(self, stud_index):

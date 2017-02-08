@@ -77,8 +77,8 @@ class MentorController(EmployeeController):
 
             elif option == '2':
                 view.View.clear()
-                title = input('Enter assignment itle: ')
-                description = input('Enter assignment description')
+                title = input('Enter assignment title: ')
+                description = input('Enter assignment description: ')
                 due_date = input('Enter assignment due date:')
                 if session.add_assiment(title, description, due_date):
                     print('Assignment was added.')
@@ -95,12 +95,14 @@ class MentorController(EmployeeController):
                 if details:
                     view.View.print_two_demention_list(details)
                     title = details[0]
-                    u_name = input('Select username:')
-                    grade = input('Enter grade:')
+                    u_name = input('\nSelect username:')
+                    grade = input('\nEnter grade:')
                     if session.grade_assignment(title, u_name, grade):
                         print('You grade assigment.')
+                        input('\nEnter some key to get back:')
                     else:
                         print('There is no student with given username.')
+                        input('\nEnter some key to get back:')
 
             elif option == '4':
                 view.View.clear()
@@ -112,7 +114,7 @@ class MentorController(EmployeeController):
 
             elif option == '5':
                 view.View.clear()
-                view.View.display_students(student.Student.list_of_students)
+                view.View.print_user_list(student.Student.list_of_students)
                 number = input('Select number of student: ')
                 telephone = input('Telephone: ')
                 mail = input('Mail: ')
@@ -121,16 +123,16 @@ class MentorController(EmployeeController):
 
             elif option == '6':
                 view.View.clear()
-                view.View.display_students(Student.list_of_students)
+                view.View.print_user_list(Student.list_of_students)
                 number = input('number of student: ')
                 session.remove_student(number)
                 input('\nEnter some key to get back:')
 
             elif option == '7':
-                if not view.View.display_static_present(session.view_presence_statistic()):
-                    print('No statistics yet.')
-                else:
-                    view.View.display_static_present(session.view_presence_statistic())
+                view.View.clear()
+                view.View.display_static_present(session.view_presence_statistic())
+                input('\nEnter some key to get back:')
+
             elif option == '0':
                 UserController.sign_out()
                 return

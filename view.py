@@ -100,40 +100,20 @@ class View:
             print('There is ampty.')
 
     @staticmethod
-    def display_ass(number):
-        details = MentorController.display_assignment(number)
-        if details:
-            for content in details:
-                print('{} {} {} {}'.format(
-                    content[0], content[1], content[2], content[3]))
-                return True
-
-    @staticmethod
-    def display_students(students_list):
-        for index, student in enumerate(students_list):
-            print('{} {} {}'.format(index, student.first_name, student.last_name))
-
-    @staticmethod
     def display_static_present(list_stat):
         if list_stat:
             for key, value in list_stat.items():
                 print('{} {}'.format(key, value))
+        else:
+            print('No statistics yet.')
 
     @staticmethod
     def edit_menu():
         print('''
         You can edit following parameters:
-            - telephone
-            - mail
+            1. telephone
+            2. mail
         ''')
-
-    @staticmethod
-    def show_full_name(user_list):
-        View.clear()
-        n = 0
-        for user in user_list:
-            n += 1
-            print('{}. {} {}'.format(n, user[0], user[1]))
 
     @staticmethod
     def print_two_demention_list(printed_list):

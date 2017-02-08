@@ -30,10 +30,10 @@ class StudentController(UserController):
         student_assignment_grade = []
         for assignment in Assignment.get_list():
             grade = assignment.list_assignment_grades(self.user.get_username())
-            if not grade[1]:
-                grade[1] = '---'
-
-            student_assignment_grade.append(grade)
+            if grade:
+                if not grade[1]:
+                    grade[1] = '---'
+                student_assignment_grade.append(grade)
         return student_assignment_grade
 
     def submit_assignment(self, assignment_title, content):

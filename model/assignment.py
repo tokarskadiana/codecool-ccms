@@ -1,6 +1,5 @@
 from model.student import Student
 from model.submit import Submition
-# from create_data import Database
 
 
 class Assignment:
@@ -123,14 +122,3 @@ class Assignment:
             if submit.get_student_username() == student_username:
                 return [self.title, submit.get_grade()]
         return None
-
-    @staticmethod
-    def return_ass(number):
-        """
-        Return assignment objc by given index in list.
-        :param number: index of objc
-        :return: objc
-        """
-        for index, ass in enumerate(Assignment.list_assignment):
-            if str(index) == number:
-                return ass
