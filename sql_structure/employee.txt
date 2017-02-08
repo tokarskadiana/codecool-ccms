@@ -1,4 +1,4 @@
-CREATE TABLE employee
+CREATE TABLE IF NOT EXISTS employee
 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -10,4 +10,3 @@ CREATE TABLE employee
     salary INT,
     position TEXT
 );
-INSERT INTO employee (first_name,last_name,password,tel,mail,user_name,salary, position) VALUES (mateusz,ostafil,b'a2tr\n,123123123,mateusz@ostafil.pl,mateusz.ostafil,10000,mentor);

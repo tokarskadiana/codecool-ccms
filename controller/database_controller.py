@@ -28,17 +28,21 @@ class DatabaseController:
     @staticmethod
     def createSqlDatabase():
         sql_student = Database.readSqlTxt('student.txt')
-        # sql_ = Database.readSqlTxt('student.txt')
-        # sql_student = Database.readSqlTxt('student.txt')
-        # sql_student = Database.readSqlTxt('student.txt')
-
-
+        sql_assiment = Database.readSqlTxt('assiment.txt')
+        sql_checkpoint = Database.readSqlTxt('checkpoint.txt')
+        sql_employee = Database.readSqlTxt('employee.txt')
+        sql_submition = Database.readSqlTxt('submition.txt')
+        sql_attendance = Database.readSqlTxt('attendence.txt')
+        sql_team = Database.readSqlTxt('team.txt')
         conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
-        sql_student = Database.readSqlTxt('student.txt')
         cursor.execute(sql_student)
-
-
+        cursor.execute(sql_assiment)
+        cursor.execute(sql_attendance)
+        cursor.execute(sql_checkpoint)
+        cursor.execute(sql_employee)
+        cursor.execute(sql_submition)
+        cursor.execute(sql_team)
 
     @staticmethod
     def DatabaseToCSV():

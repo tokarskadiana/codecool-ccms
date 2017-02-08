@@ -1,4 +1,4 @@
-CREATE TABLE submition(
+CREATE TABLE IF NOT EXISTS submition(
    ID INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,
    assignment_id           INT    NOT NULL,
    student_id           INT    NOT NULL,
