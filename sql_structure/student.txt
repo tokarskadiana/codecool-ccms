@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS student(
    tel        TEXT,
    mail        TEXT,
    username    TEXT,
-   team_id       INT
+   team_id       INT,
+   UNIQUE(username)
 );

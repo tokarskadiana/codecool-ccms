@@ -56,17 +56,18 @@ class DatabaseController:
         :return:
         """
         sample_employee = Database.readSQLTxtLines('employee_sample.txt')
-        # sample_student = Database.readSQLTxtLines('student_sample.txt')
-        # samples = [sample_employee, sample_student]
-        # conn = sqlite3.connect('codecool.sqlite')
-        # cursor = conn.cursor()
-        # cursor.execute('''''')
-        #
-        # for sample_list in samples:
-        #     for task in sample_list:
-        #         cursor.execute(task)
-        #
-        # cursor.close()
+        sample_student = Database.readSQLTxtLines('student_sample.txt')
+        samples = [sample_employee, sample_student]
+        conn = sqlite3.connect('codecool.sqlite')
+        cursor = conn.cursor()
+        for sample_list in samples:
+            for task in sample_list:
+                print(task)
+                cursor.execute(task)
+        conn.commit()
+        cursor.close()
+
+
 
     @staticmethod
     def DatabaseToCSV():
@@ -83,5 +84,3 @@ class DatabaseController:
         Database.save_attendance_to_csv(
             'attendance1.csv', Attendance.list_of_attendance)
 
-
-DatabaseController.sample_data()

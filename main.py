@@ -18,6 +18,10 @@ def main():
     DatabaseController.createSqlDatabase()
     DatabaseController.DatabaseFromCSV()
 
+    DatabaseController.sample_data()
+    DatabaseController.sample_data()
+    DatabaseController.sample_data()
+
     log_in_input = view.main_menu()
     username = log_in_input[0]
     password = log_in_input[1]
