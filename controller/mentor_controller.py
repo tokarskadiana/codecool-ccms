@@ -17,11 +17,24 @@ class MentorController(EmployeeController):
         return assignment_list
 
     def add_assiment(self, title, description, due_date):
+        """
+        Add assignment object to the list of assignments
+        :param title: store of title of assignment object
+        :param description: store of description of assignment object
+        :param due_date: store of due date of assignment object
+        """
         if Assignment.create(title, description, due_date):
             return True
         return False
 
     def grade_assignment(self, assiment_title, student_username, grade):
+        """
+        Grade student assignment submission
+        :param assiment_title: (str) title of assignment
+        :param student_username: (str) student user name
+        :param grade: (str) grade
+        :return: (str)
+        """
         for assiment in Assignment.get_list():
             if assiment.get_title() == assiment_title:
                 try:
@@ -32,6 +45,10 @@ class MentorController(EmployeeController):
 
     @staticmethod
     def check_attendence(day):
+        """
+        Check presence of students for given day
+        :param day: (str) store date of given day
+        """
         atta = attendance.Attendance(day, {})
         for person in student.Student.list_of_students:
             print('{} {}'.format(person.first_name, person.last_name))
@@ -43,19 +60,40 @@ class MentorController(EmployeeController):
         atta.add()
 
     def add_student(self, first_name, last_name, password):
+        """
+        Use student method to create student object
+        :param first_name: store of first name of Student object
+        :param last_name: store of last name of Student object
+        :param password: store of password of Student object
+        """
         student.Student.add_student(password, first_name, last_name)
 
     def edit_student(self, number, telep, mai):
+        """
+        Edit student details to change/add phone number and e-mail
+        :param number: store of number of Student object on the list
+        :param telep: store of phone number of Student object
+        :param mai: store of e-mail address of Student object
+        """
         for index, stu in enumerate(student.Student.list_of_students):
             if str(index) == number:
                 stu.edit_student(telephone=telep, mail=mai)
 
     def remove_student(self, number):
+
+        """
+        Remove student form a list of students
+        :param number: store of number of Student object on the list
+        """
         for index, stu in enumerate(student.Student.list_of_students):
             if str(index) == number:
                 student.Student.delete_student(stu.username)
 
     def view_presence_statistic(self):
+        """
+          Calculate overall present for each student.
+          :return (dict): SAMPLE DICT {'patrycja': '100', 'przemek': '50'}
+          """
         return attendance.Attendance.present_statistic()
 
     def view_details(self, number):
@@ -66,6 +104,10 @@ class MentorController(EmployeeController):
 
     @staticmethod
     def mentor_session(user):
+        """
+        Run mentor menu session
+        :param user: mentor user object
+        """
         session = MentorController(user)
         while True:
             view.View.mentor_menu()
@@ -132,10 +174,8 @@ class MentorController(EmployeeController):
                 view.View.clear()
                 view.View.display_static_present(session.view_presence_statistic())
                 input('\nEnter some key to get back:')
-
             elif option == '0':
                 UserController.sign_out()
                 return
             else:
-                print('Enter valid option.')
                 continue

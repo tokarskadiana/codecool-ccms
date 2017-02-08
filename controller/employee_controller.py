@@ -7,6 +7,7 @@ class EmployeeController(UserController):
 
     def list_students(self):
         """
+        Create list of student with detail data
         Returns list of students.
         :return (list): list of students objc
         """
@@ -24,7 +25,7 @@ class EmployeeController(UserController):
     @staticmethod
     def employee_session(user):
         """
-        Start employee menu.
+        Run employee menu and session
         :param user (objc): employee objc
         """
         session = EmployeeController(user)
@@ -44,16 +45,14 @@ class EmployeeController(UserController):
                             view.View.show_user_details(session.view_details(user_index))
                             input('\nPress any key to back:')
                         else:
-                            print('Wrong number')
                             continue
                     except ValueError:
-                        print('Enter a number')
+                        continue
                 else:
                     print('There no any student yet.')
                     input('\nPress any key to back:')
 
             elif option == '0':
                 UserController.sign_out()
-                return
             else:
                 continue

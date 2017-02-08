@@ -1,7 +1,7 @@
 from model.mentor import Mentor
 from model.student import Student
 from model.manager import Manager
-from model.user import Employee
+from model.employee import Employee
 from controller.database_controller import DatabaseController
 
 import sys
@@ -19,6 +19,12 @@ class UserController:
 
     @classmethod
     def log_in(cls, username, password):
+        """
+        This class method checking if username and password are correct for user
+        :param username: (str) store user name
+        :param password: (str) store user password
+        :return: user object
+        """
         users = [Mentor.list_mentors(),
                  Student.list_student(), Employee.list_employee(), Manager.list_manager()]
 
@@ -31,5 +37,8 @@ class UserController:
 
     @classmethod
     def sign_out(cls):
+        """
+        Saving data to file and exit the program
+        """
         DatabaseController.DatabaseToCSV()
         sys.exit()
