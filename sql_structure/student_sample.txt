@@ -1,2 +1,2 @@
-INSERT INTO table_name (first_name,last_name,password,tel,mail,username,team_id) VALUES ("piotr,gurdek,"b'a2tr\n,666666666,pgurdek@dupa.pl,piotr.gurdek,1);
-INSERT INTO table_name (first_name,last_name,password,tel,mail,username,team_id) VALUES (monika,plocica,b'a2tr\n,333333666,monika@dupa.pl,monika.plocica,1);
+INSERT INTO student (first_name,last_name,password,tel,mail,username,team_id) VALUES ("piotr","gurdek","b'a2tr\n","666666666","pgurdek@dupa.pl","piotr.gurdek",1);
+INSERT INTO student (first_name,last_name,password,tel,mail,username,team_id) VALUES ("monika","plocica","b'a2tr\n","333333666","monika@dupa.pl","monika.plocica",1);

@@ -15,7 +15,7 @@ class Database(object):
     This class represents Database connection/reading/saving
     """
     default_path = 'data_base/'  # default path to csv folder
-
+    sql_path = 'sql_structure/'
     @classmethod
     def create_user_from_csv(cls, filename, user_type=User):
         """
@@ -35,6 +35,24 @@ class Database(object):
                 object_user_list.append(temp_data)
 
         return object_user_list
+
+    @classmethod
+    def readSqlTxt(cls, filename):
+        """
+        Class method  for reading csv file and create list of users objects
+        :param filename: file name csv
+        :user_type : type of User
+        :return: List of Objects
+        """
+        file = cls.sql_path + filename
+        with open(file, newline='') as fileSql:
+
+            sql_output  = fileSql.read()
+
+        return sql_output
+
+
+
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)

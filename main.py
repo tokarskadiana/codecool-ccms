@@ -15,6 +15,7 @@ from view import View as view
 
 
 def main():
+    DatabaseController.createSqlDatabase()
     DatabaseController.DatabaseFromCSV()
 
     log_in_input = view.main_menu()
