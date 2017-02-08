@@ -60,11 +60,11 @@ class DatabaseController:
         samples = [sample_employee, sample_student]
         conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
-        cursor.execute('''''')
-
-            for sample_list in samples:
-                for task in sample_list:
-                    cursor.execute(task)
+        for sample_list in samples:
+            for task in sample_list:
+                print(task)
+                cursor.execute(task)
+        conn.commit()
         cursor.close()
 
 

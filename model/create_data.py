@@ -59,7 +59,7 @@ class Database(object):
         :return:
         """
         file = cls.sql_path + filename
-        with open(file, newline='') as fileSql:
+        with open(file) as fileSql:
 
             sql_output  = fileSql.readlines()
 
