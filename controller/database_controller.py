@@ -7,6 +7,7 @@ from model.assignment import Assignment
 from model.attendance import Attendance
 import sqlite3
 
+
 class DatabaseController:
     """Class which control database save/read"""
 
@@ -16,7 +17,6 @@ class DatabaseController:
         Initialize database for CCmS
         :return:
         """
-
 
         Manager.managers_list = Database.create_user_from_csv('manager1.csv', Manager)
         Mentor.mentors_list = Database.create_user_from_csv('mentors1.csv', Mentor)
@@ -56,18 +56,17 @@ class DatabaseController:
         :return:
         """
         sample_employee = Database.readSQLTxtLines('employee_sample.txt')
-        sample_student = Database.readSQLTxtLines('student_sample.txt')
-        samples = [sample_employee, sample_student]
-        conn = sqlite3.connect('codecool.sqlite')
-        cursor = conn.cursor()
-        cursor.execute('''''')
-
-            for sample_list in samples:
-                for task in sample_list:
-                    cursor.execute(task)
-        cursor.close()
-
-
+        # sample_student = Database.readSQLTxtLines('student_sample.txt')
+        # samples = [sample_employee, sample_student]
+        # conn = sqlite3.connect('codecool.sqlite')
+        # cursor = conn.cursor()
+        # cursor.execute('''''')
+        #
+        # for sample_list in samples:
+        #     for task in sample_list:
+        #         cursor.execute(task)
+        #
+        # cursor.close()
 
     @staticmethod
     def DatabaseToCSV():
@@ -84,3 +83,5 @@ class DatabaseController:
         Database.save_attendance_to_csv(
             'attendance1.csv', Attendance.list_of_attendance)
 
+
+DatabaseController.sample_data()
