@@ -1,0 +1,10 @@
+CREATE TABLE checkpoint
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+    student_id INTEGER
+    date TEXT
+    CONSTRAINT chk_date CHECK (date IN ('____-__-__'))
+    card INTEGER
+    CONSTRAINT chk_card CHECK (date IN (0, 1, 2))
+    mentor_id INTEGER
+);
