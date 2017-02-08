@@ -51,6 +51,19 @@ class Database(object):
 
         return sql_output
 
+    @classmethod
+    def readSQLTxtLines(cls, filename):
+        """
+
+        :param filename:
+        :return:
+        """
+        file = cls.sql_path + filename
+        with open(file, newline='') as fileSql:
+
+            sql_output  = fileSql.readlines()
+
+        return sql_output
 
 
 

@@ -27,6 +27,10 @@ class DatabaseController:
 
     @staticmethod
     def createSqlDatabase():
+        """
+
+        :return:
+        """
         sql_student = Database.readSqlTxt('student.txt')
         sql_assiment = Database.readSqlTxt('assiment.txt')
         sql_checkpoint = Database.readSqlTxt('checkpoint.txt')
@@ -43,6 +47,27 @@ class DatabaseController:
         cursor.execute(sql_employee)
         cursor.execute(sql_submition)
         cursor.execute(sql_team)
+        cursor.close()
+
+    @staticmethod
+    def sample_data():
+        """
+
+        :return:
+        """
+        sample_employee = Database.readSQLTxtLines('employee_sample.txt')
+        sample_student = Database.readSQLTxtLines('student_sample.txt')
+        samples = [sample_employee, sample_student]
+        conn = sqlite3.connect('codecool.sqlite')
+        cursor = conn.cursor()
+        cursor.execute('''''')
+
+            for sample_list in samples:
+                for task in sample_list:
+                    cursor.execute(task)
+        cursor.close()
+
+
 
     @staticmethod
     def DatabaseToCSV():
@@ -58,3 +83,4 @@ class DatabaseController:
             'assigment1.csv', Assignment.list_assignment)
         Database.save_attendance_to_csv(
             'attendance1.csv', Attendance.list_of_attendance)
+
