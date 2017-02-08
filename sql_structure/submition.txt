@@ -1,0 +1,9 @@
+CREATE TABLE submition(
+   ID INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,
+   assignment_id           INT    NOT NULL,
+   student_id           INT    NOT NULL,
+   content           TEXT    NOT NULL,
+   grade           INT    NOT NULL,
+   update_data       TEXT   NOT NULL,
+   mentor_id        INT
+);
