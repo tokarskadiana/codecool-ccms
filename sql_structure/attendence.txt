@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS attendance
     date TEXT
     CONSTRAINT chk_date CHECK (date IN ('____-__-__')),
     status INTEGER
-    CONSTRAINT chk_status CHECK (date IN (1, 2, 3))
+    CONSTRAINT chk_status CHECK (status IN (1, 2, 3))
 );

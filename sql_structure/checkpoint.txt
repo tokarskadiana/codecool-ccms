@@ -5,6 +5,6 @@ CREATE TABLE IF NOT EXISTS checkpoint
     date TEXT
     CONSTRAINT chk_date CHECK (date IN ('____-__-__')),
     card INTEGER
-    CONSTRAINT chk_card CHECK (date IN (0, 1, 2)),
+    CONSTRAINT chk_card CHECK (card IN (0, 1, 2)),
     mentor_id INTEGER
 );

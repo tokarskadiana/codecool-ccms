@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS assignment
     CONSTRAINT chk_due_date CHECK (date IN ('____-__-__')),
     mentor_id INTEGER,
     type TEXT
-    CONSTRAINT chk_type CHECK (date IN ('group', 'individual'))
+    CONSTRAINT chk_type CHECK (type IN ('group', 'individual'))
 );
