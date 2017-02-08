@@ -9,4 +9,5 @@ CREATE TABLE IF NOT EXISTS employee
     user_name TEXT,
     salary INT,
     position TEXT
+    CONSTRAINT chk_position CHK (position IN ('manager', 'employee', 'mentor')
 );
