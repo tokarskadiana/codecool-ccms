@@ -9,7 +9,6 @@ from .user_controller import UserController
 
 
 class MentorController(EmployeeController):
-
     def list_assignment(self):
         assignment_list = []
         for assignment in Assignment.get_list():
@@ -180,6 +179,11 @@ class MentorController(EmployeeController):
                 view.View.clear()
                 team_list = user.list_teams()
                 view.View.showTeams(team_list)
+                input('\nEnter some key to get back:')
+            elif option == '10':
+                view.View.clear()
+                user.list_teams()
+                user.addOrRemoveTeam()
                 input('\nEnter some key to get back:')
             elif option == '0':
                 UserController.sign_out()

@@ -89,4 +89,16 @@ class Mentor(Employee):
 
     @staticmethod
     def list_teams():
+
         return SqlRequest.sql_request('SELECT * from team')
+
+    @staticmethod
+    def addOrRemoveTeam():
+        option = input('What u want to do 1 for add 2 for delete other command leave,')
+
+        if option == '1':
+            teamName = input('Name of Team to add')
+            SqlRequest.sql_request('INSERT OR IGNORE INTO team (name) VALUES("{}")'.format(teamName))
+        elif option == '2':
+            teamName = input('Index of Team to delete')
+            SqlRequest.sql_request('DELETE FROM team WHERE id ="{}"'.format(teamName))
