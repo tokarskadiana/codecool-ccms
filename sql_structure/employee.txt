@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS employee
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    password TEXT,
+    tel TEXT,
+    mail TEXT,
+    user_name TEXT,
+    salary INT,
+    position TEXT
+    CONSTRAINT chk_position CHECK (position IN ('manager', 'employee', 'mentor')),
+    UNIQUE(user_name)
+);

@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS attendance
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id,
+    date TEXT
+    CONSTRAINT chk_date CHECK (date IN ('____-__-__')),
+    status INTEGER
+    CONSTRAINT chk_status CHECK (status IN (1, 2, 3))
+);

@@ -1,3 +1,4 @@
+import sqlite3
 from model.user import User
 from model.employee import Employee
 from model.mentor import Mentor
@@ -7,6 +8,7 @@ from model.assignment import Assignment
 from model.submit import Submition
 from model.attendance import Attendance
 
+
 import csv
 
 
@@ -15,7 +17,7 @@ class Database(object):
     This class represents Database connection/reading/saving
     """
     default_path = 'data_base/'  # default path to csv folder
-
+    sql_path = 'sql_structure/'
     @classmethod
     def create_user_from_csv(cls, filename, user_type=User):
         """
@@ -35,6 +37,37 @@ class Database(object):
                 object_user_list.append(temp_data)
 
         return object_user_list
+
+    @classmethod
+    def readSqlTxt(cls, filename):
+        """
+        Class method  for reading csv file and create list of users objects
+        :param filename: file name csv
+        :user_type : type of User
+        :return: List of Objects
+        """
+        file = cls.sql_path + filename
+        with open(file, newline='') as fileSql:
+
+            sql_output  = fileSql.read()
+
+        return sql_output
+
+    @classmethod
+    def readSQLTxtLines(cls, filename):
+        """
+
+        :param filename:
+        :return:
+        """
+        file = cls.sql_path + filename
+        with open(file) as fileSql:
+
+            sql_output  = fileSql.readlines()
+
+        return sql_output
+
+
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)
@@ -196,3 +229,17 @@ class Database(object):
             attendance.append(value)
 
         return attendance
+
+    @staticmethod
+    def sql_request(query):
+        """
+        Return list of tuples from given query.
+        :param query:
+        :return:
+        """
+        conn = sqlite3.connect('../codecool.sqlite')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+        conn.close()
+        return data

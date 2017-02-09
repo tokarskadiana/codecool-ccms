@@ -12,9 +12,16 @@ from controller.employee_controller import EmployeeController
 
 
 def main():
+    DatabaseController.createSqlDatabase()
     DatabaseController.DatabaseFromCSV()
 
+
     log_in_input = View.main_menu()
+
+    DatabaseController.sample_data()
+    DatabaseController.sample_data()
+    DatabaseController.sample_data()
+
     username = log_in_input[0]
     password = log_in_input[1]
     user = UserController.log_in(username, password)
