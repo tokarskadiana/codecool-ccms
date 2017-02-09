@@ -39,10 +39,11 @@ class Attendance:
         Add Attendance objc to list_of_attendance.
         """
         for student in self.student_presence.keys():
-            request_id = 'SELECT id FROM student WHERE username="{}"'.format(
-                student)
-            request = 'INSERT INTO attendance (student_id, "date", status) VALUES ({},"{}",{})'.format(
-                int(request_id[0][0]), self.date, int(self.student_presence[student]))
+            request_id = SqlRequest.sql_request('SELECT id FROM student WHERE username="{}"'.format(
+                student))
+
+            request = 'INSERT INTO attendance (student_id, "date", status) VALUES ("{}","{}","{}")'.format(
+                request_id[0][0], self.date, self.student_presence[student])
             SqlRequest.sql_request(request)
 
     @staticmethod
@@ -55,18 +56,18 @@ class Attendance:
 
         request = 'SELECT student_id, status FROM attendance'
         stats = SqlRequest.sql_request(request)
+        if stats:
+            for pers_stat in stats:
+                request_s = 'SELECT first_name, last_name FROM student WHERE ID="{}"'.format(pers_stat[
+                                                                                             0])
+                output = SqlRequest.sql_request(request_s)
+                full_name = output[0][1] + ' ' + output[0][1]
+                if full_name in percent_of_presence.keys():
+                    percent_of_presence[full_name] += pers_stat[1]
+                else:
+                    percent_of_presence[full_name] = pers_stat[1]
 
-        for pers_stat in stats:
-            request_s = 'SELECT first_name, last_name FROM student WHERE ID="{}"'.format(pers_stat[
-                                                                                         0])
-            output = SqlRequest.sql_request(request_s)
-            full_name = output[0][1] + ' ' + output[0][1]
-            if full_name in percent_of_presence.keys():
-                percent_of_presence[full_name] += pers_stat[1]
-            else:
-                percent_of_presence[full_name] = pers_stat[1]
-
-        for person, value in percent_of_presence.items():
-            percent_of_presence[person] = (value / len(stats)) * 100
+            for person, value in percent_of_presence.items():
+                percent_of_presence[person] = (value / len(stats)) * 100
 
         return percent_of_presence

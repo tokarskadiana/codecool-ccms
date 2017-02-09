@@ -36,7 +36,6 @@ class Student(User):
         #     if key:
         #         if key in self.__dict__.keys():
         #             self.__dict__[key] = value
-
         query = ('UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
         SqlRequest.sql_request(query)
 
