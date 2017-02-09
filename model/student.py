@@ -27,7 +27,7 @@ class Student(User):
 
 
     @staticmethod
-    def edit_student(index, mail, telephone):
+    def edit_student(index, mail, telephone, team):
         """
         Edit student attr.
         :param kwargs: name of attr and value of it
@@ -36,8 +36,7 @@ class Student(User):
         #     if key:
         #         if key in self.__dict__.keys():
         #             self.__dict__[key] = value
-
-        query = ('UPDATE student SET mail="{}", telephone="{}" WHERE id={}'.format(mail, telephone, index))
+        query = ('UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
         SqlRequest.sql_request(query)
 
 
@@ -61,7 +60,7 @@ class Student(User):
         :return (list): list of students
         """
         list_of_students = []
-        query = ('SELECT id, first_name,last_name, username, mail, telephone FROM student')
+        query = ('SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student')
         data = SqlRequest.sql_request(query)
 
         # for row in data:
