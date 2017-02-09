@@ -50,8 +50,8 @@ class Student(User):
             if username == stu.username:
                 Student.list_of_students.remove(stu)
 
-        # query = ('DELETE FROM student WHERE username={}'.format(username))
-        # SqlRequest.sql_request(query)
+        query = ('DELETE FROM student WHERE username={}'.format(username))
+        SqlRequest.sql_request(query)
 
 
     @staticmethod
