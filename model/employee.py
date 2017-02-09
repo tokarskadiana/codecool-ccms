@@ -1,5 +1,5 @@
 from model.user import User
-
+from model.sqlRequest import SqlRequest
 
 class Employee(User):
     """
@@ -9,7 +9,7 @@ class Employee(User):
 
 
     @classmethod
-    def add_employee(cls, password, first_name, last_name, telephone, mail):
+    def add_employee(cls, password, first_name, last_name, telephone="", mail=""):
         """
         Add new employee
         Add employee objc.

@@ -69,7 +69,7 @@ class Mentor(Employee):
         mentorSqlList = SqlRequest.sql_request(query)
         mentorObjectList = []
         for element in mentorSqlList:
-            mentorObject = cls(element[3],element[1],element[2])
+            mentorObject = cls(element[3],element[1],element[2],element[4],element[5])
             mentorObjectList.append(mentorObject)
         return mentorObjectList
 
@@ -86,3 +86,7 @@ class Mentor(Employee):
         :return (str): username of objc
         """
         return self.username
+
+    @staticmethod
+    def list_teams():
+        return SqlRequest.sql_request('SELECT * from team')

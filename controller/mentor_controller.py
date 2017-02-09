@@ -176,6 +176,11 @@ class MentorController(EmployeeController):
                 view.View.clear()
                 view.View.display_static_present(session.view_presence_statistic())
                 input('\nEnter some key to get back:')
+            elif option == '8':
+                view.View.clear()
+                team_list = user.list_teams()
+                view.View.showTeams(team_list)
+                input('\nEnter some key to get back:')
             elif option == '0':
                 UserController.sign_out()
                 return
