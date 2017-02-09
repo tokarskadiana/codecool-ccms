@@ -16,17 +16,17 @@ class MentorController(EmployeeController):
             assignment_list.append(str(assignment).split())
         return assignment_list
 
-    def add_assiment(self, title, description, user_name, due_date):
+    def add_assiment(self, title, description, type, due_date):
         """
         Add assignment object to the list of assignments
         :param title: store of title of assignment object
         :param description: store of description of assignment object
         :param due_date: store of due date of assignment object
         """
+        if not due_date:
+            due_date = 'No due date'
         user_name = self.user.get_username()
-        if Assignment.create(title, description, user_name, due_date):
-            return True
-        return False
+        Assignment.create(title, description, type, user_name, due_date)
 
     def grade_assignment(self, assiment_title, student_username, grade):
         """
@@ -38,11 +38,9 @@ class MentorController(EmployeeController):
         """
         for assiment in Assignment.get_list():
             if assiment.get_title() == assiment_title:
-                try:
-                    if assiment.grade_assigment(student_username, grade):
-                        return True
-                except:
-                    return False
+                if assiment.grade_assigment(self.user.get_username(), student_username, grade):
+                    return True
+        return False
 
     @staticmethod
     def check_attendence(day):
@@ -100,7 +98,7 @@ class MentorController(EmployeeController):
         return attendance.Attendance.present_statistic()
 
     def view_details(self, number):
-        for index, assignment in enumerate(Assignment.list_assignment):
+        for index, assignment in enumerate(Assignment.get_list()):
             if str(index) == number:
                 return assignment.view_details()
         return None
@@ -123,12 +121,11 @@ class MentorController(EmployeeController):
             elif option == '2':
                 view.View.clear()
                 title = input('Enter assignment title: ')
+                type = input('Enter type(group or individual): ')
                 description = input('Enter assignment description: ')
-                due_date = input('Enter assignment due date:')
-                if session.add_assiment(title, description, due_date):
-                    print('Assignment was added.')
-                else:
-                    print('Assignment was\'t added. Try again.')
+                due_date = input('Enter assignment due date(or skip if there no due date):')
+                session.add_assiment(title, description, type, due_date)
+                print('Assignment was added.')
                 input('\nEnter some key to get back:')
 
             elif option == '3':
@@ -139,14 +136,14 @@ class MentorController(EmployeeController):
                 details = session.view_details(number)
                 if details:
                     view.View.print_two_demention_list(details)
-                    title = details[0]
+                    title = details[0][0]
                     u_name = input('\nSelect username:')
                     grade = input('\nEnter grade:')
                     if session.grade_assignment(title, u_name, grade):
-                        print('You grade assigment.')
+                        print('You grade assignment.')
                         input('\nEnter some key to get back:')
                     else:
-                        print('There is no student with given username.')
+                        print('Something went wrong. You didnt grade assignment.')
                         input('\nEnter some key to get back:')
 
             elif option == '4':
@@ -159,7 +156,7 @@ class MentorController(EmployeeController):
 
             elif option == '5':
                 view.View.clear()
-                view.View.print_user_list(student.Student.list_of_students)
+                view.View.print_user_list(Student.list_students())
                 number = input('Select number of student: ')
                 telephone = input('Telephone: ')
                 mail = input('Mail: ')

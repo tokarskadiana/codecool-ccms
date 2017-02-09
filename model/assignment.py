@@ -34,13 +34,13 @@ class Assignment:
             Submition.create(self.id, student[0])
 
     @classmethod
-    def create(cls, title, description, type, user_name, due_date='No due date'): # add user_name
+    def create(cls, title, description, type, user_name, due_date): # add user_name
         '''
         Make new assignment and add it to assigment list.
 
         Returns: boolean value
         '''
-        query = "SELECT * FROM employee WHERE (position='mentor' AND user_name='{}');".format(user_name)
+        query = "SELECT * FROM employee WHERE (position='mentor' AND username='{}');".format(user_name)
         mentor_id = SqlRequest.sql_request(query)[0][0]
         assignment = cls(title, description, due_date, mentor_id, type)
         date = datetime.datetime.now().date()
@@ -108,12 +108,15 @@ class Assignment:
         Returns:bool/int
         '''
         submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        student_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(student_username))[0][0]
-        mentor_id = SqlRequest.sql_request("SELECT * FROM employee WHERE user_name='{}'".format(mentor_username))[0][0]
-        for submition in submitions:
-            if submition[2] == student_id:
-                Submition.change_grade(mentor_id, submition[0], grade)
-                return True
+        student = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(student_username))
+        mentor = SqlRequest.sql_request("SELECT * FROM employee WHERE username='{}'".format(mentor_username))
+        if student and mentor:
+            student_id = student[0][0]
+            mentor_id = mentor[0][0]
+            for submition in submitions:
+                if submition[2] == student_id:
+                    Submition.change_grade(mentor_id, submition[0], grade)
+                    return True
         return False
 
     def view_details(self):
@@ -126,7 +129,15 @@ class Assignment:
         submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
         for submition in submitions:
             user_name = SqlRequest.sql_request('SELECT * FROM student WHERE id="{}"'.format(submition[2]))[0][6]
-            details.append([self.title, user_name, submition[3], submition[4]])
+            if not submition[3]:
+                con = 'No content'
+            else:
+                con = str(submition[3])
+            if not submition[4]:
+                grade = 'No grade'
+            else:
+                grade = str(submition[4])
+            details.append([self.title, user_name, con, grade])
         return details
 
     def list_assignment_grades(self, user_name):
