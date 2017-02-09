@@ -72,11 +72,9 @@ class Mentor(Employee):
         mentorSqlList = SqlRequest.sql_request(query)
         mentorObjectList = []
         for element in mentorSqlList:
-            # print(element)
-            mentorObject = cls.add_mentor(element[3],element[1],element[2])
+            mentorObject = cls(element[3],element[1],element[2])
             mentorObjectList.append(mentorObject)
-        # print(mentorObjectList)
-        return Mentor.mentors_list
+        return mentorObjectList
 
     def __str__(self):
         """
