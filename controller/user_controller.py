@@ -52,5 +52,4 @@ class UserController:
         """
         Saving data to file and exit the program
         """
-        DatabaseController.DatabaseToCSV()
         sys.exit()
