@@ -1,4 +1,5 @@
 from model.employee import Employee
+from model.sqlRequest import SqlRequest
 
 
 class Manager(Employee):
@@ -15,8 +16,14 @@ class Manager(Employee):
         :param mail (str): mail of manager
         """
         password_coded = cls.encodeBase64(password)
+        # print("JESTEM W MANAGERZE")
+        # SqlRequest.sql_request(
+        #     "INSERT OR IGNORE INTO  employee (first_name,last_name,password,tel,mail) VALUES (?,?,?,?,?)",
+        #     (first_name, last_name, password_coded, telephone, mail))
+        # print('POSZŁO')
         m = Manager(password_coded, first_name, last_name, telephone, mail)
         cls.managers_list.append(m)
+
 
     @classmethod
     def list_manager(cls):

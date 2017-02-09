@@ -7,9 +7,12 @@ class SqlRequest:
         :param query:
         :return:
         """
-        print(query)
+
+
+
         conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
+        # print(query)
         cursor.execute(query)
         conn.commit()
         data = cursor.fetchall()

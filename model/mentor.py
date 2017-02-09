@@ -1,5 +1,5 @@
 from model.employee import Employee
-
+from model.sqlRequest import SqlRequest
 
 class Mentor(Employee):
     mentors_list = []
@@ -14,7 +14,10 @@ class Mentor(Employee):
         :param telephone (str): telephone of mentor
         :param mail (str): mail of mentor
         """
+        username = '{}.{}'.format(first_name, last_name)
         password_coded = cls.encodeBase64(password)
+        SqlRequest.sql_request('INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(first_name,last_name,password,username,'mentor'))
+
         m = Mentor(password_coded, first_name, last_name, telephone, mail)
         cls.mentors_list.append(m)
 
@@ -24,10 +27,14 @@ class Mentor(Employee):
         :param kwargs (dict): attr of mentor objc and value to change
         :return (dict): all attr of mentor objc
         """
+        username  = self.username
         for key, value in kwargs.items():
             for dict_key, dict_value in self.__dict__.items():
+
                 if key == dict_key:
-                    self.__dict__[dict_key] = value
+                    query = 'UPDATE employee SET "{}"="{}" WHERE position = "mentor" and username = "{}"'.format(key,value,username)
+                    # print(query)
+                    msg = SqlRequest.sql_request(query)
                     return True
         return False
 
@@ -46,17 +53,29 @@ class Mentor(Employee):
         :param username: username of objc
         :return (bool):
         """
+        username = mentor.username
+        query = 'DELETE FROM employee WHERE position = "mentor" and username = "{}"'.format(username)
+        msg = SqlRequest.sql_request(query)
+        # print(msg)
         Mentor.mentors_list.remove(mentor)
         if mentor not in Mentor.mentors_list:
             return True
         return False
 
-    @staticmethod
-    def list_mentors():
+    @classmethod
+    def list_mentors(cls):
         """
         Returns mentors list.
         :return (list): list of mentors objc
         """
+        query = 'SELECT * FROM employee WHERE position = "mentor"'
+        mentorSqlList = SqlRequest.sql_request(query)
+        mentorObjectList = []
+        for element in mentorSqlList:
+            # print(element)
+            mentorObject = cls.add_mentor(element[3],element[1],element[2])
+            mentorObjectList.append(mentorObject)
+        # print(mentorObjectList)
         return Mentor.mentors_list
 
     def __str__(self):

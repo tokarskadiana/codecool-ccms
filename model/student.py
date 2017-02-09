@@ -54,6 +54,7 @@ class Student(User):
         SqlRequest.sql_request(query)
 
 
+
     @staticmethod
     def list_student():
         """
