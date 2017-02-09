@@ -15,11 +15,8 @@ class Mentor(Employee):
         :param mail (str): mail of mentor
         """
         username = '{}.{}'.format(first_name, last_name)
-        password_coded = cls.encodeBase64(password)
         SqlRequest.sql_request('INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(first_name,last_name,password,username,'mentor'))
 
-        m = Mentor(password_coded, first_name, last_name, telephone, mail)
-        cls.mentors_list.append(m)
 
     def edit_mentor(self, **kwargs):
         """

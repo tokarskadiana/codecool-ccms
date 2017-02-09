@@ -7,21 +7,6 @@ class Employee(User):
     """
     employee_list = []
 
-    @classmethod
-    def create(cls, password, first_name, last_name, telephone='', mail=''):
-        """
-        Create new employee object
-        def create(cls, password, first_name, last_name, telephone=None, mail=None):
-
-        :param password (str):
-        :param first_name (str):
-        :param last_name (str):
-        :param telephone (str):
-        :param mail (str):
-        """
-        password_coded = cls.encodeBase64(password)
-        empl = Employee(password_coded, first_name, last_name, telephone, mail)
-        cls.employee_list.append(empl)
 
     @classmethod
     def add_employee(cls, password, first_name, last_name, telephone, mail):
@@ -34,8 +19,10 @@ class Employee(User):
         :param telephone (str):
         :param mail (str):
         """
-        e = Employee(password, first_name, last_name, telephone, mail)
-        cls.employee_list.append(e)
+        username = '{}.{}'.format(first_name, last_name)
+        SqlRequest.sql_request('INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(first_name,last_name,password,username,'employee'))
+
+
 
     @classmethod
     def list_employee(cls):
@@ -43,4 +30,10 @@ class Employee(User):
         Class method for return list of employers (assistants)
         :return: (list) list of employers
         """
-        return cls.employee_list
+        query = 'SELECT * FROM employee WHERE position = "employee"'
+        employeeSqlList = SqlRequest.sql_request(query)
+        employeeObjectList = []
+        for element in employeeSqlList:
+            employeeObject = cls(element[3],element[1],element[2])
+            employeeObjectList.append(employeeObject)
+        return employeeObjectList

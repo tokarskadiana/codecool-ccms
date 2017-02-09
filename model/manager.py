@@ -15,14 +15,9 @@ class Manager(Employee):
         :param telephone (str): telephone of manager
         :param mail (str): mail of manager
         """
-        password_coded = cls.encodeBase64(password)
-        # print("JESTEM W MANAGERZE")
-        # SqlRequest.sql_request(
-        #     "INSERT OR IGNORE INTO  employee (first_name,last_name,password,tel,mail) VALUES (?,?,?,?,?)",
-        #     (first_name, last_name, password_coded, telephone, mail))
-        # print('POSZŁO')
-        m = Manager(password_coded, first_name, last_name, telephone, mail)
-        cls.managers_list.append(m)
+        username = '{}.{}'.format(first_name, last_name)
+        SqlRequest.sql_request('INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(first_name,last_name,password,username,'manager'))
+
 
 
     @classmethod
@@ -31,4 +26,10 @@ class Manager(Employee):
         Returns list of manager.
         :return (list): manager list
         """
-        return cls.managers_list
+        query = 'SELECT * FROM employee WHERE position = "manager"'
+        managerSqlList = SqlRequest.sql_request(query)
+        managerObjectList = []
+        for element in managerSqlList:
+            managerObject = cls(element[3],element[1],element[2])
+            managerObjectList.append(managerObject)
+        return managerObjectList
