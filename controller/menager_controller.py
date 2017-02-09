@@ -60,7 +60,7 @@ class MenagerController(EmployeeController):
         :param password (str): password of assistant
         :return (str): returns message
         """
-        Employee.create(first_name, last_name, password)
+        Employee.add_employee(first_name, last_name, password)
         return 'Assistant was added.'
 
     @staticmethod

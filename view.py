@@ -55,6 +55,7 @@ class View:
         5. Edit student
         6. Delete student
         7. View presence statistics
+        8. View Teams
         0. Exit
         ''')
 
@@ -199,6 +200,11 @@ class View:
         """
         print(
             '\n\t{} {}, phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
+
+    @staticmethod
+    def showTeams(teams):
+        for data in teams:
+            print('{}. {}'.format(data[0],data[1]))
 
     @staticmethod
     def clear():

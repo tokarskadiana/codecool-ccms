@@ -12,6 +12,7 @@ class SqlRequest:
         conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
         cursor.execute(query)
+        conn.commit()
         data = cursor.fetchall()
         conn.commit()
         conn.close()
