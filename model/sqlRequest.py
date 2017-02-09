@@ -8,6 +8,8 @@ class SqlRequest:
         :return:
         """
 
+
+
         conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
         # print(query)
