@@ -157,10 +157,13 @@ class MentorController(EmployeeController):
             elif option == '5':
                 view.View.clear()
                 view.View.print_user_list(Student.list_student())
+                team_list = user.list_teams()
+                view.View.showTeams(team_list)
                 number = input('Select ID of student: ')
                 telephone = input('Telephone: ')
                 mail = input('Mail: ')
-                Student.edit_student(number, mail, telephone)
+                team = input('Select team ID: ')
+                Student.edit_student(number, mail, telephone, team)
                 input('\nEnter some key to get back:')
 
             elif option == '6':
