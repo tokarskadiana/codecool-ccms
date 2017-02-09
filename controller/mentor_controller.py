@@ -9,7 +9,6 @@ from .user_controller import UserController
 
 
 class MentorController(EmployeeController):
-
     def list_assignment(self):
         assignment_list = []
         for assignment in Assignment.get_list():
@@ -48,14 +47,15 @@ class MentorController(EmployeeController):
         Check presence of students for given day
         :param day: (str) store date of given day
         """
+        "query = ('SELECT id, first_name,last_name, username, mail, telephone FROM student')"
         atta = attendance.Attendance(day, {})
-        for person in student.Student.list_of_students:
-            print('{} {}'.format(person.first_name, person.last_name))
+        for person in student.Student.list_student():
+            print('{} {}'.format(person[1], person[2]))
             while True:
                 ask = input('0 or 1')
                 if ask == '0' or ask == '1':
                     break
-            atta.check_attendance(person.username, ask)
+            atta.check_attendance(person[3], ask)
         atta.add()
 
     def add_student(self, first_name, last_name, password):
@@ -156,18 +156,18 @@ class MentorController(EmployeeController):
 
             elif option == '5':
                 view.View.clear()
-                view.View.print_user_list(Student.list_students())
-                number = input('Select number of student: ')
+                view.View.print_user_list(Student.list_student())
+                number = input('Select ID of student: ')
                 telephone = input('Telephone: ')
                 mail = input('Mail: ')
-                session.edit_student(number, telephone, mail)
+                Student.edit_student(number, mail, telephone)
                 input('\nEnter some key to get back:')
 
             elif option == '6':
                 view.View.clear()
-                # view.View.print_user_list(Student.list_of_students)
-                number = input('number of student: ')
-                session.remove_student(number)
+                view.View.print_user_list(Student.list_student())
+                id = input('ID of student: ')
+                Student.delete_student(id)
                 input('\nEnter some key to get back:')
 
             elif option == '7':
@@ -178,6 +178,15 @@ class MentorController(EmployeeController):
                 view.View.clear()
                 team_list = user.list_teams()
                 view.View.showTeams(team_list)
+                input('\nEnter some key to get back:')
+            elif option == '10':
+                view.View.clear()
+                user.list_teams()
+                user.addOrRemoveTeam()
+
+            elif option == '9':
+                view.View.clear()
+                view.View.print_user_list(Student.list_student())
                 input('\nEnter some key to get back:')
             elif option == '0':
                 UserController.sign_out()

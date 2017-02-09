@@ -30,7 +30,7 @@ class UserController:
             username, password)
 
         output = SqlRequest.sql_request(request)
-        print(output)
+        # print(output)
 
         if output:
             if output[0][5] == 'mentor':

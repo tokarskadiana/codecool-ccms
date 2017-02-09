@@ -13,7 +13,6 @@ from controller.employee_controller import EmployeeController
 
 def main():
     DatabaseController.createSqlDatabase()
-
     log_in_input = View.main_menu()
 
     DatabaseController.sample_data()

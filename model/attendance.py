@@ -2,7 +2,6 @@ from model.sqlRequest import SqlRequest
 
 
 class Attendance:
-    list_of_attendance = []  # [objc, objc]  : objc " ", {" ": 0/1}
 
     def __init__(self, date, student_presence):
         """
