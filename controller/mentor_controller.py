@@ -158,18 +158,19 @@ class MentorController(EmployeeController):
 
             elif option == '5':
                 view.View.clear()
-                view.View.print_user_list(student.Student.list_of_students)
-                number = input('Select number of student: ')
+                view.View.print_user_list(Student.list_student())
+                number = input('Select ID of student: ')
                 telephone = input('Telephone: ')
                 mail = input('Mail: ')
-                session.edit_student(number, telephone, mail)
+                Student.edit_student(number, mail, telephone)
                 input('\nEnter some key to get back:')
 
             elif option == '6':
                 view.View.clear()
+                view.View.print_user_list(Student.list_student())
                 # view.View.print_user_list(Student.list_of_students)
-                number = input('number of student: ')
-                session.remove_student(number)
+                id = input('ID of student: ')
+                Student.delete_student(id)
                 input('\nEnter some key to get back:')
 
             elif option == '7':
@@ -180,6 +181,10 @@ class MentorController(EmployeeController):
                 view.View.clear()
                 team_list = user.list_teams()
                 view.View.showTeams(team_list)
+                input('\nEnter some key to get back:')
+            elif option == '9':
+                view.View.clear()
+                view.View.print_user_list(Student.list_student())
                 input('\nEnter some key to get back:')
             elif option == '0':
                 UserController.sign_out()

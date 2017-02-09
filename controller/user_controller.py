@@ -29,7 +29,7 @@ class UserController:
         request = 'SELECT password, first_name, last_name, telephone, mail, position FROM employee WHERE username="{}" AND password="{}"'.format(username,password)
 
         output = SqlRequest.sql_request(request)
-        print(output)
+        # print(output)
 
         if output:
             if output[0][5] == 'mentor':
