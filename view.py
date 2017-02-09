@@ -172,7 +172,7 @@ class View:
         """
         print(user_list)
         if user_list:
-            headers = ['Index', 'First name', 'Last name', 'User name', 'Mail', 'Telephone']
+            headers = ['Index', 'First name', 'Last name', 'User name', 'Mail', 'Telephone', 'Team ID']
             print(tabulate(user_list, headers, tablefmt="fancy_grid"))
         else:
             print('There is empty.')
