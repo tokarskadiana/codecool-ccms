@@ -1,3 +1,4 @@
+import sqlite3
 class SqlRequest:
     @staticmethod
     def sql_request(query):
@@ -6,9 +7,11 @@ class SqlRequest:
         :param query:
         :return:
         """
-        conn = sqlite3.connect('../codecool.sqlite')
+        print(query)
+        conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
         cursor.execute(query)
+        conn.commit()
         data = cursor.fetchall()
         conn.close()
         return data

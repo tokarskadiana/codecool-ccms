@@ -1,8 +1,9 @@
 from model.user import User
+from model.sqlRequest import SqlRequest
 
 
 class Student(User):
-    list_of_students = []
+    # list_of_students = []
 
     @classmethod
     def add_student(cls, password, first_name, last_name, telephone='', mail=''):
@@ -16,7 +17,18 @@ class Student(User):
         """
         password_coded = password_coded = cls.encodeBase64(password)
         student = Student(password_coded, first_name, last_name, telephone, mail)
-        Student.list_of_students.append(student)
+        # Student.list_of_students.append(student)
+
+        team_id = 1
+        username = '{}.{}'.format(first_name, last_name)
+
+        query = ('INSERT OR IGNORE INTO student (first_name,last_name,password,tel,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(first_name, last_name, password, telephone, mail, username, team_id))
+
+        SqlRequest.sql_request(query)
+
+
+
+
 
     def edit_student(self, **kwargs):
         """
@@ -38,13 +50,26 @@ class Student(User):
             if username == stu.username:
                 Student.list_of_students.remove(stu)
 
+        # query = ('DELETE FROM student WHERE username={}'.format(username))
+        # SqlRequest.sql_request(query)
+
+
     @staticmethod
     def list_student():
         """
         Returns static variable list_of_students.
         :return (list): list of students
         """
-        return Student.list_of_students
+        list_of_students = []
+        query = ('SELECT * FROM student')
+        data = SqlRequest.sql_request(query)
+
+        for row in data:
+            list_of_students.append(Student(row[1], row[2], row[4], row[5], row[6]))
+
+        return list_of_students
+
+
 
     def get_details(self):
         """

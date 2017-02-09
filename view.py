@@ -167,11 +167,12 @@ class View:
         :param assignments_list: list
         :return: None
         """
-        if user_list:
-            headers = ['Index', 'First name', 'Last name', 'User name']
-            print(tabulate(user_list, headers, tablefmt="fancy_grid"))
-        else:
-            print('There is ampty.')
+        print(user_list)
+        # if user_list:
+        #     headers = ['Index', 'First name', 'Last name', 'User name']
+        #     print(tabulate(user_list, headers, tablefmt="fancy_grid"))
+        # else:
+        #     print('There is empty.')
 
     @staticmethod
     def display_static_present(list_stat):
