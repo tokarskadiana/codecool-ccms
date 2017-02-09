@@ -56,6 +56,8 @@ class View:
         6. Delete student
         7. View presence statistics
         8. View Teams
+        9. List Students
+        10. Add or Remove Team
         0. Exit
         ''')
 
