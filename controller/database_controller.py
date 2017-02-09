@@ -62,7 +62,7 @@ class DatabaseController:
         cursor = conn.cursor()
         for sample_list in samples:
             for task in sample_list:
-                print(task)
+                # print(task)
                 cursor.execute(task)
         conn.commit()
         cursor.close()
@@ -83,4 +83,3 @@ class DatabaseController:
             'assigment1.csv', Assignment.list_assignment)
         Database.save_attendance_to_csv(
             'attendance1.csv', Attendance.list_of_attendance)
-

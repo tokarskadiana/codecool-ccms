@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS employee
     mail TEXT,
     user_name TEXT,
     salary INT,
-    position TEXT
-    CONSTRAINT chk_position CHECK (position IN ('manager', 'employee', 'mentor')),
+    position TEXT,
     UNIQUE(user_name)
 );

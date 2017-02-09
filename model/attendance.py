@@ -1,3 +1,6 @@
+from model.sqlRequest import SqlRequest
+
+
 class Attendance:
     list_of_attendance = [] # [obcj]  : obcj " ", {" ": 0/1}
 

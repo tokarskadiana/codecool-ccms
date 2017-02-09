@@ -16,14 +16,15 @@ class MentorController(EmployeeController):
             assignment_list.append(str(assignment).split())
         return assignment_list
 
-    def add_assiment(self, title, description, due_date):
+    def add_assiment(self, title, description, user_name, due_date):
         """
         Add assignment object to the list of assignments
         :param title: store of title of assignment object
         :param description: store of description of assignment object
         :param due_date: store of due date of assignment object
         """
-        if Assignment.create(title, description, due_date):
+        user_name = self.user.get_username()
+        if Assignment.create(title, description, user_name, due_date):
             return True
         return False
 
