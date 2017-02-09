@@ -23,6 +23,9 @@ class User:
         self.telephone = telephone
         self.mail = mail
 
+    def get_username(self):
+        return self.username
+
     @staticmethod
     def encodeBase64(password):
         """

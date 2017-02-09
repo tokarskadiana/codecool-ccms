@@ -7,5 +7,4 @@ CREATE TABLE IF NOT EXISTS assignment
     due_date TEXT,
     mentor_id INTEGER,
     type TEXT
-    CONSTRAINT chk_type CHECK (type IN ('group', 'individual'))
 );
