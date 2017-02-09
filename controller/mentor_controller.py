@@ -167,9 +167,10 @@ class MentorController(EmployeeController):
 
             elif option == '6':
                 view.View.clear()
+                view.View.print_user_list(Student.list_student())
                 # view.View.print_user_list(Student.list_of_students)
-                number = input('number of student: ')
-                session.remove_student(number)
+                id = input('ID of student: ')
+                Student.delete_student(id)
                 input('\nEnter some key to get back:')
 
             elif option == '7':

@@ -15,9 +15,6 @@ class Student(User):
         :param telephone (str): telephone
         :param mail (str): mail
         """
-        password_coded = password_coded = cls.encodeBase64(password)
-        student = Student(password_coded, first_name, last_name, telephone, mail)
-        # Student.list_of_students.append(student)
 
         team_id = 1
         username = '{}.{}'.format(first_name, last_name)
@@ -46,16 +43,13 @@ class Student(User):
 
 
     @staticmethod
-    def delete_student(username):
+    def delete_student(id):
         """
         Remove student from list_of_students by given username.
         :param username (str): value of username attr
         """
-        for stu in Student.list_of_students:
-            if username == stu.username:
-                Student.list_of_students.remove(stu)
 
-        query = ('DELETE FROM student WHERE username={}'.format(username))
+        query = ('DELETE FROM student WHERE id={}'.format(id))
         SqlRequest.sql_request(query)
 
 
