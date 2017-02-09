@@ -40,7 +40,7 @@ class Attendance:
         Add Attendance objc to list_of_attendance.
         """
         for student in self.student_presence.keys():
-            request_id = 'SELECT id FROM student WHERE username="{}"'.format(student)
+            request_id = SqlRequest.sql_request('SELECT id FROM student WHERE username="{}"'.format(student))
             request = 'INSERT INTO attendance (student_id, "date", status) VALUES ({},"{}",{})'.format(int(request_id[0][0]), self.date, int(self.student_presence[student]))
             SqlRequest.sql_request(request)
 

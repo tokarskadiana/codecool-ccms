@@ -49,14 +49,15 @@ class MentorController(EmployeeController):
         Check presence of students for given day
         :param day: (str) store date of given day
         """
+        "query = ('SELECT id, first_name,last_name, username, mail, telephone FROM student')"
         atta = attendance.Attendance(day, {})
-        for person in student.Student.list_of_students:
-            print('{} {}'.format(person.first_name, person.last_name))
+        for person in student.Student.list_student():
+            print('{} {}'.format(person[1], person[2]))
             while True:
                 ask = input('0 or 1')
                 if ask == '0' or ask == '1':
                     break
-            atta.check_attendance(person.username, ask)
+            atta.check_attendance(person[3], ask)
         atta.add()
 
     def add_student(self, first_name, last_name, password):
