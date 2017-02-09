@@ -74,6 +74,7 @@ class View:
         3. Add assistant
         4. Edit mentor
         5. Delete mentor
+        6. Add salary
         0. Exit
         ''')
 
