@@ -22,23 +22,28 @@ class Student(User):
         team_id = 1
         username = '{}.{}'.format(first_name, last_name)
 
-        query = ('INSERT OR IGNORE INTO student (first_name,last_name,password,tel,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(first_name, last_name, password, telephone, mail, username, team_id))
+        query = ('INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(first_name, last_name, password, telephone, mail, username, team_id))
 
         SqlRequest.sql_request(query)
 
 
 
 
-
-    def edit_student(self, **kwargs):
+    @staticmethod
+    def edit_student(index, mail, telephone):
         """
         Edit student attr.
         :param kwargs: name of attr and value of it
         """
-        for key, value in kwargs.items():
-            if key:
-                if key in self.__dict__.keys():
-                    self.__dict__[key] = value
+        # for key, value in kwargs.items():
+        #     if key:
+        #         if key in self.__dict__.keys():
+        #             self.__dict__[key] = value
+
+        query = ('UPDATE student SET mail="{}", telephone="{}" WHERE id={}'.format(mail, telephone, index))
+        SqlRequest.sql_request(query)
+
+
 
     @staticmethod
     def delete_student(username):
@@ -62,13 +67,17 @@ class Student(User):
         :return (list): list of students
         """
         list_of_students = []
-        query = ('SELECT * FROM student')
+        query = ('SELECT id, first_name,last_name, username, mail, telephone FROM student')
         data = SqlRequest.sql_request(query)
 
-        for row in data:
-            list_of_students.append(Student(row[1], row[2], row[4], row[5], row[6]))
+        # for row in data:
+        #     list_of_students.append(Student(row[1], row[2], row[4], row[5], row[6]))
 
-        return list_of_students
+        # students = []
+        # for student in list_of_students:
+        #     students.append(Student.first_name, Student.last_name )
+
+        return data
 
 
 

@@ -158,11 +158,11 @@ class MentorController(EmployeeController):
 
             elif option == '5':
                 view.View.clear()
-                view.View.print_user_list(student.Student.list_of_students)
-                number = input('Select number of student: ')
+                view.View.print_user_list(Student.list_student())
+                number = input('Select ID of student: ')
                 telephone = input('Telephone: ')
                 mail = input('Mail: ')
-                session.edit_student(number, telephone, mail)
+                Student.edit_student(number, mail, telephone)
                 input('\nEnter some key to get back:')
 
             elif option == '6':
@@ -175,6 +175,10 @@ class MentorController(EmployeeController):
             elif option == '7':
                 view.View.clear()
                 view.View.display_static_present(session.view_presence_statistic())
+                input('\nEnter some key to get back:')
+            elif option == '8':
+                view.View.clear()
+                view.View.print_user_list(Student.list_student())
                 input('\nEnter some key to get back:')
             elif option == '0':
                 UserController.sign_out()
