@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS student(
    first_name           TEXT    NOT NULL,
    last_name            TEXT     NOT NULL,
    password        TEXT,
-   tel        TEXT,
+   telephone        TEXT,
    mail        TEXT,
    username    TEXT,
    team_id       INT,

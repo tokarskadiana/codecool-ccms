@@ -4,11 +4,11 @@ CREATE TABLE IF NOT EXISTS employee
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     password TEXT,
-    tel TEXT,
+    telephone TEXT,
     mail TEXT,
-    user_name TEXT,
+    username TEXT,
     salary INT,
     position TEXT
     CONSTRAINT chk_position CHECK (position IN ('manager', 'employee', 'mentor')),
-    UNIQUE(user_name)
+    UNIQUE(username)
 );
