@@ -63,13 +63,6 @@ class Student(User):
         query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student'
         data = SqlRequest.sql_request(query)
 
-        for row in data:
-            list_of_students.append(Student(row[1], row[2], row[4], row[5], row[6]))
-
-        students = []
-        for student in list_of_students:
-            students.append(Student.first_name, Student.last_name )
-
         return data
 
 
