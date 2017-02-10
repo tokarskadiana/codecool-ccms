@@ -230,5 +230,6 @@ class View:
 
     @staticmethod
     def show_student_presents(data):
+        data = round(data)
         print(str(data)+'%')
 
