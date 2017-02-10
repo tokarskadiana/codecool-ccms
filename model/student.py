@@ -108,3 +108,12 @@ class Student(User):
         data = SqlRequest.sql_request(query)
         return data
 
+    def get_attandance(self):
+        query = 'SELECT id FROM student WHERE username="{}"'.format(self.get_username())
+        data = SqlRequest.sql_request(query)
+        query_att = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(data[0][0])
+        data_att = SqlRequest.sql_request(query_att)
+        if data_att[0][0]:
+            stats = (data_att[0][0]/data_att[0][1])*100
+            return stats
+        return False

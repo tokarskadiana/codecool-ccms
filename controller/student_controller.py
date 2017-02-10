@@ -80,6 +80,13 @@ class StudentController(UserController):
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
                 input('\nPress any key to back')
+
+            elif option == '5':
+                view.clear()
+                data = user.get_attandance()
+                if data:
+                    view.show_student_presents(data)
+                input('\nPress any key to back')
             elif option == '0':
                 UserController.sign_out()
                 return

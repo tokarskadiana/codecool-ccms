@@ -36,6 +36,7 @@ class View:
         1. List your assignments
         2. View grades
         3. Submit assignment
+        5. Show present stats
         0. Exit
         ''')
 
@@ -226,4 +227,8 @@ class View:
             print(tabulate(students, headers, tablefmt="fancy_grid"))
         else:
             print('No students on the list.')
+
+    @staticmethod
+    def show_student_presents(data):
+        print(str(data)+'%')
 
