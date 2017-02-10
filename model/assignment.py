@@ -34,7 +34,7 @@ class Assignment:
             Submition.create(self.id, student[0])
 
     @classmethod
-    def create(cls, title, description, type, user_name, due_date): # add user_name
+    def create(cls, title, description, type, user_name, due_date):  # add user_name
         '''
         Make new assignment and add it to assigment list.
 
@@ -46,10 +46,11 @@ class Assignment:
         date = datetime.datetime.now().date()
         query = "INSERT OR IGNORE INTO assignment (title, description, date, due_date, type, mentor_id) \
                  VALUES ('{}', '{}', '{}', '{}', '{}', '{}');".format(
-                 assignment.title, assignment.description, date,
-                 assignment.due_date, assignment.type, assignment.mentor_id)
+            assignment.title, assignment.description, date,
+            assignment.due_date, assignment.type, assignment.mentor_id)
         SqlRequest.sql_request(query)
-        assignment_id = SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
+        assignment_id = \
+        SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
         assignment.set_id(assignment_id)
         assignment.make_submit_list()
 

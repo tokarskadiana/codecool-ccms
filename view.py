@@ -38,6 +38,7 @@ class View:
         2. View grades
         3. Submit assignment
         4. Your average score
+        5. Show present stats
         0. Exit
         ''')
 
@@ -188,7 +189,6 @@ class View:
         else:
             print('No statistics yet.')
 
-
     @staticmethod
     def print_two_demention_list(printed_list):
         """Print all 2 demention list
@@ -210,7 +210,7 @@ class View:
     @staticmethod
     def showTeams(teams):
         for data in teams:
-            print('{}. {}'.format(data[0],data[1]))
+            print('{}. {}'.format(data[0], data[1]))
 
     @staticmethod
     def clear():
@@ -228,9 +228,15 @@ class View:
             print(tabulate(students, headers, tablefmt="fancy_grid"))
         else:
             print('No students on the list.')
+
     @staticmethod
-    def user_grade_average(user,grade):
+    def user_grade_average(user, grade):
         if grade is not None:
-            print('{} {} your average grade is {}'.format(user.first_name,user.last_name,grade))
+            print('{} {} your average grade is {}'.format(user.first_name, user.last_name, grade))
         else:
-            print('{} {} have no grades yet fella'.format(user.first_name,user.last_name))
+            print('{} {} have no grades yet fella'.format(user.first_name, user.last_name))
+
+    @staticmethod
+    def show_student_presents(data):
+        data = round(data)
+        print(str(data) + '%')

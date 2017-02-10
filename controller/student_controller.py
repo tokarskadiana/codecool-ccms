@@ -83,9 +83,15 @@ class StudentController(UserController):
             elif option == '4':
                 view.clear()
                 user_average = user.student_average_grade()
-                view.user_grade_average(user,user_average)
+                view.user_grade_average(user, user_average)
                 input('\nPress any key to back')
                 continue
+            elif option == '5':
+                view.clear()
+                data = user.get_attandance()
+                if data:
+                    view.show_student_presents(data)
+                input('\nPress any key to back')
             elif option == '0':
                 UserController.sign_out()
                 return

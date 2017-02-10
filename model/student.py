@@ -22,7 +22,6 @@ class Student(User):
         query = (
         'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(
             first_name, last_name, password, telephone, mail, username, team_id))
-
         SqlRequest.sql_request(query)
 
     @staticmethod
@@ -37,6 +36,7 @@ class Student(User):
         #             self.__dict__[key] = value
         query = (
         'UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
+
         SqlRequest.sql_request(query)
 
     @staticmethod
@@ -63,6 +63,7 @@ class Student(User):
 
         return data
 
+
     def get_username(self):
         """
         Returns username of objc.
@@ -75,6 +76,11 @@ class Student(User):
 
     @staticmethod
     def list_for_employee(index):
+        """
+        Method for employee session to get details for student with given ID number
+        :param index: int
+        :return: None or sql query data
+        """
         if index.isdigit():
             query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student WHERE id={}'.format(
                 index)
@@ -84,9 +90,14 @@ class Student(User):
 
     @staticmethod
     def student_name():
+        """
+        Method for list all student for only basic data
+        :return: sql query data
+        """
         query = 'SELECT id, first_name,last_name FROM student'
         data = SqlRequest.sql_request(query)
         return data
+
 
     def student_average_grade(self):
 
@@ -106,3 +117,17 @@ class Student(User):
             #     # for student in list_of_students:
             #     #     temp_object = Student()
             #     #
+
+    def get_attandance(self):
+        """
+        Get average present for student
+        :return(int): average present
+        """
+        query = 'SELECT id FROM student WHERE username="{}"'.format(self.get_username())
+        data = SqlRequest.sql_request(query)
+        query_att = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(data[0][0])
+        data_att = SqlRequest.sql_request(query_att)
+        if data_att[0][0]:
+            stats = (data_att[0][0] / data_att[0][1]) * 100
+            return stats
+        return False
