@@ -2,7 +2,6 @@ from model.sqlRequest import SqlRequest
 
 
 class Attendance:
-
     def __init__(self, date, student_presence):
         """
         Initialize Assignment object.
@@ -59,7 +58,7 @@ class Attendance:
         if stats:
             for pers_stat in stats:
                 request_s = 'SELECT first_name, last_name FROM student WHERE ID="{}"'.format(pers_stat[
-                                                                                             0])
+                                                                                                 0])
                 output = SqlRequest.sql_request(request_s)
                 full_name = output[0][1] + ' ' + output[0][1]
                 if full_name in percent_of_presence.keys():

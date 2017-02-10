@@ -4,7 +4,6 @@ import view
 
 
 class EmployeeController(UserController):
-
     def list_students(self):
         """
         Create list of student with detail data
@@ -14,7 +13,7 @@ class EmployeeController(UserController):
         list_student = []
         if Student.list_student():
             for index, student in enumerate(Student.list_student()):
-                list_student.append([index]+str(student).split())
+                list_student.append([index] + str(student).split())
         return list_student
 
     # def view_details(self, stud_index):
@@ -37,7 +36,6 @@ class EmployeeController(UserController):
                 view.View.show_students_name(Student.student_name())
                 studentid = input('\nFor more details give the ID of person or else to get back: ')
                 view.View.print_user_list(Student.list_for_employee(studentid))
-
 
                 input('\nPress any key to back:')
 

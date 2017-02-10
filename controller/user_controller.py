@@ -9,7 +9,6 @@ import sys
 
 
 class UserController:
-
     def __init__(self, user):
         '''
         Constructor of user controller.
@@ -40,7 +39,8 @@ class UserController:
             elif output[0][5] == 'employee':
                 return Employee(output[0][0], output[0][1], output[0][2], output[0][3], output[0][4])
 
-        request_s = 'SELECT password, first_name, last_name, telephone, mail FROM student WHERE password="{}" AND username="{}"'.format(password, username)
+        request_s = 'SELECT password, first_name, last_name, telephone, mail FROM student WHERE password="{}" AND username="{}"'.format(
+            password, username)
         output_s = SqlRequest.sql_request(request_s)
         if output_s:
             return Student(output_s[0][0], output_s[0][1], output_s[0][2], output_s[0][3], output_s[0][4])

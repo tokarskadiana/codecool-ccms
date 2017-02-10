@@ -1,10 +1,12 @@
 from model.sqlRequest import SqlRequest
 import datetime
 
+
 class Submition:
     '''
     Represent an submit of individual student_username
     '''
+
     def __init__(self, assignment_id, student_id):
         '''
         Constructor of Submition object.
@@ -27,9 +29,11 @@ class Submition:
 
         Returns: instance of Submition class
         '''
-        SqlRequest.sql_request('INSERT INTO submition (assignment_id, student_id) VALUES("{}", "{}")'.format(assignment_id, student_id))
+        SqlRequest.sql_request(
+            'INSERT INTO submition (assignment_id, student_id) VALUES("{}", "{}")'.format(assignment_id, student_id))
         submition = cls(assignment_id, student_id)
-        submition_id = SqlRequest.sql_request('SELECT * FROM submition WHERE id = (SELECT MAX(id) FROM submition);')[0][0]
+        submition_id = SqlRequest.sql_request('SELECT * FROM submition WHERE id = (SELECT MAX(id) FROM submition);')[0][
+            0]
         submition.set_id(submition_id)
 
     def get_content(self):
@@ -55,7 +59,8 @@ class Submition:
 
         Returns: boolean
         '''
-        SqlRequest.sql_request('UPDATE submition SET grade="{}", mentor_id="{}" WHERE id="{}";'.format(new_grade, mentor_id, id))
+        SqlRequest.sql_request(
+            'UPDATE submition SET grade="{}", mentor_id="{}" WHERE id="{}";'.format(new_grade, mentor_id, id))
 
     @staticmethod
     def change_content(id, new_content):
@@ -65,4 +70,5 @@ class Submition:
         Returns: boolean
         '''
         date = datetime.datetime.now().date()
-        SqlRequest.sql_request('UPDATE submition SET content="{}", update_data="{}" WHERE id="{}";'.format(new_content, date, id))
+        SqlRequest.sql_request(
+            'UPDATE submition SET content="{}", update_data="{}" WHERE id="{}";'.format(new_content, date, id))
