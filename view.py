@@ -35,7 +35,6 @@ class View:
         print('''
         -----------MENU-----------
         1. List your assignments
-        2. View grades
         3. Submit assignment
         4. Your average score
         5. Show present stats

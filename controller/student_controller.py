@@ -65,12 +65,12 @@ class StudentController(UserController):
                 view.clear()
                 view.print_assignments_list(session.list_assignment())
                 input('\nPress any key to back')
-            elif option == '2':
-                view.clear()
-                grades = session.list_assignment_grades()
-                view.print_assignment_grades(grades)
-                input('\nPress any key to back')
-                continue
+            # elif option == '2':
+            #     view.clear()
+            #     grades = session.list_assignment_grades()
+            #     view.print_assignment_grades(grades)
+            #     input('\nPress any key to back')
+            #     continue
             elif option == '3':
                 view.clear()
                 assignments_list = session.list_assignment_title_content(
