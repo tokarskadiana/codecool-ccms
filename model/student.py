@@ -100,7 +100,10 @@ class Student(User):
 
 
     def student_average_grade(self):
-
+        """
+        Get average student grade
+        :return:
+        """
         get_id = 'SELECT * FROM student WHERE username="{}"'.format(self.username)
         student_id = SqlRequest.sql_request(get_id)
         for id in student_id:
