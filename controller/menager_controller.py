@@ -76,6 +76,16 @@ class MenagerController(EmployeeController):
         return 'Mentor was\'t deleted'
 
     @staticmethod
+    def add_salary(mentor_index, salary):
+        """
+        Remove mentor from mentor list.
+        :param username: returns
+        :return: returns message
+        """
+        mentor = Mentor.list_mentors()[mentor_index]
+        Mentor.add_salary(mentor, salary)
+
+    @staticmethod
     def manager_session(user):
         """
         Start manager menu.
@@ -152,6 +162,25 @@ class MenagerController(EmployeeController):
                         continue
                 except ValueError:
                     continue
+            elif option == '6':
+                view.View.clear()
+                list_mentors = session.list_mentor()
+                view.View.print_user_list(list_mentors)
+                if list_mentors:
+                    mentor_index = input(
+                        'Enter mentor index which you want to add salary:')
+                try:
+                    mentor_index = int(mentor_index)
+                    if mentor_index in range(len(list_mentors)):
+                        salary = input('salary!!!: ')
+                        print(session.add_salary(mentor_index, int(salary)))
+                        back = input('\nEnter some key to get back:')
+                    else:
+                        continue
+                except ValueError:
+                    continue
+
+
             elif option == '0':
                 UserController.sign_out()
                 return

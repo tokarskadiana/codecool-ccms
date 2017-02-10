@@ -14,7 +14,6 @@ from controller.employee_controller import EmployeeController
 def main():
     DatabaseController.createSqlDatabase()
     DatabaseController.sample_data()
-
     log_in_input = View.main_menu()
     username = log_in_input[0]
     password = log_in_input[1]

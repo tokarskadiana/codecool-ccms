@@ -56,8 +56,8 @@ class View:
         6. Delete student
         7. View presence statistics
         8. View Teams
-        9. View student list
-        10. Add Team / Remove Team
+        9. List Students
+        10. Add or Remove Team
         0. Exit
         ''')
 
@@ -74,6 +74,7 @@ class View:
         3. Add assistant
         4. Edit mentor
         5. Delete mentor
+        6. Add salary
         0. Exit
         ''')
 
@@ -134,7 +135,7 @@ class View:
             headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
             print(tabulate([list(user)], headers, tablefmt="fancy_grid"))
         else:
-            print('There is empty.')
+            print('There is ampty.')
 
     @staticmethod
     def print_assignment_grades(assignment_grades):
@@ -170,12 +171,11 @@ class View:
         :param assignments_list: list
         :return: None
         """
-        print(user_list)
         if user_list:
-            headers = ['Index', 'First name', 'Last name', 'User name', 'Mail', 'Telephone']
+            headers = ['Index', 'First name', 'Last name', 'User name']
             print(tabulate(user_list, headers, tablefmt="fancy_grid"))
         else:
-            print('There is empty.')
+            print('There is ampty.')
 
     @staticmethod
     def display_static_present(list_stat):

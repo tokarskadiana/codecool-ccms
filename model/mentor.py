@@ -59,6 +59,18 @@ class Mentor(Employee):
             return True
         return False
 
+    @staticmethod
+    def add_salary(mentor, salary):
+        """
+        Remove mentor from list of mentors by given username.
+        :param username: username of objc
+        :return (bool):
+        """
+        username = mentor.username
+        query = 'UPDATE employee SET salary={} WHERE position = "mentor" and username = "{}"'.format(salary, username)
+        msg = SqlRequest.sql_request(query)
+
+
     @classmethod
     def list_mentors(cls):
         """
