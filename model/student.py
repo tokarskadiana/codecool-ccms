@@ -61,6 +61,7 @@ class Student(User):
         :return (list): list of students
         """
         list_of_students = []
+
         query = ('SELECT id, first_name,last_name, username, mail, telephone FROM student')
         data = SqlRequest.sql_request(query)
 
