@@ -96,6 +96,11 @@ class Student(User):
 
     @staticmethod
     def list_for_employee(index):
+        """
+        Method for employee session to get details for student with given ID number
+        :param index: int
+        :return: None or sql query data
+        """
         if index.isdigit():
                 query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student WHERE id={}'.format(index)
                 data = SqlRequest.sql_request(query)
@@ -104,6 +109,10 @@ class Student(User):
 
     @staticmethod
     def student_name():
+        """
+        Method for list all student for only basic data
+        :return: sql query data
+        """
         query = 'SELECT id, first_name,last_name FROM student'
         data = SqlRequest.sql_request(query)
         return data
