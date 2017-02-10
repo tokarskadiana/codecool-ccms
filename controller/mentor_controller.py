@@ -79,16 +79,16 @@ class MentorController(EmployeeController):
             if str(index) == number:
                 stu.edit_student(telephone=telep, mail=mai)
 
-    def remove_student(self, number):
-
-        """
-        Remove student form a list of students
-        :param number: store of number of Student object on the list
-        """
-        # for index, stu in enumerate(student.Student.list_of_students):
-        #     if str(index) == number:
-        #         student.Student.delete_student(stu.username)
-        pass
+    # def remove_student(self, number):
+    #
+    #     """
+    #     Remove student form a list of students
+    #     :param number: store of number of Student object on the list
+    #     """
+    #     # for index, stu in enumerate(student.Student.list_of_students):
+    #     #     if str(index) == number:
+    #     #         student.Student.delete_student(stu.username)
+    #     pass
 
     def view_presence_statistic(self):
         """

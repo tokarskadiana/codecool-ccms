@@ -3,7 +3,7 @@ from model.sqlRequest import SqlRequest
 
 
 class Student(User):
-    # list_of_students = []
+    list_of_students = []
 
     @classmethod
     def add_student(cls, password, first_name, last_name, telephone='', mail=''):
@@ -62,16 +62,10 @@ class Student(User):
         list_of_students = []
 
 
-        query = ('SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student')
+
+        query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student'
 
         data = SqlRequest.sql_request(query)
-
-        # for row in data:
-        #     list_of_students.append(Student(row[1], row[2], row[4], row[5], row[6]))
-
-        # students = []
-        # for student in list_of_students:
-        #     students.append(Student.first_name, Student.last_name )
 
         return data
 
@@ -82,8 +76,13 @@ class Student(User):
         Returns list of personal data.
         :return (list): list of personal data
         """
+        query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student'
+        data = SqlRequest.sql_request(query)
+
         list_det = [self.first_name, self.last_name, self.username, self.telephone, self.mail]
         return list_det
+
+        return data
 
     def get_username(self):
         """
@@ -94,3 +93,18 @@ class Student(User):
 
     def __str__(self):
         return '{} {} {}'.format(self.first_name, self.last_name, self.username)
+
+    @staticmethod
+    def list_for_employee(index):
+        if index.isdigit():
+                query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student WHERE id={}'.format(index)
+                data = SqlRequest.sql_request(query)
+                return data
+        return None
+
+    @staticmethod
+    def student_name():
+        query = 'SELECT id, first_name,last_name FROM student'
+        data = SqlRequest.sql_request(query)
+        return data
+

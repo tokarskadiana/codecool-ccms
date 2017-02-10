@@ -67,6 +67,7 @@ class View:
         Show manager menu
         :return: None
         """
+        View.clear()
         print('''
         -----------MENU-----------
         1. List mentors
@@ -103,15 +104,15 @@ class View:
         2. mail
         ''')
 
-    @staticmethod
-    def display_students(students_list):
-        """
-        Show students list
-        :param students_list: list of students
-        :return: None
-        """
-        for index, student in enumerate(students_list):
-            print('{} {} {}'.format(index, student.first_name, student.last_name))
+    # @staticmethod
+    # def display_students(students_list):
+    #     """
+    #     Show students list
+    #     :param students_list: list of students
+    #     :return: None
+    #     """
+    #     for index, student in enumerate(students_list):
+    #         print('{} {} {}'.format(index, student.first_name, student.last_name))
 
     @staticmethod
     def display_static_present(list_stat):
@@ -132,10 +133,10 @@ class View:
         :return: none
         """
         if user:
-            headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail']
+            headers = ['First name', 'Last name', 'User name', 'Phone Number', 'Mail', 'Telephone', 'e-mail', 'Team ID']
             print(tabulate([list(user)], headers, tablefmt="fancy_grid"))
         else:
-            print('There is ampty.')
+            print('There is empty.')
 
     @staticmethod
     def print_assignment_grades(assignment_grades):
@@ -172,10 +173,10 @@ class View:
         :return: None
         """
         if user_list:
-            headers = ['Index', 'First name', 'Last name', 'User name']
+            headers = ['ID', 'First name', 'Last name', 'User name', 'Mail', 'Phone Number', 'e-mail', 'Team ID']
             print(tabulate(user_list, headers, tablefmt="fancy_grid"))
         else:
-            print('There is ampty.')
+            print('There is empty.')
 
     @staticmethod
     def display_static_present(list_stat):
@@ -194,15 +195,15 @@ class View:
         for index, sub_list in enumerate(printed_list):
             print('{}. {}'.format(index, ' - '.join(sub_list)))
 
-    @staticmethod
-    def show_details(user):
-        """
-        Show details of user
-        :param user: list
-        :return: None
-        """
-        print(
-            '\n\t{} {}, phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
+    # @staticmethod
+    # def show_details(user):
+    #     """
+    #     Show details of user
+    #     :param user: list
+    #     :return: None
+    #     """
+    #     print(
+    #         '\n\t{} {}, phone number:{}, e-mail: {}'.format(user[0], user[1], user[3], user[4]))
 
     @staticmethod
     def showTeams(teams):
@@ -216,3 +217,13 @@ class View:
         :return None
         """
         os.system('cls' if os.name == 'nt' else 'clear')
+
+    @staticmethod
+    def show_students_name(students):
+
+        if students:
+            headers = ['ID', 'First name', 'Last name']
+            print(tabulate(students, headers, tablefmt="fancy_grid"))
+        else:
+            print('No students on the list.')
+
