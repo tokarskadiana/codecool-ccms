@@ -80,6 +80,12 @@ class StudentController(UserController):
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
                 input('\nPress any key to back')
+            elif option == '4':
+                view.clear()
+                user_average = user.student_average_grade()
+                view.user_grade_average(user,user_average)
+                input('\nPress any key to back')
+                continue
             elif option == '0':
                 UserController.sign_out()
                 return

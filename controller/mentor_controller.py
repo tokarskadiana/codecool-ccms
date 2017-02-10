@@ -182,15 +182,15 @@ class MentorController(EmployeeController):
                 team_list = user.list_teams()
                 view.View.showTeams(team_list)
                 input('\nEnter some key to get back:')
+            elif option == '9':
+                view.View.clear()
+                view.View.print_user_list(Student.list_student())
+                input('\nEnter some key to get back:')
             elif option == '10':
                 view.View.clear()
                 user.list_teams()
                 user.addOrRemoveTeam()
 
-            elif option == '9':
-                view.View.clear()
-                view.View.print_user_list(Student.list_student())
-                input('\nEnter some key to get back:')
             elif option == '0':
                 UserController.sign_out()
                 return

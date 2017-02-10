@@ -2,6 +2,7 @@ from tabulate import tabulate
 from model.assignment import Assignment
 import sys
 import os
+from model.student import Student
 from controller.mentor_controller import MentorController
 
 
@@ -36,6 +37,7 @@ class View:
         1. List your assignments
         2. View grades
         3. Submit assignment
+        4. Your average score
         0. Exit
         ''')
 
@@ -226,4 +228,9 @@ class View:
             print(tabulate(students, headers, tablefmt="fancy_grid"))
         else:
             print('No students on the list.')
-
+    @staticmethod
+    def user_grade_average(user,grade):
+        if grade is not None:
+            print('{} {} your average grade is {}'.format(user.first_name,user.last_name,grade))
+        else:
+            print('{} {} have no grades yet fella'.format(user.first_name,user.last_name))

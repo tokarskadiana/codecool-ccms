@@ -19,12 +19,11 @@ class Student(User):
         team_id = 1
         username = '{}.{}'.format(first_name, last_name)
 
-        query = ('INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(first_name, last_name, password, telephone, mail, username, team_id))
+        query = (
+        'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(
+            first_name, last_name, password, telephone, mail, username, team_id))
 
         SqlRequest.sql_request(query)
-
-
-
 
     @staticmethod
     def edit_student(index, mail, telephone, team):
@@ -36,10 +35,9 @@ class Student(User):
         #     if key:
         #         if key in self.__dict__.keys():
         #             self.__dict__[key] = value
-        query = ('UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
+        query = (
+        'UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
         SqlRequest.sql_request(query)
-
-
 
     @staticmethod
     def delete_student(id):
@@ -51,8 +49,6 @@ class Student(User):
         query = ('DELETE FROM student WHERE id={}'.format(id))
         SqlRequest.sql_request(query)
 
-
-
     @staticmethod
     def list_student():
         """
@@ -61,26 +57,9 @@ class Student(User):
         """
         list_of_students = []
 
-
-
         query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student'
 
         data = SqlRequest.sql_request(query)
-
-        return data
-
-
-
-    def get_details(self):
-        """
-        Returns list of personal data.
-        :return (list): list of personal data
-        """
-        query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student'
-        data = SqlRequest.sql_request(query)
-
-        list_det = [self.first_name, self.last_name, self.username, self.telephone, self.mail]
-        return list_det
 
         return data
 
@@ -97,9 +76,10 @@ class Student(User):
     @staticmethod
     def list_for_employee(index):
         if index.isdigit():
-                query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student WHERE id={}'.format(index)
-                data = SqlRequest.sql_request(query)
-                return data
+            query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student WHERE id={}'.format(
+                index)
+            data = SqlRequest.sql_request(query)
+            return data
         return None
 
     @staticmethod
@@ -108,3 +88,21 @@ class Student(User):
         data = SqlRequest.sql_request(query)
         return data
 
+    def student_average_grade(self):
+
+        get_id = 'SELECT * FROM student WHERE username="{}"'.format(self.username)
+        student_id = SqlRequest.sql_request(get_id)
+        for id in student_id:
+            get_average_grade = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(id[0])
+            student_average_grade = SqlRequest.sql_request(get_average_grade)
+            return student_average_grade[0][0]
+
+            #
+            # def all_students_average_grade(self):
+            #
+            #     list_of_students = self.list_student()
+            #     objectStudentList  = []
+            #     print(list_of_students)
+            #     # for student in list_of_students:
+            #     #     temp_object = Student()
+            #     #
