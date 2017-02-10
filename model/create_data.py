@@ -36,9 +36,9 @@ class Database(object):
     @classmethod
     def readSQLTxtLines(cls, filename):
         """
-
-        :param filename:
-        :return:
+        Read line by line query from text file.
+        :param filename (str): path for text file
+        :return: data form text file
         """
         file = cls.sql_path + filename
         with open(file) as fileSql:

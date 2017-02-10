@@ -101,11 +101,17 @@ class Mentor(Employee):
 
     @staticmethod
     def list_teams():
-
+        """
+        Returns list of teams form database.
+        :return: list of tuples.
+        """
         return SqlRequest.sql_request('SELECT * from team')
 
     @staticmethod
     def addOrRemoveTeam():
+        """
+        Add or remove team from database.
+        """
         option = input('What u want to do 1 for add 2 for delete other command leave,')
 
         if option == '1':

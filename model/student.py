@@ -109,6 +109,10 @@ class Student(User):
         return data
 
     def get_attandance(self):
+        """
+        Get average present for student
+        :return(int): average present
+        """
         query = 'SELECT id FROM student WHERE username="{}"'.format(self.get_username())
         data = SqlRequest.sql_request(query)
         query_att = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(data[0][0])
