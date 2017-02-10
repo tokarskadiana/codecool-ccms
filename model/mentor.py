@@ -1,6 +1,7 @@
 from model.employee import Employee
 from model.sqlRequest import SqlRequest
 
+
 class Mentor(Employee):
     mentors_list = []
 
@@ -15,8 +16,9 @@ class Mentor(Employee):
         :param mail (str): mail of mentor
         """
         username = '{}.{}'.format(first_name, last_name)
-        SqlRequest.sql_request('INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(first_name,last_name,password,username,'mentor'))
-
+        SqlRequest.sql_request(
+            'INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(
+                first_name, last_name, password, username, 'mentor'))
 
     def edit_mentor(self, **kwargs):
         """
@@ -24,12 +26,14 @@ class Mentor(Employee):
         :param kwargs (dict): attr of mentor objc and value to change
         :return (dict): all attr of mentor objc
         """
-        username  = self.username
+        username = self.username
         for key, value in kwargs.items():
             for dict_key, dict_value in self.__dict__.items():
 
                 if key == dict_key:
-                    query = 'UPDATE employee SET "{}"="{}" WHERE position = "mentor" and username = "{}"'.format(key,value,username)
+                    query = 'UPDATE employee SET "{}"="{}" WHERE position = "mentor" and username = "{}"'.format(key,
+                                                                                                                 value,
+                                                                                                                 username)
                     # print(query)
                     msg = SqlRequest.sql_request(query)
                     return True
@@ -70,7 +74,6 @@ class Mentor(Employee):
         query = 'UPDATE employee SET salary={} WHERE position = "mentor" and username = "{}"'.format(salary, username)
         msg = SqlRequest.sql_request(query)
 
-
     @classmethod
     def list_mentors(cls):
         """
@@ -81,7 +84,7 @@ class Mentor(Employee):
         mentorSqlList = SqlRequest.sql_request(query)
         mentorObjectList = []
         for element in mentorSqlList:
-            mentorObject = cls(element[3],element[1],element[2],element[4],element[5])
+            mentorObject = cls(element[3], element[1], element[2], element[4], element[5])
             mentorObjectList.append(mentorObject)
         return mentorObjectList
 
@@ -101,11 +104,17 @@ class Mentor(Employee):
 
     @staticmethod
     def list_teams():
-
+        """
+        Returns list of teams form database.
+        :return: list of tuples.
+        """
         return SqlRequest.sql_request('SELECT * from team')
 
     @staticmethod
     def addOrRemoveTeam():
+        """
+        Add or remove team from database.
+        """
         option = input('What u want to do 1 for add 2 for delete other command leave,')
 
         if option == '1':

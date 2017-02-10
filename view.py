@@ -187,7 +187,6 @@ class View:
         else:
             print('No statistics yet.')
 
-
     @staticmethod
     def print_two_demention_list(printed_list):
         """Print all 2 demention list
@@ -209,7 +208,7 @@ class View:
     @staticmethod
     def showTeams(teams):
         for data in teams:
-            print('{}. {}'.format(data[0],data[1]))
+            print('{}. {}'.format(data[0], data[1]))
 
     @staticmethod
     def clear():
@@ -231,5 +230,4 @@ class View:
     @staticmethod
     def show_student_presents(data):
         data = round(data)
-        print(str(data)+'%')
-
+        print(str(data) + '%')

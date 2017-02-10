@@ -8,7 +8,6 @@ from model.assignment import Assignment
 from model.submit import Submition
 from model.attendance import Attendance
 
-
 import csv
 
 
@@ -28,25 +27,22 @@ class Database(object):
         """
         file = cls.sql_path + filename
         with open(file, newline='') as fileSql:
-
-            sql_output  = fileSql.read()
+            sql_output = fileSql.read()
 
         return sql_output
 
     @classmethod
     def readSQLTxtLines(cls, filename):
         """
-
-        :param filename:
-        :return:
+        Read line by line query from text file.
+        :param filename (str): path for text file
+        :return: data form text file
         """
         file = cls.sql_path + filename
         with open(file) as fileSql:
-
-            sql_output  = fileSql.readlines()
+            sql_output = fileSql.readlines()
 
         return sql_output
-
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)
