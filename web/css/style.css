@@ -32,6 +32,10 @@ a, a:active, a:visited, a:hover{
   color: #000;
 }
 
+
+/*spesific classes*/
+
+
 .user-info{
 	border-right: 1px solid #d5d5d5;
 	padding: 15px;
@@ -57,6 +61,9 @@ a, a:active, a:visited, a:hover{
 
 }
 
+.user-actions h3{
+  text-align: center;
+}
 .user-first-section{
 	border-bottom:  1px solid #d5d5d5;
 	padding-bottom: 15px;
@@ -84,11 +91,12 @@ a, a:active, a:visited, a:hover{
 	padding: 15px 0px;
 }
 
-table td{
+/*table td{
 	border: 1px solid #d5d5d5;
 	padding: 15px;
-}
+}*/
 
+/*------------------login------------*/
 .login-wrapper{
   width: 50%;
   margin: 7% auto;
@@ -120,3 +128,18 @@ table td{
     cursor: pointer;
     width: 30%;
     border-radius: 5px;
+}
+/*------------------student assiments-----------------*/
+
+.stud-assiments{
+  width: 50%;
+  margin: 10px auto;
+  text-align: center;
+}
+.stud-assiments td, th{
+  padding-top: 20px;
+  border-bottom: 2px  dashed #000;
+}
+#icon{
+  width:30px;
+}
