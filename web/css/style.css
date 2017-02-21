@@ -1,6 +1,12 @@
 *{
 	box-sizing: border-box;
 }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Lato';
+}
 body,p{
 	font-size:16px;
 	line-height: 140%;
@@ -20,7 +26,12 @@ aside{
 
 section{
 	width: 70%;
-	float:left;	
+	float:left;
+}
+
+a, a:active, a:visited, a:hover{
+  text-decoration: none;
+  color: #000;
 }
 
 .user-info{
@@ -29,6 +40,23 @@ section{
 }
 .user-actions{
 	padding: 15px;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+.user-actions::after {
+  content: "";
+  background: url('../images/codecool.png') no-repeat;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background-size: 70%;
+  background-position: center;
+
 }
 
 .user-first-section{
@@ -55,7 +83,13 @@ section{
 .user-capabilities{
 	clear: both;
 	display: block;
-	padding: 15px 0px;	 
+	padding: 15px 0px;
+}
+table{
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    overflow-x: auto;
 }
 
 table td{
@@ -63,13 +97,18 @@ table td{
 	padding: 15px;
 }
 
+
 /*==============================================================*/
 
 
+.addmentor-input label {
+    display: block;
+}
 
 
-
-
+.addmentor-button {
+    display: block;
+}
 
 
 
@@ -111,3 +150,4 @@ body{
     cursor: pointer;
     width: 30%;
     border-radius: 5px;
+}
