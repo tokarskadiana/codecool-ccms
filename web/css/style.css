@@ -1,6 +1,11 @@
 *{
 	box-sizing: border-box;
 }
+html, body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 body,p{
 	font-size:16px;
 	line-height: 140%;
@@ -24,6 +29,7 @@ section{
 
 a, a:active, a:visited, a:hover{
   text-decoration: none;
+  color: #000;
 }
 
 .user-info{
@@ -32,6 +38,23 @@ a, a:active, a:visited, a:hover{
 }
 .user-actions{
 	padding: 15px;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+.user-actions::after {
+  content: "";
+  background: url('../images/codecool.png') no-repeat;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background-size: 70%;
+  background-position: center;
+
 }
 
 .user-first-section{
@@ -58,29 +81,12 @@ a, a:active, a:visited, a:hover{
 .user-capabilities{
 	clear: both;
 	display: block;
-	padding: 15px 0px;	 
+	padding: 15px 0px;
 }
 
 table td{
 	border: 1px solid #d5d5d5;
 	padding: 15px;
-}
-
-/*==============================================================*/
-
-
-
-
-
-
-
-
-
-
-	
-body{
-  margin: 0;
-  padding: 0;
 }
 
 .login-wrapper{
