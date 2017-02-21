@@ -1,122 +1,171 @@
-*{
-	box-sizing: border-box;
-}
-html, body{
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-body,p{
-	font-size:16px;
-	line-height: 140%;
-}
-h1{
-	font-size: 42px;
-}
-h2,h3,h4{
-	font-size:24px;
+* {
+    box-sizing: border-box;
 }
 
-aside{
-	width: 30%;
-	float:left;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Lato';
 }
 
-section{
-	width: 70%;
-	float:left;
+body, p {
+    font-size: 16px;
+    line-height: 140%;
 }
 
-a, a:active, a:visited, a:hover{
-  text-decoration: none;
-  color: #000;
+h1 {
+    font-size: 42px;
+}
+
+h2, h3, h4 {
+    font-size: 24px;
+}
+
+aside {
+    width: 30%;
+    float: left;
+}
+
+section {
+    width: 70%;
+    float: left;
+}
+
+a, a:active, a:visited, a:hover {
+    text-decoration: none;
+    color: #000;
 }
 
 
 /*spesific classes*/
 
+.user-info {
+    border-right: 1px solid #d5d5d5;
+    padding: 15px;
+}
 
-.user-info{
-	border-right: 1px solid #d5d5d5;
-	padding: 15px;
+.user-actions {
+    padding: 15px;
+    height: 100%;
+    display: block;
+    position: relative;
 }
-.user-actions{
-	padding: 15px;
-  height: 100%;
-  display: block;
-  position: relative;
-}
+
 .user-actions::after {
-  content: "";
-  background: url('../images/codecool.png') no-repeat;
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-  background-size: 70%;
-  background-position: center;
-
+    content: "";
+    background: url('../images/codecool.png') no-repeat;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    background-size: 70%;
+    background-position: center;
 }
 
-.user-actions h3{
-  text-align: center;
+.user-actions h3 {
+    text-align: center;
 }
-.user-first-section{
-	border-bottom:  1px solid #d5d5d5;
-	padding-bottom: 15px;
+
+.user-first-section {
+    border-bottom: 1px solid #d5d5d5;
+    padding-bottom: 15px;
 }
-.image-wrapper:after{
+
+.image-wrapper:after {
     clear: both;
     content: "";
     display: block;
 }
-.image-wrapper img{
-	width: 30%;
-	max-width: 100px;
-	float:left;
+
+.image-wrapper img {
+    width: 30%;
+    max-width: 100px;
+    float: left;
 }
 
-.image-wrapper .details{
-	width: 50%;
-	float:left;
-	padding: 20px;
+.image-wrapper .details {
+    width: 50%;
+    float: left;
+    padding: 20px;
     padding-top: 0px
 }
-.user-capabilities{
-	clear: both;
-	display: block;
-	padding: 15px 0px;
+
+.user-capabilities {
+    clear: both;
+    display: block;
+    padding: 15px 0px;
 }
 
-.back-button{
-  width: 100px;
-  height: 35px;
-  background:url("../images/back-button(1).png") no-repeat;
-  background-size: 30px;
-  position: fixed;
-  bottom: 5%;
-  left: 32%;
-  text-align: right;
+
+/*Who wright this???*/
+
+
+/*Use class or at least id, not just a table*/
+
+
+/*table{
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    overflow-x: auto;
+}*/
+
+.back-button {
+    width: 100px;
+    height: 35px;
+    background: url("../images/back-button(1).png") no-repeat;
+    background-size: 30px;
+    position: fixed;
+    bottom: 5%;
+    left: 32%;
+    text-align: right;
 }
-.back-button a{
-  margin-top: 5px;
-  display: block;
-  font-size: 1.5em;
+
+.back-button a {
+    margin-top: 5px;
+    display: block;
+    font-size: 1.5em;
 }
+
+
+/*Who wright this???*/
+
+
+/*Use class or at least id, not just a table td*/
+
+
 /*table td{
 	border: 1px solid #d5d5d5;
 	padding: 15px;
 }*/
 
-/*------------------login------------*/
-.login-wrapper{
-  width: 50%;
-  margin: 7% auto;
-  text-align: center;
+
+/**/
+
+.addmentor-input label {
+    display: block;
 }
+
+.addmentor-button {
+    display: block;
+}
+
+
+/**/
+
+
+/*------------------login------------*/
+
+.login-wrapper {
+    width: 50%;
+    margin: 7% auto;
+    text-align: center;
+}
+
 .login {
     width: 70%;
     margin: inherit;
@@ -124,7 +173,8 @@ a, a:active, a:visited, a:hover{
     border-radius: 5px;
     padding: 20px;
 }
-.login input{
+
+.login input {
     padding: 12px 20px;
     margin: 8px auto;
     display: block;
@@ -132,6 +182,7 @@ a, a:active, a:visited, a:hover{
     box-sizing: border-box;
     border-radius: 5px;
 }
+
 #button {
     background-color: #0b5463;
     display: block;
@@ -142,53 +193,63 @@ a, a:active, a:visited, a:hover{
     cursor: pointer;
     border-radius: 5px;
 }
+
+
 /*------------------student assiments-----------------*/
+
+
 /*listing*/
-.stud-assiments{
-  width: 50%;
-  margin: 10px auto;
-  text-align: center;
+
+.stud-assiments {
+    width: 50%;
+    margin: 10px auto;
+    text-align: center;
 }
-.stud-assiments td, th{
-  padding-top: 20px;
-  border-bottom: 2px  dashed #000;
+
+.stud-assiments td, th {
+    padding-top: 20px;
+    border-bottom: 2px dashed #000;
 }
-#icon{
-  width:30px;
+
+#icon {
+    width: 30px;
 }
+
 
 /*view detaiils*/
-.stud-view-assiments{
-  width:90%;
-  margin: 10px auto;
-  text-align: center;
+
+.stud-view-assiments {
+    width: 90%;
+    margin: 10px auto;
+    text-align: center;
 }
 
-.stud-view-assiments td, th{
-  padding-top: 20px;
-  border-bottom: 2px  dashed #000;
+.stud-view-assiments td, th {
+    padding-top: 20px;
+    border-bottom: 2px dashed #000;
 }
+
 
 /*submition*/
-.submition-wrapper{
-  width:90%;
-  margin: 10px auto;
+
+.submition-wrapper {
+    width: 90%;
+    margin: 10px auto;
 }
 
-.submition-wrapper input{
-      padding: 12px 20px;
-      margin: 8px auto;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      border-radius: 5px;
+.submition-wrapper input {
+    padding: 12px 20px;
+    margin: 8px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
 }
 
-#sub-button{
-  background-color: #0b5463;
-  color: white;
-  padding: 14px 20px;
-
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+#sub-button {
+    background-color: #0b5463;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
