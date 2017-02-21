@@ -4,6 +4,7 @@
 body,p{
 	font-size:16px;
 	line-height: 140%;
+	background-color: #e8e8e8;	
 }
 h1{
 	font-size: 42px;
@@ -23,7 +24,7 @@ section{
 }
 
 .user-info{
-	border-right: 1px solid #d5d5d5;
+	border-right: 1px solid white;
 	padding: 15px;
 }
 .user-actions{
@@ -31,7 +32,7 @@ section{
 }
 
 .user-first-section{
-	border-bottom:  1px solid #d5d5d5;
+	border-bottom:  1px solid white;
 	padding-bottom: 15px;
 }
 .image-wrapper:after{
@@ -58,7 +59,7 @@ section{
 }
 
 table td{
-	border: 1px solid #d5d5d5;
+	border: 2px solid white;
 	padding: 15px;
 }
 
