@@ -1,0 +1,78 @@
+
+<html>
+    <head>
+        <style>
+            .editmentor-table {
+                width: 100%;
+                border: 1px solid rgba(0, 142, 157, 0.21);
+                background-color: rgba(0, 142, 157, 0.43); 
+            }
+            .editmentor-table tr, td, th{
+                border: 1px solid rgba(0, 142, 157, 0.21);
+                text-align: center;
+                background-color: rgba(0, 142, 157, 0.21);
+            }
+            ul.editmentor-buttons {
+                width: 100%;
+                text-align: center;
+                display:block;
+            }
+            .editmentor-buttons li {
+                display: inline-block;
+                padding: 10px 15px;
+            }
+            .editmentor-buttons li input {
+                width: 120px;
+                font-size: 1em;
+                text-decoration-style:10px 10px 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <table class="editmentor-table">
+            <tr>
+                <th>Id</th>
+                <td><input type="text" value="1"></td>
+            </tr>
+            <tr>
+                <th>First name</th>
+                <td><input type="text" value="Matuesz"></td>
+            </tr>
+            <tr>
+                <th>Last name</th>
+                <td><input type="text" value="Ostafil"></td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td><input type="text" value="matuesz.ostafil"></td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td><input type="text" value="666-666-666"></td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td><input type="text" value="mateusz.ostafil@gmail.com"></td>
+            </tr>
+            <tr>
+                <th>Salary</th>
+                <td><input type="text" value="10000"></td>
+            </tr>
+
+        </table>
+        <div class="buttons">
+            <ul class="editmentor-buttons">
+                <li>
+                    <input id="editmentor-button-remove" type="submit" value="Remove">
+                </li>
+                <li>
+                    <input id="editmentor-button-edit"  type="submit" value="Clear to default" onclick="backDefaultMentor()">
+                </li>
+                <li>
+                    <input id="editmentor-button-save"  type="submit" value="Save">
+                </li>
+            </ul>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
