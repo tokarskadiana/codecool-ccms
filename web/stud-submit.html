@@ -25,7 +25,6 @@
 					<h3>Classes</h3>
 					<ul>
 						<li><a href="stud_list_assiments.html">List available assignments</li></a>
-				    <!-- <li><a href="#">Submit assignment</li></a> -->
 				    <li><a href="#">Show average score</li></a>
 						<li><a href="#">Check attendance</li></a>
 						<li><a href="#">Add assignment</li></a>
@@ -51,27 +50,21 @@
 		</aside>
 
 		<section class="user-actions">
-			<h3>Assignments avaiable to you</h3>
-      <table class='stud-assiments'>
-        <thead>
-          <th>Assiment</th>
-          <th>View</th>
-          <th>Submit</th>
-        </thead>
-        <tbody>
-          <tr>
-          <td>Dupa</td>
-          <td><a href="stud_view_assiment.html"><img id="icon" src="images/loupe.png" alt="loupe"></a></td>
-          <td><a href="stud-submit.html"><img id="icon" src="images/edit.png" alt="submit"></a></td>
-        </tr>
-        <tr>
-        <td>Dupaaaaaaaaaaa</td>
-        <td><a href="stud_view_assiment.html"><img id="icon" src="images/loupe.png" alt="loupe"></a></td>
-        <td><a href="stud-submit.html"><img id="icon" src="images/edit.png" alt="submit"></a></td>
-      </tr>
-        </tbody>
-      </table>
-		</section>
+
+<div class="submition-wrapper">
+
+      <h3>Submit assignment</h3>
+        <p>Assiment: Dupa</p>
+        <p>Description: Duuuuuupaaaaaaa...</p>
+        <p>Due date: 12/12/12</p>
+        <p>Launch your submition:</p>
+        <form class="submition" action="stud-submit.html" method="post">
+          <input type="text" name="submition" placeholder="Submition">
+          <input id="sub-button" type="submit" name="" value="Submit">
+        </form>
+  </div>
+  <div class="back-button"><a href="stud_list_assiments.html">Back</a></div>
+</section>
 
 	</body>
 </html>

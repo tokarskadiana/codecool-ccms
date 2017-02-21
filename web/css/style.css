@@ -91,6 +91,21 @@ a, a:active, a:visited, a:hover{
 	padding: 15px 0px;
 }
 
+.back-button{
+  width: 100px;
+  height: 35px;
+  background:url("../images/back-button(1).png") no-repeat;
+  background-size: 30px;
+  position: fixed;
+  bottom: 5%;
+  left: 32%;
+  text-align: right;
+}
+.back-button a{
+  margin-top: 5px;
+  display: block;
+  font-size: 1.5em;
+}
 /*table td{
 	border: 1px solid #d5d5d5;
 	padding: 15px;
@@ -110,7 +125,6 @@ a, a:active, a:visited, a:hover{
     padding: 20px;
 }
 .login input{
-    width: 60%;
     padding: 12px 20px;
     margin: 8px auto;
     display: block;
@@ -126,11 +140,10 @@ a, a:active, a:visited, a:hover{
     margin: 15px auto;
     border: none;
     cursor: pointer;
-    width: 30%;
     border-radius: 5px;
 }
 /*------------------student assiments-----------------*/
-
+/*listing*/
 .stud-assiments{
   width: 50%;
   margin: 10px auto;
@@ -142,4 +155,40 @@ a, a:active, a:visited, a:hover{
 }
 #icon{
   width:30px;
+}
+
+/*view detaiils*/
+.stud-view-assiments{
+  width:90%;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.stud-view-assiments td, th{
+  padding-top: 20px;
+  border-bottom: 2px  dashed #000;
+}
+
+/*submition*/
+.submition-wrapper{
+  width:90%;
+  margin: 10px auto;
+}
+
+.submition-wrapper input{
+      padding: 12px 20px;
+      margin: 8px auto;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 5px;
+}
+
+#sub-button{
+  background-color: #0b5463;
+  color: white;
+  padding: 14px 20px;
+
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
