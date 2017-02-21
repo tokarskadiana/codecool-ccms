@@ -34,7 +34,46 @@ section{
 	border-bottom:  1px solid #d5d5d5;
 	padding-bottom: 15px;
 }
+.image-wrapper:after{
+    clear: both;
+    content: "";
+    display: block;
+}
+.image-wrapper img{
+	width: 30%;
+	max-width: 100px;
+	float:left;
+}
 
+.image-wrapper .details{
+	width: 50%;
+	float:left;
+	padding: 20px;
+    padding-top: 0px
+}
+.user-capabilities{
+	clear: both;
+	display: block;
+	padding: 15px 0px;	 
+}
+
+table td{
+	border: 1px solid #d5d5d5;
+	padding: 15px;
+}
+
+/*==============================================================*/
+
+
+
+
+
+
+
+
+
+
+	
 body{
   margin: 0;
   padding: 0;
