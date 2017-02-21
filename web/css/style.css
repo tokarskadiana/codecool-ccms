@@ -65,10 +65,14 @@ table td{
 /*==============================================================*/
 
 
+.addmentor-input label {
+    display: block;
+}
 
 
-
-
+.addmentor-button {
+    display: block;
+}
 
 
 
