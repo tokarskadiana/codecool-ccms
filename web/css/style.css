@@ -19,7 +19,11 @@ aside{
 
 section{
 	width: 70%;
-	float:left;	
+	float:left;
+}
+
+a, a:active, a:visited, a:hover{
+  text-decoration: none;
 }
 
 .user-info{
