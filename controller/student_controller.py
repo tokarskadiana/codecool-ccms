@@ -4,6 +4,7 @@ from view import View as view
 
 
 class StudentController(UserController):
+    """Class which controls user behaviour"""
 
     def list_assignment(self):
         assignment_list = []
@@ -30,15 +31,16 @@ class StudentController(UserController):
         student_assignment_grade = []
         for assignment in Assignment.get_list():
             grade = assignment.list_assignment_grades(self.user.get_username())
-            if not grade[1]:
-                grade[1] = '---'
-
-            student_assignment_grade.append(grade)
+            if grade:
+                if not grade[1]:
+                    grade[1] = '---'
+                student_assignment_grade.append(grade)
         return student_assignment_grade
 
     def submit_assignment(self, assignment_title, content):
         '''
         Submit assignment as a student
+        return: string
         '''
         for assignment in Assignment.get_list():
             if assignment.get_title() == assignment_title:
@@ -50,6 +52,11 @@ class StudentController(UserController):
 
     @staticmethod
     def student_session(user):
+        """
+        Static method show menu of user
+        :param user:
+        :return: None
+        """
         session = StudentController(user)
         while True:
             view.student_menu()
@@ -58,12 +65,12 @@ class StudentController(UserController):
                 view.clear()
                 view.print_assignments_list(session.list_assignment())
                 input('\nPress any key to back')
-            elif option == '2':
-                view.clear()
-                grades = session.list_assignment_grades()
-                view.print_assignment_grades(grades)
-                input('\nPress any key to back')
-                continue
+            # elif option == '2':
+            #     view.clear()
+            #     grades = session.list_assignment_grades()
+            #     view.print_assignment_grades(grades)
+            #     input('\nPress any key to back')
+            #     continue
             elif option == '3':
                 view.clear()
                 assignments_list = session.list_assignment_title_content(
@@ -72,6 +79,18 @@ class StudentController(UserController):
                 assignment_title = input('\nEnter assignment title to submit:')
                 content = input('Enter content of assignment:')
                 print(session.submit_assignment(assignment_title, content))
+                input('\nPress any key to back')
+            elif option == '4':
+                view.clear()
+                user_average = user.student_average_grade()
+                view.user_grade_average(user, user_average)
+                input('\nPress any key to back')
+                continue
+            elif option == '5':
+                view.clear()
+                data = user.get_attandance()
+                if data:
+                    view.show_student_presents(data)
                 input('\nPress any key to back')
             elif option == '0':
                 UserController.sign_out()

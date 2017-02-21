@@ -1,49 +1,58 @@
 from model.student import Student
 from model.submit import Submition
-# from create_data import Database
+from model.sqlRequest import SqlRequest
+import datetime
 
 
 class Assignment:
     '''
     Class representing assignment object.
     '''
-    list_assignment = []
 
-    def __init__(self, title, description, due_date, submit_list):
+    def __init__(self, title, description, due_date, mentor_id, type):
         '''
         Constructor of an object.
         '''
         self.title = title
         self.description = description
         self.due_date = due_date
-        self.submit_list = self.make_submit_list(submit_list)
+        self.type = type
+        self.mentor_id = mentor_id
+        self.id = None
 
-    def make_submit_list(self, submit_list):
+    def set_id(self, id):
+        self.id = id
+
+    def make_submit_list(self):
         '''
         Make a list of submitions for particular assigment instance for every students.
 
         Returns:list
         '''
-        if not submit_list:
-            if Student.list_student():
-                for student in Student.list_student():
-
-                    submit_list.append(Submition.create(student.get_username()))
-                return submit_list
-        return submit_list
+        student_list = SqlRequest.sql_request('SELECT * FROM student')
+        for student in student_list:
+            Submition.create(self.id, student[0])
 
     @classmethod
-    def create(cls, title, description, due_date='No due date', submit_list=[]):
+    def create(cls, title, description, type, user_name, due_date):  # add user_name
         '''
         Make new assignment and add it to assigment list.
 
         Returns: boolean value
         '''
-        assigment = cls(title, description, due_date, submit_list)
-        cls.list_assignment.append(assigment)
-        if assigment in cls.list_assignment:
-            return True
-        return False
+        query = "SELECT * FROM employee WHERE (position='mentor' AND username='{}');".format(user_name)
+        mentor_id = SqlRequest.sql_request(query)[0][0]
+        assignment = cls(title, description, due_date, mentor_id, type)
+        date = datetime.datetime.now().date()
+        query = "INSERT OR IGNORE INTO assignment (title, description, date, due_date, type, mentor_id) \
+                 VALUES ('{}', '{}', '{}', '{}', '{}', '{}');".format(
+            assignment.title, assignment.description, date,
+            assignment.due_date, assignment.type, assignment.mentor_id)
+        SqlRequest.sql_request(query)
+        assignment_id = \
+        SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
+        assignment.set_id(assignment_id)
+        assignment.make_submit_list()
 
     def __str__(self):
         '''
@@ -63,13 +72,21 @@ class Assignment:
 
         Returns:list
         '''
-        return cls.list_assignment
+        list_assignment = []
+        data = SqlRequest.sql_request('SELECT * FROM assignment')
+        for item in data:
+            assignment = cls(item[1], item[2], item[3], item[4], item[5])
+            assignment.set_id(item[0])
+            list_assignment.append(assignment)
+        return list_assignment
 
     def get_submition_content(self, user_name):
-        if self.submit_list:
-            for submition in self.submit_list:
-                if submition.get_student_username() == user_name:
-                    return submition.get_content()
+        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        user_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        for submition in submitions:
+            if submition[2] == user_id:
+                return submition[3]
+        return None
 
     def submit_assignment(self, user_name, content):
         '''
@@ -77,25 +94,30 @@ class Assignment:
 
         Returns: bool
         '''
-        if self.submit_list:
-            for submition in self.submit_list:
-                if submition.get_student_username() == user_name:
-                    if submition.change_content(content):
-                        return True
+        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        user_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        for submition in submitions:
+            if submition[2] == user_id:
+                Submition.change_content(submition[0], content)
+                return True
         return False
 
-    def grade_assigment(self, user_name, grade):
+    def grade_assigment(self, mentor_username, student_username, grade):
         '''
         Make able mentor to grade students assigment.
 
         Returns:bool/int
         '''
-        if self.submit_list:
-            for submition in self.submit_list:
-                if submition.get_student_username() == user_name:
-                    if submition.change_grade(grade):
-                        return True
-                return False
+        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        student = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(student_username))
+        mentor = SqlRequest.sql_request("SELECT * FROM employee WHERE username='{}'".format(mentor_username))
+        if student and mentor:
+            student_id = student[0][0]
+            mentor_id = mentor[0][0]
+            for submition in submitions:
+                if submition[2] == student_id:
+                    Submition.change_grade(mentor_id, submition[0], grade)
+                    return True
         return False
 
     def view_details(self):
@@ -105,32 +127,29 @@ class Assignment:
         Returns:list
         '''
         details = []
-        if self.submit_list:
-            for submition in self.submit_list:
-                details.append([self.title, submition.get_student_username(),
-                                submition.get_content(), submition.get_grade()])
-        if details:
-            return details
-        return None
+        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        for submition in submitions:
+            user_name = SqlRequest.sql_request('SELECT * FROM student WHERE id="{}"'.format(submition[2]))[0][6]
+            if not submition[3]:
+                con = 'No content'
+            else:
+                con = str(submition[3])
+            if not submition[4]:
+                grade = 'No grade'
+            else:
+                grade = str(submition[4])
+            details.append([self.title, user_name, con, grade])
+        return details
 
-    def list_assignment_grades(self, student_username):
+    def list_assignment_grades(self, user_name):
         '''
         Find submittion by user name and return info about garade.
 
         Returns:list
         '''
-        for submit in self.submit_list:
-            if submit.get_student_username() == student_username:
-                return [self.title, submit.get_grade()]
+        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        user_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        for submition in submitions:
+            if submition[2] == user_id:
+                return submition[4]
         return None
-
-    @staticmethod
-    def return_ass(number):
-        """
-        Return assignment objc by given index in list.
-        :param number: index of objc
-        :return: objc
-        """
-        for index, ass in enumerate(Assignment.list_assignment):
-            if str(index) == number:
-                return ass

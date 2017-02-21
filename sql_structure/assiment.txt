@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS assignment
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    date TEXT,
+    description TEXT,
+    due_date TEXT,
+    mentor_id INTEGER,
+    type TEXT
+);

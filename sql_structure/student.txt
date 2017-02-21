@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS student(
+   ID INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,
+   first_name           TEXT    NOT NULL,
+   last_name            TEXT     NOT NULL,
+   password        TEXT,
+   telephone        TEXT,
+   mail        TEXT,
+   username    TEXT,
+   team_id       INT,
+   UNIQUE(username)
+);

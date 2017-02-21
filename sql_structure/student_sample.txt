@@ -1,0 +1,2 @@
+INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("piotr","gurdek","kkk","666666666","pgurdek@dupa.pl","piotr.gurdek",1);
+INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("monika","plocica","kkk","333333666","monika@dupa.pl","monika.plocica",1);

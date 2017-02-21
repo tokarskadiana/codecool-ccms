@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS team
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    UNIQUE(name)
+);

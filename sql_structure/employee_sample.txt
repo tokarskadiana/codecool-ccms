@@ -1,0 +1,5 @@
+INSERT OR IGNORE INTO  employee (first_name,last_name,password,telephone,mail,username,salary, position) VALUES ("mateusz","ostafil","kkk","123123123","mateusz@ostafil.pl","mateusz.ostafil","10000","mentor");
+INSERT OR IGNORE INTO  employee (first_name,last_name,password,telephone,mail,username,salary, position) VALUES ("jurek","mardaus","kkk","123123123","jurek@mardaus.pl","jurek.mardaus","100000","manager");
+INSERT OR IGNORE INTO  employee (first_name,last_name,password,telephone,mail,username,salary, position) VALUES ("miriam","miriam","kkk","123123123","miriam@miriam.pl","miriam.miriam","5000","employee");
+INSERT OR IGNORE INTO  employee (first_name,last_name,password,telephone,mail,username,salary, position) VALUES ("p","p","kkk","123123123","p@p.pl","p.p","5000","manager");
+INSERT OR IGNORE INTO  employee (first_name,last_name,password,telephone,mail,username,salary, position) VALUES ("s","s","kkk","123123123","s@s.pl","s.s","5000","employee");
