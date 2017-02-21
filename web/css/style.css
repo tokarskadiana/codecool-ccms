@@ -34,3 +34,40 @@ section{
 	border-bottom:  1px solid #d5d5d5;
 	padding-bottom: 15px;
 }
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.login-wrapper{
+  width: 50%;
+  margin: 7% auto;
+  text-align: center;
+}
+.login {
+    width: 70%;
+    margin: inherit;
+    border: 3px solid #bebcbc;
+    border-radius: 5px;
+    padding: 20px;
+}
+.login input{
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px auto;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+#button {
+    background-color: #0b5463;
+    display: block;
+    color: white;
+    padding: 14px 20px;
+    margin: 15px auto;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    border-radius: 5px;
