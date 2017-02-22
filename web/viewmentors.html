@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
@@ -44,16 +45,17 @@
 
 		<section class="user-actions">
 			<h3>Mentors List:</h3>
-			<table>
+			<table class='stud-view-assiments'>
 				<thead>
-					<td>#</td>
+					<td>ID</td>
 					<td>First Name</td>
 					<td>Last Name</td>
                     <td>User Name</td>
 					<td>Phone number</td>
                     <td>E-mail</td>
 					<td>Salary</td>
-                    <td>Action</td>
+                    <td>Edit</td>
+				    <td>Delete</td>
 				</thead>
 				<tbody>
 					<tr>
@@ -64,9 +66,8 @@
                         <td>123-123-123</td>
                         <td>mateusz@codecool.pl</td>
                         <td>10000000</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
-                        </td>
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
 					</tr>
 					<tr>
 						<td>2</td>
@@ -76,9 +77,8 @@
                         <td>123-123-123</td>
                         <td>rafał@codecool.pl</td>
                         <td>10000000</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
-                        </td>
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
 					</tr>
 					<tr>
 						<td>3</td>
@@ -88,9 +88,8 @@
                         <td>123-123-123</td>
                         <td>marcin@codecool.pl</td>
                         <td>10000000</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
-                        </td>
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
 					</tr>
                     <tr>
 						<td>4</td>
@@ -100,14 +99,17 @@
                         <td>123-123-123</td>
                         <td>przemek@codecool.pl</td>
                         <td>10000000</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
-                        </td>
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
 					</tr>
+
 				</tbody>
 
 			</table>
-            <input type="button" value="Add New Team">
+			<div class="submition-wrapper">
+            <input id='sub-button' type="button" value="Add New Team">
+						</div>
+
 		</section>
 
 	</body>
