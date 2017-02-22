@@ -37,6 +37,14 @@ a, a:active, a:visited, a:hover {
     color: #000;
 }
 
+input {
+    padding: 12px 20px;
+    margin: 8px auto;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
 
 /*spesific classes*/
 
@@ -134,15 +142,6 @@ a, a:active, a:visited, a:hover {
     padding: 20px;
 }
 
-.login input {
-    padding: 12px 20px;
-    margin: 8px auto;
-    display: block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 5px;
-}
-
 #button {
     background-color: #0b5463;
     display: block;
@@ -160,37 +159,35 @@ a, a:active, a:visited, a:hover {
 
 /*listing*/
 
-.stud-assiments {
-    width: 50%;
+.small-wrapper{
+  width: 60%;
+  margin: 0 auto;
+}
+.large-wrapper{
+  width: 90%;
+  margin: 0 auto;
+}
+.table-style {
+    width: 100%;
     margin: 10px auto;
     text-align: center;
 }
 
-.stud-assiments td, th {
-    padding-top: 20px;
-    border-bottom: 2px dashed #000;
-}
-
-#icon {
-    width: 30px;
-}
-
-
-/*view detaiils*/
-
-.stud-view-assiments {
-    width: 90%;
-    margin: 10px auto;
-    text-align: center;
-}
-
-.stud-view-assiments td, th {
+.table-style td, th {
     padding-top: 20px;
     border-bottom: 2px dashed #000;
 }
 
 
 /*submition*/
+#sub-button {
+  background-color: #0b5463;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;}
 
 .submition-wrapper {
     width: 90%;
@@ -203,16 +200,34 @@ a, a:active, a:visited, a:hover {
     border: 1px solid #ccc;
     box-sizing: border-box;
     border-radius: 5px;
-    /*float: right;*/
+    margin: 0 0;
+    width: 50%;
+
 }
 
-#sub-button {
-    background-color: #0b5463;
-    color: white;
-    padding: 14px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+.submition-wrapper #sub-button{
+  width: 20%;
+}
+
+.main-form{
+  text-align: center;
+  margin-top: 5%;
+}
+.main-form input{
+  width: 40%;
+  margin: 10px auto;
+}
+ .main-form #sub-button{
+   width: 20%;
+   margin: 10% auto;
+ }
+.right-side {
+  float: left;
+  width: 40%;
+
+}
+.right-side input{
+  width: 100%;
 }
 .button-td{
     border:none;

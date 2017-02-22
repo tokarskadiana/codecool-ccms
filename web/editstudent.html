@@ -4,9 +4,6 @@
 	<title>Default Logged Page</title>
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
@@ -17,11 +14,12 @@
 				<div class="image-wrapper">
 					<img src="images/user.png" />
 					<div class="details">
-						<h1>{Piotrek}</h1>
+						<h1>{Przemek}</h1>
 						<a href="#">Log Out</a>
 					</div>
 				</div>
 			</div>
+
 			<div class="user-capabilities">
 				<div class="group-capabilities">
 					<h3>Classes</h3>
@@ -35,11 +33,11 @@
 						<li><a href="#">Add student</li></a>
 						<!-- <li><a href="#">Edit student</li></a> -->
 						<!-- <li><a href="#">Delete student</li></a> -->
-						<li><a href="#">View presence statistics</li></a>
-						<li><a href="#">View Teams	</li></a>
+						<li><a href="presencestats.html">View presence statistics</li></a>
+						<li><a href="viewteams.html">View Teams	</li></a>
 						<!-- <li><a href="#">Add or Remove Team</li></a> -->
-						<li><a href="#">List mentors</li></a>
-						<li><a href="#">Add mentor</li></a>
+						<li><a href="viewmentors.html">List mentors</li></a>
+						<!-- <li><a href="#">Add mentor</li></a> -->
 						<li><a href="#">Add assistant</li></a>
 						<!-- <li><a href="#">Edit mentor</li></a> -->
 						<!-- <li><a href="#">Delete mentor</li></a> -->
@@ -53,42 +51,27 @@
 		</aside>
 
 		<section class="user-actions">
-			<h3>Check Attendance 20.12.2017</h3>
-	 <div class="small-wrapper">
-      <table class='table-style'>
-        <thead>
-          <th>Name</th>
-          <th>Present</th>
-          <th>Absent</th>
-        </thead>
-        <tbody>
-	    	<tr>
-	          <td>Dupa</td>
-	          <td>      <input type="radio" id="dupa-yes" name="present" />
-	    				<label for="dupa-yes"><span></span>Yes</label>
-	    	  </td>
-	          <td>      <input type="radio" id="dupa-no" name="present" />
-	    				<label for="dupa-no"><span></span>No</label>
-	    	  </td>
-	        </tr>
-	         <tr>
-	              <td>Marcin</td>
-	              <td>      <input type="radio" id="Marcin-yes" name="present-marcin" />
-	                        <label for="Marcin-yes"><span></span>Yes</label>
-	              </td>
-	              <td>      <input type="radio" id="Marcin-no" name="present-marcin" />
-	                        <label for="Marcin-no"><span></span>No</label>
-	              </td>
-	        </tr>
-        </tbody>
-        <tfoot>
-        </tfoot>
-        
-      </table>
-			<div class="submition-wrapper sub-right">
-	            <input id="sub-button" type="button" value="Submit">
-			</div>
-		</div>
+      <h3>Edit student</h3>
+      <div class="large-wrapper">
+        <form class="main-form" action="index.html" method="post">
+          <div class="right-side">
+            <label for="first-name">First name</label>
+            <input type="text" name="first-name" value="Piotrek">
+            <label for="last-name">Last name</label>
+            <input type="text" name="last-name" value="Hahaha">
+            <label for="username">Username</label>
+            <input type="text" name="username" value="piotrek.hahaha">
+          </div>
+          <label for="phone-number">Telephone number</label>
+          <input type="tel" name="phone-number" value="111-111-111">
+          <label for="mail">Mail</label>
+          <input type="email" name="name" value="mail.azaza@hihi.com">
+          <label for="team">Team</label>
+          <input type="text" name="team" value="Dupa">
+          <input id="sub-button" type="submit" name="submition" value="Save">
+
+        </form>
+      </div>
 		</section>
 
 	</body>

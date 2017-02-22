@@ -8,8 +8,6 @@
 <!-- Header -->
 	<body id="homepage" class="container">
 
-
-
 		<aside class="user-info">
 			<div class="user-first-section">
 				<h3>You are logged as</h3>
@@ -26,15 +24,26 @@
 				<div class="group-capabilities">
 					<h3>Classes</h3>
 					<ul>
-						<li>List of Students</li>
-						<li>Attendace</li>
-					</ul>
-				</div>
-								<div class="group-capabilities">
-					<h3>Students</h3>
-					<ul>
-						<li>List of Students</li>
-						<li>Attendace</li>
+						<li><a href="stud_list_assiments.html">List available assignments</li></a>
+				    <!-- <li><a href="#">Submit assignment</li></a> -->
+				    <li><a href="#">Show average score</li></a>
+						<li><a href="#">Check attendance</li></a>
+						<li><a href="#">Add assignment</li></a>
+						<!-- <li><a href="#">Grade assignment</li></a> -->
+						<li><a href="#">Add student</li></a>
+						<!-- <li><a href="#">Edit student</li></a> -->
+						<!-- <li><a href="#">Delete student</li></a> -->
+						<li><a href="presencestats.html">View presence statistics</li></a>
+						<li><a href="viewteams.html">View Teams	</li></a>
+						<!-- <li><a href="#">Add or Remove Team</li></a> -->
+						<li><a href="viewmentors.html">List mentors</li></a>
+						<!-- <li><a href="#">Add mentor</li></a> -->
+						<li><a href="#">Add assistant</li></a>
+						<!-- <li><a href="#">Edit mentor</li></a> -->
+						<!-- <li><a href="#">Delete mentor</li></a> -->
+						<!-- <li><a href="#">Add mentor salary</li></a> -->
+						<li><a href="#">List students</li></a>
+						<li><a href="#">List assignments</a></li>
 					</ul>
 				</div>
 			</div>
@@ -42,28 +51,27 @@
 		</aside>
 
 		<section class="user-actions">
+      <h3>Add assistant</h3>
+      <div class="large-wrapper">
+        <form class="main-form" action="index.html" method="post">
+          <div class="right-side">
+            <label for="first-name">First name</label>
+            <input type="text" name="first-name" value="">
+            <label for="last-name">Last name</label>
+            <input type="text" name="last-name" value="">
+            <label for="username">Username</label>
+            <input type="text" name="username" value="">
+          </div>
+          <label for="phone-number">Telephone number</label>
+          <input type="tel" name="phone-number" value="">
+          <label for="mail">Mail</label>
+          <input type="email" name="name" value="">
+          <label for="salary">Salary</label>
+          <input type="number" name="salary" value="">
+          <input id="sub-button" type="submit" name="submition" value="Save">
 
-            <div class="addmentor-contener">
-                <div class="addmentor-input">
-                    <div class="addmentor-input-firstname">
-                        <label>First name</label>
-                        <input type="text" placeholder="name">
-                    </div>
-                    <div class="addmentor-input-lastname">
-                        <label>Last name</label>
-                        <input type="text" placeholder="surname">
-                    </div>
-                    <div class="addmentor-input-password">
-                        <label>Password</label>
-                        <input type="text" placeholder="password">
-                    </div>
-                </div>
-                <div class="addmentor-button">
-                    <input id="addmentor-button-add" type="submit" value="add assistant">
-                    <input id="addmentor-button-clear" type="submit" value="clear">
-                </div>
-            </div>
-
+        </form>
+      </div>
 		</section>
 
 	</body>
