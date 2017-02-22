@@ -236,6 +236,30 @@ input {
     text-align: right;
     float:right
 }
+
+/*group-capabilities*/
+
+.group-capabilities ul{
+    list-style-type: none;
+}
+.group-capabilities ul li:before{
+    background: url(../images/codecool.png);
+    content: '';
+    display: inline-block;
+    padding: 5px;
+    width: 24px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    top: 8px;
+    position: relative;
+}
+.group-capabilities ul li.active:before{
+    left: -5px;
+        -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
 /*Custom styles checkbox*/
 
 
