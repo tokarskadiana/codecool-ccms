@@ -50,6 +50,7 @@ a, a:active, a:visited, a:hover {
     height: 100%;
     display: block;
     position: relative;
+
 }
 
 .user-actions::after {
@@ -243,6 +244,7 @@ a, a:active, a:visited, a:hover {
     border: 1px solid #ccc;
     box-sizing: border-box;
     border-radius: 5px;
+    float: right;
 }
 
 #sub-button {
