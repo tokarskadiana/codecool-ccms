@@ -100,48 +100,15 @@ a, a:active, a:visited, a:hover {
     padding: 15px 0px;
 }
 
-
-/*Who wright this???*/
-
-
-/*Use class or at least id, not just a table*/
-
-
-/*table{
-    width: 100%;
-    max-width: 100%;
+.back-button a {
+    margin-top: 5px;
     display: block;
-    overflow-x: auto;
-}*/
-
-.back-button {
-    width: 100px;
-    height: 35px;
-    background: url("../images/back-button(1).png") no-repeat;
-    background-size: 30px;
+    font-size: 1.5em;
     position: fixed;
     bottom: 5%;
     left: 32%;
     text-align: right;
 }
-
-.back-button a {
-    margin-top: 5px;
-    display: block;
-    font-size: 1.5em;
-}
-
-
-/*Who wright this???*/
-
-
-/*Use class or at least id, not just a table td*/
-
-
-/*table td{
-	border: 1px solid #d5d5d5;
-	padding: 15px;
-}*/
 
 .addmentor-input label {
     display: block;
@@ -193,31 +160,21 @@ a, a:active, a:visited, a:hover {
 
 /*listing*/
 
-.stud-assiments {
-    width: 50%;
+.small-table-wrapper{
+  width: 50%;
+  margin: 0 auto;
+}
+.large-table-wrapper{
+  width: 90%;
+  margin: 0 auto;
+}
+.table-style {
+    width: 100%;
     margin: 10px auto;
     text-align: center;
 }
 
-.stud-assiments td, th {
-    padding-top: 20px;
-    border-bottom: 2px dashed #000;
-}
-
-#icon {
-    width: 30px;
-}
-
-
-/*view detaiils*/
-
-.stud-view-assiments {
-    width: 90%;
-    margin: 10px auto;
-    text-align: center;
-}
-
-.stud-view-assiments td, th {
+.table-style td, th {
     padding-top: 20px;
     border-bottom: 2px dashed #000;
 }

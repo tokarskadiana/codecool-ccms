@@ -4,6 +4,7 @@
 	<title>Default Logged Page</title>
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
@@ -26,15 +27,26 @@
 				<div class="group-capabilities">
 					<h3>Classes</h3>
 					<ul>
-						<li>List of Students</li>
-						<li>Attendace</li>
-					</ul>
-				</div>
-								<div class="group-capabilities">
-					<h3>Students</h3>
-					<ul>
-						<li>List of Students</li>
-						<li>Attendace</li>
+						<li><a href="stud_list_assiments.html">List available assignments</li></a>
+				    <!-- <li><a href="#">Submit assignment</li></a> -->
+				    <li><a href="#">Show average score</li></a>
+						<li><a href="#">Check attendance</li></a>
+						<li><a href="#">Add assignment</li></a>
+						<!-- <li><a href="#">Grade assignment</li></a> -->
+						<li><a href="#">Add student</li></a>
+						<!-- <li><a href="#">Edit student</li></a> -->
+						<!-- <li><a href="#">Delete student</li></a> -->
+						<li><a href="#">View presence statistics</li></a>
+						<li><a href="viewteams.html">View Teams	</li></a>
+						<!-- <li><a href="#">Add or Remove Team</li></a> -->
+						<li><a href="viewmentors.html">List mentors</li></a>
+						<!-- <li><a href="#">Add mentor</li></a> -->
+						<li><a href="#">Add assistant</li></a>
+						<!-- <li><a href="#">Edit mentor</li></a> -->
+						<!-- <li><a href="#">Delete mentor</li></a> -->
+						<!-- <li><a href="#">Add mentor salary</li></a> -->
+						<li><a href="#">List students</li></a>
+						<li><a href="#">List assignments</a></li>
 					</ul>
 				</div>
 			</div>
@@ -43,38 +55,43 @@
 
 		<section class="user-actions">
 			<h3>Teams List:</h3>
-			<table>
+			<div class="small-table-wrapper">
+
+			<table class='table-style'>
 				<thead>
-					<td>#</td>
-					<td>Team Name</td>
-					<td>Action</td>
+					<th>#</th>
+					<th>Team Name</th>
+					<th>Edit</th>
+                    <th>Delete</th>
 				</thead>
 				<tbody>
 					<tr>
 						<td>1</td>
 						<td>Team 10</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
-                        </td>
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
 					</tr>
 					<tr>
 						<td>2</td>
 						<td>The Best</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
                         </td>
 					</tr>
 					<tr>
 						<td>3</td>
 						<td>Dupaaaaaaaaaaaaaaaaaaaa</td>
-						<td><input type="button" value="Edit">
-                            <input type="button" value="Delete">
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
                         </td>
 					</tr>
 				</tbody>
 
 			</table>
-            <input type="button" value="Add New Team">
+			<div class="submition-wrapper">
+            <input id='sub-button' type="button" value="Add New Team">
+			</div>
+		</div>
 		</section>
 
 	</body>
