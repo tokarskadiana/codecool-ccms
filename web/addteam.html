@@ -2,20 +2,18 @@
 <html>
 	<head>
 	<title>CCMS</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
-
-
 
 		<aside class="user-info">
 			<div class="user-first-section">
 				<h3>You are logged as</h3>
 				<div class="image-wrapper">
-					<img src="images/user.png" />
+					<img src="#" />
 					<div class="details">
 						<h1>{Przemek}</h1>
 						<a href="#">Log Out</a>
@@ -23,12 +21,11 @@
 				</div>
 			</div>
 
-			<div class="user-capabilities">
 				<div class="group-capabilities">
 					<h3>Classes</h3>
 					<ul>
 						<li><a href="stud_list_assiments.html">List available assignments</a></li>
-				    <li><a href="avaragestatistics.html">Show average score</a></li>
+						<li><a href="avaragestatistics.html">Show average score</a></li>
 						<li><a href="attendance.html">Check attendance</a></li>
 
 						<li><a href="presencestats.html">View presence statistics</a></li>
@@ -39,36 +36,18 @@
 						<li><a href="mentor_list_assiments.html">List assignments</a></li>  <!-- For mentor -->
 					</ul>
 				</div>
-			</div>
-
 		</aside>
 
 		<section class="user-actions">
-			<h3>Students presence statistics:</h3>
-			<div class="small-wrapper">
-			<table class="table-style">
-				<thead>
-					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-          <th>Presence in %</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Tomasz</td>
-            <td>Dupaa</td>
-            <td>89%</td>
-					</tr>
-					<tr>
-						<td>2</td>
-            <td>Sebastian</td>
-            <td>Dupa</td>
-            <td>79%</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+			<h3>Add New Team</h3>
+        <div class="small-wrapper">
+					<form class="main-form" action="editteam.html" method="post">
+            <label>Team name</label>
+            <input type="text" placeholder="name">
+						<input id='sub-button' type="submit" value="Save">
+          </form>
+				</div>
+    <div class="back-button"><a href="viewteams.html"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
 		</section>
 	</body>
 </html>

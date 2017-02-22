@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>Default Logged Page</title>
+	<title>CCMS</title>
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
-
-
 
 		<aside class="user-info">
 			<div class="user-first-section">
@@ -30,7 +28,7 @@
 						<li><a href="stud_list_assiments.html">List available assignments</a></li>
 						<li><a href="avaragestatistics.html">Show average score</a></li>
 						<li><a href="attendance.html">Check attendance</a></li>
-						<li><a href="viewstudents.html">Add student</a></li>
+
 						<li><a href="presencestats.html">View presence statistics</a></li>
 						<li><a href="viewteams.html">View Teams	</a></li>
 						<li><a href="viewmentors.html">List mentors</a></li>
@@ -52,38 +50,32 @@
 					<th>#</th>
 					<th>Team Name</th>
 					<th>Edit</th>
-                    <th>Delete</th>
+          <th>Delete</th>
 				</thead>
 				<tbody>
 					<tr>
 						<td>1</td>
 						<td>Team 10</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
+						<td><a href="editteam.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+						<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 					</tr>
 					<tr>
 						<td>2</td>
 						<td>The Best</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </td>
+						<td><a href="editteam.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+						<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 					</tr>
 					<tr>
 						<td>3</td>
 						<td>Dupaaaaaaaaaaaaaaaaaaaa</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </td>
+						<td><a href="editteam.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+						<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 					</tr>
 				</tbody>
-
 			</table>
-
-            <input id='sub-button' type="button" value="Add New Team">
-
+      <a href="addteam.html"><input id='sub-button' type="button" value="Add New Team"></a>
 		</div>
 		</section>
-
 	</body>
 </html>
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>

@@ -10,14 +10,13 @@
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
-
 		<aside class="user-info">
 			<div class="user-first-section">
 				<h3>You are logged as</h3>
-				<div class="image-wrapper default-image-spin">
-					<img src="images/codecool.png" />
+				<div class="image-wrapper">
+					<img src="images/user.png" />
 					<div class="details">
-						<h1>{Mateusz}</h1>
+						<h1>{Piotrek}</h1>
 						<a href="#">Log Out</a>
 					</div>
 				</div>
@@ -29,7 +28,7 @@
 						<li><a href="stud_list_assiments.html">List available assignments</a></li>
 				    <li><a href="avaragestatistics.html">Show average score</a></li>
 						<li><a href="attendance.html">Check attendance</a></li>
-						
+
 						<li><a href="presencestats.html">View presence statistics</a></li>
 						<li><a href="viewteams.html">View Teams	</a></li>
 						<li><a href="viewmentors.html">List mentors</a></li>
@@ -43,41 +42,19 @@
 		</aside>
 
 		<section class="user-actions">
-			<h3>Check Attendance 20.12.2017</h3>
-	 <div class="small-wrapper">
-      <table class='table-style'>
-        <thead>
-          <th>Name</th>
-          <th>Present</th>
-          <th>Absent</th>
-        </thead>
-        <tbody>
-	    	<tr>
-	          <td>Dupa</td>
-	          <td>      <input type="radio" id="dupa-yes" name="present" />
-	    				<label for="dupa-yes"><span></span>Yes</label>
-	    	  </td>
-	          <td>      <input type="radio" id="dupa-no" name="present" />
-	    				<label for="dupa-no"><span></span>No</label>
-	    	  </td>
-	        </tr>
-	         <tr>
-	              <td>Marcin</td>
-	              <td>      <input type="radio" id="Marcin-yes" name="present-marcin" />
-	                        <label for="Marcin-yes"><span></span>Yes</label>
-	              </td>
-	              <td>      <input type="radio" id="Marcin-no" name="present-marcin" />
-	                        <label for="Marcin-no"><span></span>No</label>
-	              </td>
-	        </tr>
-        </tbody>
-        <tfoot>
-        </tfoot>
-
-      </table>
-			<input id="sub-button" type="button" value="Submit">
+			<h3>Grade assignment Dupa</h3>
+        <div class="submition-wrapper">
+                <p>Student name: Piotrek Hahaha</p>
+                <p>Student submit: github.com/blablabla</p>
+                <p>Enter grade:</p>
+                <form class="submition" action="grade_assignment.html" method="post">
+                  <input type="number" name="submition" placeholder="0">
+                  <input id="sub-button" type="submit" name="" value="Save">
+                </form>
+          </div>
 
 		</div>
+    <div class="back-button"><a href="grade_assignment.html"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
 		</section>
 
 	</body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>Default Logged Page</title>
+	<title>CCMS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
@@ -9,9 +9,6 @@
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
-
-
-
 		<aside class="user-info">
 			<div class="user-first-section">
 				<h3>You are logged as</h3>
@@ -31,7 +28,6 @@
 						<li><a href="stud_list_assiments.html">List available assignments</a></li>
 				    <li><a href="avaragestatistics.html">Show average score</a></li>
 						<li><a href="attendance.html">Check attendance</a></li>
-						<li><a href="viewstudents.html">Add student</a></li>
 						<li><a href="presencestats.html">View presence statistics</a></li>
 						<li><a href="viewteams.html">View Teams	</a></li>
 						<li><a href="viewmentors.html">List mentors</a></li>
@@ -47,75 +43,68 @@
 		<section class="user-actions">
 			<h3>Mentors List:</h3>
 			<div class="large-wrapper">
-
-			<table class='table-style'>
-				<thead>
-					<td>ID</td>
-					<td>First Name</td>
-					<td>Last Name</td>
-                    <td>User Name</td>
-					<td>Phone number</td>
-                    <td>E-mail</td>
-					<td>Salary</td>
-                    <td>Edit</td>
-				    <td>Delete</td>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Mateusz</td>
-                        <td>Ostafil</td>
-                        <td>mateusz.ostafil</td>
-                        <td>123-123-123</td>
-                        <td>mateusz@codecool.pl</td>
-                        <td>10000000</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
-					</tr>
-					<tr>
-						<td>2</td>
-                        <td>Rafał</td>
-                        <td>Stępień</td>
-                        <td>rafał.stepien</td>
-                        <td>123-123-123</td>
-                        <td>rafał@codecool.pl</td>
-                        <td>10000000</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>Marcin</td>
-                        <td>Izworski</td>
-                        <td>marcin.izworski</td>
-                        <td>123-123-123</td>
-                        <td>marcin@codecool.pl</td>
-                        <td>10000000</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
-					</tr>
-                    <tr>
-						<td>4</td>
-						<td>Przemysław</td>
-                        <td>Ciąćka</td>
-                        <td>przemyslaw.ciąćka</td>
-                        <td>123-123-123</td>
-                        <td>przemek@codecool.pl</td>
-                        <td>10000000</td>
-						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
-					</tr>
-
-				</tbody>
-
-			</table>
-
-            <input id='sub-button' type="button" value="Add New Mentor">
-
-
-					</div>
+				<table class='table-style'>
+					<thead>
+						<th>ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+	          <th>User Name</th>
+						<th>Phone number</th>
+	          <th>E-mail</th>
+						<th>Salary</th>
+	          <th>Edit</th>
+					  <td>Delete</td>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Mateusz</td>
+	            <td>Ostafil</td>
+	            <td>mateusz.ostafil</td>
+	            <td>123-123-123</td>
+	            <td>mateusz@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+						<tr>
+							<td>2</td>
+	            <td>Rafał</td>
+	            <td>Stępień</td>
+	            <td>rafał.stepien</td>
+	            <td>123-123-123</td>
+	            <td>rafał@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Marcin</td>
+	            <td>Izworski</td>
+	            <td>marcin.izworski</td>
+	            <td>123-123-123</td>
+	            <td>marcin@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+	          <tr>
+							<td>4</td>
+							<td>Przemysław</td>
+	            <td>Ciąćka</td>
+	            <td>przemyslaw.ciąćka</td>
+	            <td>123-123-123</td>
+	            <td>przemek@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+  			<a href="addmentor.html"><input id='sub-button' type="button" value="Add New Mentor"></a>
+			</div>
 		</section>
-
 	</body>
 </html>
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>

@@ -37,7 +37,7 @@ a, a:active, a:visited, a:hover {
     color: #000;
 }
 
-input {
+input, select {
     padding: 12px 20px;
     margin: 8px auto;
     display: block;
@@ -205,7 +205,7 @@ input {
   text-align: center;
   margin-top: 5%;
 }
-.main-form input{
+.main-form input, select{
   width: 40%;
   margin: 10px auto;
 }
