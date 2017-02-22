@@ -4,6 +4,9 @@
 	<title>Default Logged Page</title>
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
@@ -14,12 +17,11 @@
 				<div class="image-wrapper">
 					<img src="images/user.png" />
 					<div class="details">
-						<h1>{Przemek}</h1>
+						<h1>{Piotrek}</h1>
 						<a href="#">Log Out</a>
 					</div>
 				</div>
 			</div>
-
 			<div class="user-capabilities">
 				<div class="group-capabilities">
 					<h3>Classes</h3>
@@ -51,7 +53,40 @@
 		</aside>
 
 		<section class="user-actions">
-			
+			<h3>Check Attendance 20.12.2017</h3>
+      <table class='stud-assiments'>
+        <thead>
+          <th>Name</th>
+          <th>Present</th>
+          <th>Absent</th>
+        </thead>
+        <tbody>
+	    	<tr>
+	          <td>Dupa</td>
+	          <td>      <input type="radio" id="dupa-yes" name="present" />
+	    				<label for="dupa-yes"><span></span>Yes</label>
+	    	  </td>
+	          <td>      <input type="radio" id="dupa-no" name="present" />
+	    				<label for="dupa-no"><span></span>No</label>
+	    	  </td>
+	        </tr>
+	         <tr>
+	              <td>Marcin</td>
+	              <td>      <input type="radio" id="Marcin-yes" name="present-marcin" />
+	                        <label for="Marcin-yes"><span></span>Yes</label>
+	              </td>
+	              <td>      <input type="radio" id="Marcin-no" name="present-marcin" />
+	                        <label for="Marcin-no"><span></span>No</label>
+	              </td>
+	        </tr>
+        </tbody>
+        <tfoot>
+        </tfoot>
+        
+      </table>
+			<div class="submition-wrapper sub-right">
+	            <input id="sub-button" type="button" value="Add New Team">
+			</div>
 		</section>
 
 	</body>
