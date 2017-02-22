@@ -2,19 +2,23 @@
 <html>
 	<head>
 	<title>Default Logged Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 <!-- Header -->
 	<body id="homepage" class="container">
+
+
 
 		<aside class="user-info">
 			<div class="user-first-section">
 				<h3>You are logged as</h3>
 				<div class="image-wrapper">
-					<img src="images/user.png" />
+					<img src="#" />
 					<div class="details">
-						<h1>{Przemek}</h1>
+						<h1>{Jurek}</h1>
 						<a href="#">Log Out</a>
 					</div>
 				</div>
@@ -41,28 +45,44 @@
 		</aside>
 
 		<section class="user-actions">
-      <h3>Add student</h3>
-      <div class="large-wrapper">
-        <form class="main-form" action="index.html" method="post">
-          <div class="right-side">
-            <label for="first-name">First name</label>
-            <input type="text" name="first-name" value="">
-            <label for="last-name">Last name</label>
-            <input type="text" name="last-name" value="">
-            <label for="username">Username</label>
-            <input type="text" name="username" value="">
-          </div>
-          <label for="phone-number">Telephone number</label>
-          <input type="tel" name="phone-number" value="">
-          <label for="mail">Mail</label>
-          <input type="email" name="name" value="">
-          <label for="team">Team</label>
-          <input type="text" name="team" value="">
-          <input id="sub-button" type="submit" name="submition" value="Save">
+			<h3>Assistants List</h3>
+			<div class="large-wrapper">
 
-        </form>
-      </div>
+			<table class='table-style'>
+				<thead>
+					<td>ID</td>
+					<td>First Name</td>
+					<td>Last Name</td>
+                    <td>User Name</td>
+					<td>Phone number</td>
+                    <td>E-mail</td>
+					<td>Salary</td>
+                    <td>Edit</td>
+				    <td>Delete</td>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Kati</td>
+                        <td>Hahaha</td>
+                        <td>kati.hahaha</td>
+                        <td>123-123-123</td>
+                        <td>kati@codecool.pl</td>
+                        <td>10000000</td>
+						<td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+						<td><i class="fa fa-trash" aria-hidden="true"></i></td>
+					</tr>
+
+				</tbody>
+
+			</table>
+
+            <input id='sub-button' type="button" value="Add New Assistant">
+
+
+					</div>
 		</section>
 
 	</body>
 </html>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>

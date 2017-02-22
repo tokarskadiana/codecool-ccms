@@ -118,14 +118,6 @@ input {
     text-align: right;
 }
 
-.addmentor-input label {
-    display: block;
-}
-
-.addmentor-button {
-    display: block;
-}
-
 /*------------------login------------*/
 
 .login-wrapper {
@@ -206,7 +198,7 @@ input {
 }
 
 .submition-wrapper #sub-button{
-  width: 20%;
+  width: auto;
 }
 
 .main-form{
