@@ -234,6 +234,10 @@ input, select {
 .group-capabilities ul{
     list-style-type: none;
 }
+.group-capabilities ul li a{
+    font-size: 18px;
+    padding-left: 15px;
+}
 .group-capabilities ul li:before{
     background: url(../images/codecool.png);
     content: '';
@@ -245,6 +249,7 @@ input, select {
     background-repeat: no-repeat;
     top: 8px;
     position: relative;
+    left: -5px;
 }
 .group-capabilities ul li.active:before{
     left: -5px;
