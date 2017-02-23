@@ -170,7 +170,6 @@ input, select {
     border-bottom: 2px dashed #000;
 }
 
-
 /*submition*/
 #sub-button {
   background-color: #0b5463;
@@ -252,10 +251,18 @@ input, select {
     left: -5px;
 }
 .group-capabilities ul li.active:before{
+
     left: -5px;
         -webkit-animation:spin 4s linear infinite;
     -moz-animation:spin 4s linear infinite;
     animation:spin 4s linear infinite;
+}
+.group-capabilities ul li.active a{
+    font-weight: bold;
+}
+
+i.fa{
+    font-size: 20px;
 }
 /*Custom styles checkbox*/
 
