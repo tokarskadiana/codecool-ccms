@@ -46,7 +46,7 @@ input, select {
     border-radius: 5px;
 }
 
-/*spesific classes*/
+/*spesific MENU*/
 
 .user-info {
     border-right: 1px solid #d5d5d5;
@@ -260,7 +260,9 @@ input, select {
 .group-capabilities ul li.active a{
     font-weight: bold;
 }
-
+.group-capabilities h3{
+    margin-left: 40px;
+}
 i.fa{
     font-size: 20px;
 }
