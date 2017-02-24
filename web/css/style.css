@@ -46,6 +46,15 @@ input, select {
     border-radius: 5px;
 }
 
+.main-button {
+  background-color: #0b5463;
+  color: white!important;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;
+}
 /*spesific MENU*/
 
 .user-info {
@@ -134,16 +143,10 @@ input, select {
 
 }
 
-#button {
-    background-color: #0b5463;
-    display: block;
-    color: white;
-    padding: 14px 20px;
-    margin: 15px auto;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+.login .main-button {
+  margin: 10px auto;
 }
+
 .login-background{
     padding-top: 150px;
 }
@@ -161,6 +164,7 @@ input, select {
     height: 100%;
     z-index: -1;
 }
+
 
 /*------------------student assiments-----------------*/
 
@@ -187,14 +191,6 @@ input, select {
 }
 
 /*submition*/
-#sub-button {
-  background-color: #0b5463;
-  color: white;
-  padding: 14px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 10px;}
 
 .submition-wrapper {
     width: 90%;
@@ -212,7 +208,7 @@ input, select {
 
 }
 
-.submition-wrapper #sub-button{
+.submition-wrapper .main-button{
   width: auto;
 }
 
@@ -224,7 +220,7 @@ input, select {
   width: 40%;
   margin: 10px auto;
 }
- .main-form #sub-button{
+ .main-form .main-button{
    width: 20%;
    margin: 10% auto;
  }

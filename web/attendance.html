@@ -18,7 +18,7 @@
 					<img src="images/codecool.png" />
 					<div class="details">
 						<h1>Mateusz</h1>
-						<a href="index.html" id="sub-button">Log Out</a>
+						<a href="index.html" class='main-button'>Log Out</a>
 					</div>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 		<section class="user-actions">
 			<h3>Check Attendance 20.12.2017</h3>
 	 <div class="small-wrapper">
-      <table class='table-style'>
+      <table class='table-style' onclick="toggleButtonRadioForm('attendance-sub-button', 'attendance-radio')">
         <thead>
           <th>Name</th>
           <th>Present</th>
@@ -53,19 +53,19 @@
         <tbody>
 	    	<tr>
 	          <td>Dupa</td>
-	          <td>      <input type="radio" id="dupa-yes" name="present" />
+	          <td>      <input type="radio" id="dupa-yes" name="present" class="attendance-radio"/>
 	    				<label for="dupa-yes"><span></span>Yes</label>
 	    	  </td>
-	          <td>      <input type="radio" id="dupa-no" name="present" />
+	          <td>      <input type="radio" id="dupa-no" name="present" class="attendance-radio"/>
 	    				<label for="dupa-no"><span></span>No</label>
 	    	  </td>
 	        </tr>
 	         <tr>
 	              <td>Marcin</td>
-	              <td>      <input type="radio" id="Marcin-yes" name="present-marcin" />
+	              <td>      <input type="radio" id="Marcin-yes" name="present-marcin" class="attendance-radio"/>
 	                        <label for="Marcin-yes"><span></span>Yes</label>
 	              </td>
-	              <td>      <input type="radio" id="Marcin-no" name="present-marcin" />
+	              <td>      <input type="radio" id="Marcin-no" name="present-marcin" class="attendance-radio"/>
 	                        <label for="Marcin-no"><span></span>No</label>
 	              </td>
 	        </tr>
@@ -74,10 +74,10 @@
         </tfoot>
 
       </table>
-			<input id="sub-button" type="button" value="Submit">
+			<input class='main-button' type="button" value="Submit" id="attendance-sub-button" disabled="disabled">
 
 		</div>
 		</section>
-
+<script src="js/main.js"></script>
 	</body>
 </html>

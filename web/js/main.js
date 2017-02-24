@@ -1,3 +1,7 @@
+/**
+ * Check if input is empty and change color to red if yes otherwise change color to green.
+ * @param {id} name - markup
+ */
 function isEmpty(name) {
    var element = document.getElementById(name);
    var lenElement = element.value.length;
@@ -11,7 +15,32 @@ function isEmpty(name) {
    }
 }
 
+/**
+ * Check if buttons with given class is checked.
+ * @param {class} name - class name of buttons
+ * @return {boolean}
+ */
+function isChecked(name) {
+    var buttons = document.getElementsByClassName(name);
+    var count = 0;
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i].checked == true){
+            count++;
+        }
+    }
+    if ((buttons.length/2) == count){
+        return true
+    }else {
+        return false
+    }
+}
 
+/**
+ * Check if inputs have True value in data-isvalid parameter in given array of inputs.
+ * @param {array} inputs - array with id
+ * @return {boolean} return true if all of given inputs have True value in data-isvalid parameter
+ *  otherwise return false.
+ */
 function checkInputs(inputs) {
    var validCount = 0;
    for (i = 0; i < inputs.length; i++) {
@@ -27,12 +56,33 @@ function checkInputs(inputs) {
    }
 }
 
+/**
+ * Disable given button with id given in name parameter when isChecked
+ *  return False with given class of radio buttons otherwise enable button.
+ * @param {id} name - id of button
+ * @param {class} nameClass - class name of radio buttons
+ */
+function toggleButtonRadioForm(name, nameClass) {
+    var button = document.getElementById(name);
+    if (isChecked(nameClass)){
+        button.removeAttribute("disabled");
+    } else {
+        button.setAttribute("disabled", "disabled");
+    }
+}
+
+/**
+ * Disable given button with id given in name parameter when checkInputs
+ *  return False with given array of id inputs otherwise enable button.
+ * @param {id} name - class name of buttons
+ * @param {array} inputs - array of id inputs
+ */
 function toggleButton(name, inputs) {
    var button = document.getElementById(name);
    var state = checkInputs(inputs);
    if (state) {
        button.removeAttribute("disabled");
    } else {
-       button.setAttribute("disabled", "disabled")
+       button.setAttribute("disabled", "disabled");
    }
 }
