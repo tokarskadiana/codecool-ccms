@@ -11,6 +11,21 @@ function isEmpty(name) {
    }
 }
 
+function isChecked(name) {
+    var buttons = document.getElementsByClassName(name);
+    var count = 0;
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i].checked == true){
+            count++;
+        }
+    }
+    if (buttons.length == count){
+        return true
+    }else {
+        return false
+    }
+}
+
 
 function checkInputs(inputs) {
    var validCount = 0;
@@ -27,12 +42,21 @@ function checkInputs(inputs) {
    }
 }
 
+function toggleButtonRadioForm(name, nameClass) {
+    var button = document.getElementById(name);
+    if (isChecked(nameClass)){
+        button.removeAttribute("disabled");
+    } else {
+        button.setAttribute("disabled", "disabled");
+    }
+}
+
 function toggleButton(name, inputs) {
    var button = document.getElementById(name);
    var state = checkInputs(inputs);
    if (state) {
        button.removeAttribute("disabled");
    } else {
-       button.setAttribute("disabled", "disabled")
+       button.setAttribute("disabled", "disabled");
    }
 }
