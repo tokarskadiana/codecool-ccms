@@ -122,16 +122,16 @@ input, select {
 
 .login-wrapper {
     width: 50%;
-    margin: 7% auto;
+    margin: auto auto 0 auto;
     text-align: center;
+
 }
 
 .login {
     width: 70%;
     margin: inherit;
-    border: 3px solid #bebcbc;
-    border-radius: 5px;
     padding: 20px;
+
 }
 
 #button {
@@ -144,7 +144,23 @@ input, select {
     cursor: pointer;
     border-radius: 5px;
 }
-
+.login-background{
+    padding-top: 150px;
+}
+.login-background:before{
+    content: '';
+    background: url(../images/codecool.png) no-repeat;
+    background-position: center;
+    opacity: 0.5;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 
 /*------------------student assiments-----------------*/
 
@@ -327,3 +343,4 @@ input[type="radio"]:checked + label span {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
