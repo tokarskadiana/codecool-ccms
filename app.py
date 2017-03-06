@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-
+from model.employee import Employee
 from controller.database_controller import DatabaseController
 
 app = Flask(__name__)
@@ -46,11 +46,11 @@ def list_assistants():
 
     :return:
     """
-
+    assistants = Employee.list_employee()
     if request.method == 'POST':
         pass
 
-    return render_template('viewassistants.html')
+    return render_template('viewassistants.html', assistants=assistants)
 
 
 @app.route('/list-assignments', methods=['GET', 'POST'])

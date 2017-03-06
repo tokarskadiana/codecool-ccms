@@ -7,7 +7,7 @@ class User:
     """
     line = 0
 
-    def __init__(self, password, first_name, last_name, telephone="", mail=""):
+    def __init__(self, password, first_name, last_name, telephone="", mail="", id=None):
         """
         Constructs User object
         :param password: (str) store of password of User object
@@ -22,6 +22,7 @@ class User:
         self.last_name = last_name
         self.telephone = telephone
         self.mail = mail
+        self.id = id
 
     def get_username(self):
         return self.username
