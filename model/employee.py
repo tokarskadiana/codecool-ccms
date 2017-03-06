@@ -7,6 +7,13 @@ class Employee(User):
     """
     employee_list = []
 
+    def __init__(self, password, first_name, last_name, telephone="", mail="", id=None, salary=None):
+        super().__init__(password, first_name, last_name, telephone, mail)
+        self.id = id
+        self.salary = salary
+
+
+
 
     @classmethod
     def add_employee(cls, password, first_name, last_name, telephone="", mail=""):
