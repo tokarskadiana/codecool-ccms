@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+{% block content %}
+
+
+			<h3>Mentors List:</h3>
+			<div class="large-wrapper">
+				<a href="addmentor.html"><input class="sub-right main-button" type="button" value="Add New Mentor"></a>
+				<table class='table-style'>
+					<thead>
+						<th>ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+	          <th>User Name</th>
+						<th>Phone number</th>
+	          <th>E-mail</th>
+						<th>Salary</th>
+	          <th>Edit</th>
+					  <td>Delete</td>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Mateusz</td>
+	            <td>Ostafil</td>
+	            <td>mateusz.ostafil</td>
+	            <td>123-123-123</td>
+	            <td>mateusz@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+						<tr>
+							<td>2</td>
+	            <td>Rafał</td>
+	            <td>Stępień</td>
+	            <td>rafał.stepien</td>
+	            <td>123-123-123</td>
+	            <td>rafał@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Marcin</td>
+	            <td>Izworski</td>
+	            <td>marcin.izworski</td>
+	            <td>123-123-123</td>
+	            <td>marcin@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+	          <tr>
+							<td>4</td>
+							<td>Przemysław</td>
+	            <td>Ciąćka</td>
+	            <td>przemyslaw.ciąćka</td>
+	            <td>123-123-123</td>
+	            <td>przemek@codecool.pl</td>
+	            <td>10000000</td>
+							<td><a href="editmentor.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+{% endblock %}
