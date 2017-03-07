@@ -8,6 +8,11 @@ class Employee(User):
     """
     employee_list = []
 
+    def __init__(self, password, first_name, last_name, telephone="", mail="", id=None, salary=None):
+        super().__init__(password, first_name, last_name, telephone, mail)
+        self.id = id
+        self.salary = salary
+
     def save(self):
         """ Saves/updates employee in database """
         is_exist_record = SqlRequest.sql_request("SELECT * FROM employee WHERE id='{}'".format(self.id))
@@ -23,6 +28,22 @@ class Employee(User):
     def delete(self):
         """ Removes employee from the database """
         SqlRequest.sql_request("DELETE FROM employee WHERE id='{}'".format(self.id))
+
+    @classmethod
+    def get_assistant_by_id(cls, id):
+        """
+        Retrieves assistant with given id from database.
+        Args:
+            id(int): assistant id
+        Returns:
+            Assistant: Assistant object with a given id
+        """
+        record = SqlRequest.sql_request("SELECT * FROM employee WHERE id='{}' AND position='employee'".format(id))
+        if record:
+            return cls(id=record[0][0], first_name=record[0][1], last_name=record[0][2], password=record[0][3],
+                       telephone=record[0][4], mail=record[0][5], salary=record[0][7])
+        else:
+            return None
 
     @classmethod
     def add_employee(cls, password, first_name, last_name, telephone="", mail=""):

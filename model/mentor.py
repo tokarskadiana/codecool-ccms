@@ -6,7 +6,7 @@ class Mentor(Employee):
     mentors_list = []
 
     @classmethod
-    def add_mentor(cls, password, first_name, last_name, telephone='', mail=''):
+    def add_mentor(cls, password, first_name, last_name, telephone='', mail='', salary=''):
         """
         Add mentor to mentors list.
         :param password (str): password of mentor
@@ -14,6 +14,7 @@ class Mentor(Employee):
         :param last_name (str): last name of manager
         :param telephone (str): telephone of mentor
         :param mail (str): mail of mentor
+        :param salary (int): salary of mentor
         """
         username = '{}.{}'.format(first_name, last_name)
         SqlRequest.sql_request(
