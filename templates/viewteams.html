@@ -1,37 +1,36 @@
 {% extends 'index.html' %}
 {% block content %}
 
-<h3>Teams List:</h3>
-<div class="small-wrapper">
-    <a href="addteam.html"><input class="sub-right main-button" type="button" value="Add New Team"></a>
-    <table class='table-style'>
-        <thead>
-        <th>#</th>
-        <th>Team Name</th>
-        <th>Edit</th>
-        <th>Delete</th>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>Team 10</td>
-            <td><a href="editteam.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-            <td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>The Best</td>
-            <td><a href="editteam.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-            <td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Dupaaaaaaaaaaaaaaaaaaaa</td>
-            <td><a href="editteam.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-            <td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
+    <h3>Teams List:</h3>
+    <div class="small-wrapper">
+        <a href="{{ url_for('add_team') }}"><input class="sub-right main-button" type="button" value="Add New Team"></a>
+        <table class='table-style'>
+            <thead>
+            <th>Name</th>
+            <th>Members</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            </thead>
+            <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{ team.name }}</td>
+                    <td>
+                        {% if team.get_members() %}
+                            <ul>
+                                {% for student in team.get_members() %}
+                                    <li>{{ student }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ url_for('edit_team', team_id=team.id) }}"><i class="fa fa-pencil-square-o"
+                                                                                 aria-hidden="true"></i></a></td>
+                    <td><a href="{{ url_for('delete_team', team_id=team.id) }}"><i class="fa fa-trash"
+                                                                                   aria-hidden="true"></i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

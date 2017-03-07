@@ -112,6 +112,43 @@ def delete(student_id):
     return redirect('list-students')
 
 
+@app.route('/student-statistics')
+def statistics():
+    students = Student.list_students()
+    return render_template('statistics.html', students=students)
+
+
+@app.route('/list-teams')
+def list_teams():
+    teams = Team.list_teams()
+    return render_template('viewteams.html', teams=teams)
+
+
+@app.route('/list-teams/add', methods=["GET", 'POST'])
+def add_team():
+    if request.method == 'POST':
+        Team(request.form['name']).add_team()
+        return redirect('list-teams')
+    return render_template("team_form.html")
+
+
+@app.route('/list-teams/edit/<team_id>', methods=["GET", 'POST'])
+def edit_team(team_id):
+    team = Team.get_by_id(team_id)
+    if request.method == 'POST':
+        team.name = request.form['name']
+        team.edit_team()
+        return redirect(url_for('list_teams'))
+    return render_template('team_form.html', team=team)
+
+
+@app.route('/list-teams/delete/<team_id>')
+def delete_team(team_id):
+    team = Team.get_by_id(team_id)
+    team.delete_team()
+    return redirect(url_for('list_teams'))
+
+
 @app.route('/list-assistants', methods=['GET', 'POST'])
 def list_assistants():
     """
@@ -162,12 +199,13 @@ def grade_assignment():
             studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
 
             return render_template('grade_assignment.html', students=studentsDetails, assignment=assigID)
-    elif request.method =="GET":
+    elif request.method == "GET":
         assigID = Assignment.get_by_id(request.args['assignmentID'])
         studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
         return render_template('grade_assignment.html', students=studentsDetails, assignment=assigID)
     else:
         return "Not Implemented"
+
 
 @app.route('/list-assignments/grade-assignment/<username>', methods=['GET', 'POST'])
 def grade_user_assignments(username):
@@ -176,10 +214,11 @@ def grade_user_assignments(username):
         if request.form['grade_user'] == 'grade':
             assignment_id = request.form['assignment']
             student_id = request.form['id']
-            assignment  = Assignment.get_by_id(assignment_id)
+            assignment = Assignment.get_by_id(assignment_id)
             student = Student.get_by_id(student_id)
-            student_submit = Submition.get_submit(student_id,assignment_id)
-            return render_template('grade_user_assignments.html',student=student,assignment=assignment,student_submit=student_submit )
+            student_submit = Submition.get_submit(student_id, assignment_id)
+            return render_template('grade_user_assignments.html', student=student, assignment=assignment,
+                                   student_submit=student_submit)
         elif request.form['grade_user'] == 'Save':
             submit_id = request.form['submit_id']
             new_grade = request.form['new_grade']
@@ -188,7 +227,7 @@ def grade_user_assignments(username):
             submit = Submition.get_by_id(submit_id)
             print(submit)
             submit.update_grade(new_grade)
-            return redirect(url_for('grade_assignment',assignmentID=assignment_id))
+            return redirect(url_for('grade_assignment', assignmentID=assignment_id))
     return 'Not permited fool'
 
 
@@ -206,17 +245,17 @@ def dated_url_for(endpoint, **values):
             values['q'] = int(os.stat(file_path).st_mtime)
     return url_for(endpoint, **values)
 
-
-@app.route('/view-teams', methods=['GET', 'POST'])
-def list_teams():
-    """
-
-    :return:
-    """
-    if request.method == 'POST':
-        pass
-
-    return render_template('viewteams.html')
+# WTF IS THIS ?
+# @app.route('/view-teams', methods=['GET', 'POST'])
+# def list_teams():
+#     """
+#
+#     :return:
+#     """
+#     if request.method == 'POST':
+#         pass
+#
+#     return render_template('viewteams.html')
 
 
 @app.route('/test', methods=['GET', 'POST'])
@@ -225,8 +264,10 @@ def test():
         users = request.form.getlist('users')
     return render_template('test.html')
 
+
 def xxx():
     return 'lol'
+
 
 if __name__ == '__main__':
     DatabaseController.createSqlDatabase()
