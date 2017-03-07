@@ -107,6 +107,21 @@ def edit_assistant(assistant_id):
         assistant.save()
         return redirect(url_for('list_assistants'))
 
+@app.route("/addassistant", methods=['GET', 'POST'])
+def add_assistant():
+    if request.method == 'POST':
+        first_name = request.form['first-name']
+        last_name = request.form['last-name']
+        telephone = request.form['phone-number']
+        email = request.form['email']
+        salary = request.form['salary']
+        password = request.form['password']
+        employee = Employee(password, first_name, last_name, telephone, email, salary)
+        employee.position = 'employee'
+        employee.save()
+        return redirect(url_for('list_assistants'))
+    return render_template('addassistant.html')
+
 if __name__ == '__main__':
     DatabaseController.createSqlDatabase()
     DatabaseController.sample_data()

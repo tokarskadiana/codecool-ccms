@@ -23,7 +23,7 @@ class Employee(User):
         else:
             SqlRequest.sql_request(
                 "INSERT INTO employee (first_name, last_name, password, telephone, mail, username, salary, position) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
-                    self.first_name, self.last_name, self.telephone, self.mail, self.salary, self.position))
+                    self.first_name, self.last_name, self.password, self.telephone, self.mail, self.username, self.salary, self.position))
 
     def delete(self):
         """ Removes employee from the database """
