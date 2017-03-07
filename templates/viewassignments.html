@@ -1,4 +1,32 @@
 {% extends 'index.html' %}
 {% block content %}
+<section>
+    <h3>List assignments</h3>
+    <div class="large-wrapper">
+        <a href="addassignment.html"><input class="sub-right main-button" type="button" value="Add New Assignment"></a>
+        <table class='table-style'>
+            <thead>
+            <th>Assignment</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Type</th>
+            <th>Grade</th>
+            </thead>
+            <tbody>
+            {% for assignment in assignListOfObjects %}
+            <tr>
+
+                <td>{{assignment.title}}</td>
+                <td>{{assignment.description}}</td>
+                <td>{{assignment.due_date}}</td>
+                <td>{{assignment.type}}</td>
+                <td><a href="grade_assignment.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 
 {% endblock %}

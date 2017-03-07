@@ -9,7 +9,7 @@ class Assignment:
     Class representing assignment object.
     '''
 
-    def __init__(self, title, description, due_date, mentor_id, type):
+    def __init__(self, title, description, due_date, mentor_id, type, id=None):
         '''
         Constructor of an object.
         '''
@@ -18,7 +18,7 @@ class Assignment:
         self.due_date = due_date
         self.type = type
         self.mentor_id = mentor_id
-        self.id = None
+        self.id = id
 
     def set_id(self, id):
         self.id = id
@@ -75,7 +75,7 @@ class Assignment:
         list_assignment = []
         data = SqlRequest.sql_request('SELECT * FROM assignment')
         for item in data:
-            assignment = cls(item[1], item[2], item[3], item[4], item[5])
+            assignment = cls(item[1], item[2], item[3], item[4], item[6],item[0])
             assignment.set_id(item[0])
             list_assignment.append(assignment)
         return list_assignment
