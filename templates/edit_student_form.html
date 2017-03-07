@@ -5,11 +5,11 @@
   <form id="student-form" name='student-form' class="main-form" action="" method="post">
     <div class="right-side">
       <label for="first-name">First name</label>
-      <input type="text" name="first-name" value="{{student.first_name}}">
+      <input type="text" name="first-name" value="{{student.first_name}}" required>
       <label for="last-name">Last name</label>
-      <input type="text" name="last-name" value="{{student.last_name}}">
+      <input type="text" name="last-name" value="{{student.last_name}}" required>
       <label for="password">Password</label>
-      <input type="text" name="password" value="{{student.password}}">
+      <input type="text" name="password" value="{{student.password}}" required>
     </div>
     <label for="phone-number">Telephone number</label>
     <input type="tel" name="phone-number" value="{{student.telephone}}">
@@ -17,7 +17,7 @@
     <input type="email" name="mail" value="{{student.mail}}">
     <label for="team">Team</label>
     <select name='team' form="student-form">
-      <option disabled="disabled">Chose team</option>
+      <option selected='selected' disabled required>Chose team</option>
       {% for team in teams %}
         <option {% if team.id == student.team_id %} selected='selected' {% endif%} value="{{team.id}}">{{team.name}}
         </option>

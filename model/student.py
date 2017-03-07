@@ -11,10 +11,14 @@ class Student(User):
         self.team_name = self.get_team_name(team_id)
 
     def get_team_name(self, team_id):
-        query = 'SELECT * FROM team WHERE id={}'.format(team_id)
-        for row in SqlRequest.sql_request(query):
-            team_name = row[1]
-        return team_name
+        if team_id:
+            query = 'SELECT * FROM team WHERE id={}'.format(team_id)
+            team = SqlRequest.sql_request(query)
+            if team:
+                for row in team:
+                    team_name = row[1]
+                return team_name
+        return ''
 
     @classmethod
     def get_by_id(cls, id):

@@ -49,8 +49,8 @@ def add_student():
                           first_name=request.form['first-name'],
                           last_name=request.form['last-name'],
                           password=request.form['password'],
-                          telephone=request.form['phone-number'],
-                          mail=request.form['mail'],
+                          telephone=request.form.get('phone-number', ''),
+                          mail=request.form.get('mail', ''),
                           team_id=request.form['team'])
         student.add_student()
         return redirect(url_for('list_students'))
@@ -67,8 +67,8 @@ def edit_student(student_id):
                     first_name=request.form['first-name'],
                     last_name=request.form['last-name'],
                     password=request.form['password'],
-                    telephone=request.form['phone-number'],
-                    mail=request.form['mail'],
+                    telephone=request.form.get('phone-number', ''),
+                    mail=request.form.get('mail', ''),
                     team_id=request.form['team']).edit_student()
             return redirect('list-students')
         return render_template('edit_student_form.html', student=student, teams=teams)
