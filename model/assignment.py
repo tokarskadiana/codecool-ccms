@@ -50,7 +50,7 @@ class Assignment:
             assignment.due_date, assignment.type, assignment.mentor_id)
         SqlRequest.sql_request(query)
         assignment_id = \
-        SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
+            SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
         assignment.set_id(assignment_id)
         # assignment.make_submit_list()
 
@@ -75,7 +75,7 @@ class Assignment:
         list_assignment = []
         data = SqlRequest.sql_request('SELECT * FROM assignment')
         for item in data:
-            assignment = cls(item[1], item[2], item[3], item[4], item[6],item[0])
+            assignment = cls(item[1], item[2], item[3], item[4], item[6], item[0])
             assignment.set_id(item[0])
             list_assignment.append(assignment)
         return list_assignment
@@ -153,3 +153,24 @@ class Assignment:
             if submition[2] == user_id:
                 return submition[4]
         return None
+
+    # title, description, due_date, mentor_id, type, id = None
+    @classmethod
+    def get_by_id(cls, id):
+        query = 'SELECT id,title,"date",description,due_date,mentor_id,type FROM assignment WHERE id={}'.format(id)
+        assignments = SqlRequest.sql_request(query)
+        if assignments:
+            return cls(id=assignments[0][0],
+                       title=assignments[0][1],
+                       description=assignments[0][3],
+                       due_date=assignments[0][4],
+                       mentor_id=assignments[0][5],
+                       type=assignments[0][6],
+                       )
+        return None
+
+    @classmethod
+    def get_studentsOfAssigmnent(cls, id):
+        query = "SELECT student.ID, first_name,last_name,grade,content,update_data, (student.first_name || '.' || student.last_name ) as username  \
+                from submition LEFT JOIN student ON student.ID = student_id WHERE assignment_id={}".format(id)
+        return SqlRequest.sql_request(query)

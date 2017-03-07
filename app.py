@@ -1,4 +1,9 @@
+import os
+
 from flask import Flask, render_template, request, redirect, url_for
+from model.student import Student
+from model.submit import Submition
+from model.team import Team
 from controller.database_controller import DatabaseController
 from model.assignment import Assignment
 from model.employee import Employee
@@ -26,10 +31,14 @@ def list_mentors():
 
     :return:
     """
+
     if request.method == 'GET':
         mentorsObjectList = Mentor.list_mentors()
         print(mentorsObjectList[0])
         return render_template('viewmentors.html', mentorsObjectList=mentorsObjectList)
+
+    if request.method == 'POST':
+        pass
 
     return render_template('viewmentors.html')
 
@@ -54,10 +63,53 @@ def list_students():
 
     :return:
     """
-    if request.method == 'POST':
-        pass
+    students = Student.list_students()
+    return render_template('viewstudents.html', students=students)
 
-    return render_template('viewstudents.html')
+
+@app.route('/list-students/add', methods=['GET', 'POST'])
+def add_student():
+    """
+    """
+    teams = Team.list_teams()
+    if request.method == 'POST':
+        student = Student(id=None,
+                          first_name=request.form['first-name'],
+                          last_name=request.form['last-name'],
+                          password=request.form['password'],
+                          telephone=request.form.get('phone-number', ''),
+                          mail=request.form.get('mail', ''),
+                          team_id=request.form['team'])
+        student.add_student()
+        return redirect(url_for('list_students'))
+    return render_template('student_form.html', teams=teams)
+
+
+@app.route('/list-students/edit/<student_id>', methods=['GET', 'POST'])
+def edit_student(student_id):
+    teams = Team.list_teams()
+    student = Student.get_by_id(student_id)
+    if student:
+        if request.method == 'POST':
+            Student(id=student.id,
+                    first_name=request.form['first-name'],
+                    last_name=request.form['last-name'],
+                    password=request.form['password'],
+                    telephone=request.form.get('phone-number', ''),
+                    mail=request.form.get('mail', ''),
+                    team_id=request.form['team']).edit_student()
+            return redirect('list-students')
+        return render_template('edit_student_form.html', student=student, teams=teams)
+    return redirect('list-students')
+
+
+@app.route('/list-student/delete/<student_id>')
+def delete(student_id):
+    student = Student.get_by_id(student_id)
+    if student:
+        student.delete_student()
+        return redirect('list-students')
+    return redirect('list-students')
 
 
 @app.route('/list-assistants', methods=['GET', 'POST'])
@@ -106,11 +158,53 @@ def add_assignment():
 def grade_assignment():
     if request.method == 'POST':
         if request.form['assignmentID']:
-            assigID = request.form['assignmentID']
-            studentsObjectList = Student.list_students()
-            return render_template('grade_assignment.html')
+            assigID = Assignment.get_by_id(request.form['assignmentID'])
+            studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
 
-    return render_template('grade_assignment.html')
+            return render_template('grade_assignment.html', students=studentsDetails, assignment=assigID)
+    elif request.method =="GET":
+        assigID = Assignment.get_by_id(request.args['assignmentID'])
+        studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
+        return render_template('grade_assignment.html', students=studentsDetails, assignment=assigID)
+    else:
+        return "Not Implemented"
+
+@app.route('/list-assignments/grade-assignment/<username>', methods=['GET', 'POST'])
+def grade_user_assignments(username):
+    if request.method == "POST":
+
+        if request.form['grade_user'] == 'grade':
+            assignment_id = request.form['assignment']
+            student_id = request.form['id']
+            assignment  = Assignment.get_by_id(assignment_id)
+            student = Student.get_by_id(student_id)
+            student_submit = Submition.get_submit(student_id,assignment_id)
+            return render_template('grade_user_assignments.html',student=student,assignment=assignment,student_submit=student_submit )
+        elif request.form['grade_user'] == 'Save':
+            submit_id = request.form['submit_id']
+            new_grade = request.form['new_grade']
+            assignment_id = request.form['assignment_id']
+            print(new_grade)
+            submit = Submition.get_by_id(submit_id)
+            print(submit)
+            submit.update_grade(new_grade)
+            return redirect(url_for('grade_assignment',assignmentID=assignment_id))
+    return 'Not permited fool'
+
+
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 
 @app.route('/view-teams', methods=['GET', 'POST'])
@@ -124,6 +218,15 @@ def list_teams():
 
     return render_template('viewteams.html')
 
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    if request.method == 'POST':
+        users = request.form.getlist('users')
+    return render_template('test.html')
+
+def xxx():
+    return 'lol'
 
 if __name__ == '__main__':
     DatabaseController.createSqlDatabase()

@@ -3,10 +3,38 @@ from model.sqlRequest import SqlRequest
 
 
 class Student(User):
-    list_of_students = []
+
+    def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id=""):
+        super(Student, self).__init__(id, password, first_name,
+                                      last_name, telephone, mail)
+        self.team_id = team_id
+        self.team_name = self.get_team_name(team_id)
+
+    def get_team_name(self, team_id):
+        if team_id:
+            query = 'SELECT * FROM team WHERE id={}'.format(team_id)
+            team = SqlRequest.sql_request(query)
+            if team:
+                for row in team:
+                    team_name = row[1]
+                return team_name
+        return ''
 
     @classmethod
-    def add_student(cls, password, first_name, last_name, telephone='', mail=''):
+    def get_by_id(cls, id):
+        query = 'SELECT * FROM student WHERE id={}'.format(id)
+        student = SqlRequest.sql_request(query)
+        if student:
+            return cls(id=student[0][0],
+                       password=student[0][3],
+                       first_name=student[0][1],
+                       last_name=student[0][2],
+                       telephone=student[0][4],
+                       mail=student[0][5],
+                       team_id=student[0][7])
+        return None
+
+    def add_student(self):
         """
         Initialize Assignment object.
         :param password (str): password
@@ -15,120 +43,82 @@ class Student(User):
         :param telephone (str): telephone
         :param mail (str): mail
         """
-
-        team_id = 1
-        username = '{}.{}'.format(first_name, last_name)
-
+        username = '{}.{}'.format(self.first_name, self.last_name)
         query = (
-        'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(
-            first_name, last_name, password, telephone, mail, username, team_id))
+            'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES("{}","{}","{}","{}","{}","{}","{}");'.format(
+                self.first_name, self.last_name, self.password, self.telephone, self.mail, username, self.team_id))
         SqlRequest.sql_request(query)
 
-    @staticmethod
-    def edit_student(index, mail, telephone, team):
+    def edit_student(self):
         """
         Edit student attr.
         :param kwargs: name of attr and value of it
         """
-        # for key, value in kwargs.items():
-        #     if key:
-        #         if key in self.__dict__.keys():
-        #             self.__dict__[key] = value
-        query = (
-        'UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
+        username = '{}.{}'.format(self.first_name, self.last_name)
+        query = ("""UPDATE student SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
+        team_id={}, username="{}" WHERE id={};""".format(self.first_name, self.last_name, self.password,
+                                                         self.telephone, self.mail, self.team_id, username, self.id))
 
         SqlRequest.sql_request(query)
 
-    @staticmethod
-    def delete_student(id):
+    def delete_student(self):
         """
         Remove student from list_of_students by given username.
         :param username (str): value of username attr
         """
 
-        query = ('DELETE FROM student WHERE id={}'.format(id))
+        query = ('DELETE FROM student WHERE id={}'.format(self.id))
         SqlRequest.sql_request(query)
 
-    @staticmethod
-    def list_student():
+    @classmethod
+    def list_students(cls):
         """
         Returns static variable list_of_students.
         :return (list): list of students
         """
         list_of_students = []
 
-        query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student'
+        query = 'SELECT id, password, first_name,last_name, mail, telephone, team_id FROM student'
 
         data = SqlRequest.sql_request(query)
+        for row in data:
+            list_of_students.append(cls(id=row[0],
+                                        password=row[1],
+                                        first_name=row[2],
+                                        last_name=row[3],
+                                        telephone=row[5],
+                                        mail=row[4],
+                                        team_id=row[6]))
 
-        return data
+        return list_of_students
 
-
-    def get_username(self):
-        """
-        Returns username of objc.
-        :return (str): username of objc
-        """
-        return self.username
-
-    def __str__(self):
-        return '{} {} {}'.format(self.first_name, self.last_name, self.username)
-
-    @staticmethod
-    def list_for_employee(index):
-        """
-        Method for employee session to get details for student with given ID number
-        :param index: int
-        :return: None or sql query data
-        """
-        if index.isdigit():
-            query = 'SELECT id, first_name,last_name, username, mail, telephone, team_id FROM student WHERE id={}'.format(
-                index)
-            data = SqlRequest.sql_request(query)
-            return data
-        return None
-
-    @staticmethod
-    def student_name():
-        """
-        Method for list all student for only basic data
-        :return: sql query data
-        """
-        query = 'SELECT id, first_name,last_name FROM student'
-        data = SqlRequest.sql_request(query)
-        return data
-
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
 
     def student_average_grade(self):
         """
         Get average student grade
         :return:
         """
-        get_id = 'SELECT * FROM student WHERE username="{}"'.format(self.username)
+        get_id = 'SELECT * FROM student WHERE username="{}"'.format(
+            self.username)
         student_id = SqlRequest.sql_request(get_id)
         for id in student_id:
-            get_average_grade = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(id[0])
+            get_average_grade = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(
+                id[0])
             student_average_grade = SqlRequest.sql_request(get_average_grade)
             return student_average_grade[0][0]
-
-            #
-            # def all_students_average_grade(self):
-            #
-            #     list_of_students = self.list_student()
-            #     objectStudentList  = []
-            #     print(list_of_students)
-            #     # for student in list_of_students:
-            #     #     temp_object = Student()
-            #     #
 
     def get_attandance(self):
         """
         Get average present for student
         :return(int): average present
         """
-        query = 'SELECT id FROM student WHERE username="{}"'.format(self.get_username())
+        query = 'SELECT id FROM student WHERE username="{}"'.format(
+            self.get_username())
         data = SqlRequest.sql_request(query)
-        query_att = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(data[0][0])
+        query_att = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(
+            data[0][0])
         data_att = SqlRequest.sql_request(query_att)
         if data_att[0][0]:
             stats = (data_att[0][0] / data_att[0][1]) * 100

@@ -1,24 +1,51 @@
 {% extends 'index.html' %}
 {% block content %}
-<h3>Grade assignment Dupa</h3>
-<div class="small-wrapper">
-    <h4>Chose student:</h4>
-    <table class='table-style'>
-        <thead>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Grade</th>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Piotrek</td>
-            <td>Hahaha</td>
-            <td><a href="grade_stud.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i></td>
-        </tr>
-        </tbody>
-    </table>
+    <h3>Grade assignment {{ assignment.title }}</h3>
+    <h3>Due Date {{ assignment.due_date }}</h3>
+    <div class="small-wrapper">
+        <h4>Chose student:</h4>
+        <table class='table-style'>
+            <thead>
+            <th>Name</th>
+            <th>Content</th>
+            <th>Submit Date</th>
+            <th>Grade</th>
+            <th>Edit</th>
+            </thead>
+            <tbody>
 
-</div>
-<div class="back-button"><a href="mentor_list_assiments.html"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
-</div>
+            {% if students %}
+                {% for details in students %}
+                    <tr>
+                        <td>{{ details[1] }} {{ details[2] }}</td>
+                        <td>{{ details[4] }}</td>
+                    <td>{{ details[5] }}</td>
+                        <td>
+                            {% if details[3] == 0 %}
+                                <p class="not-grade">Not graded yet</p>
+                            {% elif details[3] < 4 %}
+                                <p class="low-grade"> {{ details[3] }}</p>
+                            {% else %}
+                                <p class="good-grade">{{ details[3] }}</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form method="POST" action="{{ url_for('grade_user_assignments',username=details[6]) }}">
+                                <input type="hidden"  name="assignment" value="{{ assignment.id }}">
+                                <input type="hidden"  name="id" value="{{ details[0] }}">
+                                <button type="submit" name="grade_user" value="grade">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+    <div class="back-button"><a href="mentor_list_assiments.html"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Back</a>
+    </div>
 {% endblock %}

@@ -339,6 +339,18 @@ button i{
 .default-image-spin {
 
 }
+.not-grade,.low-grade,.good-grade{
+    font-weight:bold;
+}
+.not-grade{
+    color:darkgrey;
+}
+.low-grade{
+    color: darkred;
+}
+.good-grade{
+    color:green;
+}
 .default-image-spin img{
 
     -webkit-animation:spin 4s linear infinite;
