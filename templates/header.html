@@ -25,14 +25,13 @@
 				<div class="group-capabilities">
 					<h3>MENU</h3>
 					<ul>
-				    <li><a href="avaragestatistics.html">Show average score</a></li>
+				    <li><a href="{{ url_for('statistics')}}">Show student statistics</a></li>
 						<li><a href="attendance.html">Check attendance</a></li>
-						<li><a href="presencestats.html">View presence statistics</a></li>
-						<li><a href="viewteams.html">View Teams	</a></li>
+						<li><a href="{{url_for('list_teams')}}">List teams</a></li>
 						<li><a href="{{ url_for('list_mentors')}}">List mentors</a></li>
 						<li><a href="{{ url_for('list_assistants')}}">List assistants</a></li>
 						<li><a href="{{ url_for('list_students')}}">List students</a></li>
-						<li><a href="{{ url_for('list_assignments')}}">List assignments</a></li>  <!-- For mentor -->
+						<li><a href="{{ url_for('list_assignments')}}">List assignments</a></li>
 					</ul>
 				</div>
 			</div>

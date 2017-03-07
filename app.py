@@ -84,6 +84,12 @@ def delete(student_id):
     return redirect('list-students')
 
 
+@app.route('/student-statistics')
+def statistics():
+    students = Student.list_students()
+    return render_template('statistics.html', students=students)
+
+
 @app.route('/list-assistants', methods=['GET', 'POST'])
 def list_assistants():
     """

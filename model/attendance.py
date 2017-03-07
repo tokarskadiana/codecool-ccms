@@ -57,16 +57,13 @@ class Attendance:
         stats = SqlRequest.sql_request(request)
         if stats:
             for pers_stat in stats:
-                request_s = 'SELECT first_name, last_name FROM student WHERE ID="{}"'.format(pers_stat[
-                                                                                                 0])
+                request_s = 'SELECT id FROM student WHERE ID="{}"'.format(pers_stat[0])
                 output = SqlRequest.sql_request(request_s)
-                full_name = output[0][1] + ' ' + output[0][1]
-                if full_name in percent_of_presence.keys():
-                    percent_of_presence[full_name] += pers_stat[1]
+                if request_s in percent_of_presence.keys():
+                    percent_of_presence[request_s] += pers_stat[1]
                 else:
-                    percent_of_presence[full_name] = pers_stat[1]
+                    percent_of_presence[request_s] = pers_stat[1]
 
             for person, value in percent_of_presence.items():
                 percent_of_presence[person] = (value / len(stats)) * 100
-
         return percent_of_presence
