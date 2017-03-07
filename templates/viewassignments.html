@@ -3,7 +3,7 @@
 <section>
     <h3>List assignments</h3>
     <div class="large-wrapper">
-        <a href="addassignment.html"><input class="sub-right main-button" type="button" value="Add New Assignment"></a>
+        <a href="{{url_for('add_assignment')}}"><input class="sub-right main-button" type="button" value="Add New Assignment"></a>
         <table class='table-style'>
             <thead>
             <th>Assignment</th>
@@ -20,7 +20,12 @@
                 <td>{{assignment.description}}</td>
                 <td>{{assignment.due_date}}</td>
                 <td>{{assignment.type}}</td>
-                <td><a href="grade_assignment.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>
+                <td>
+                    <form method="post"  action="{{url_for('grade_assignment')}}">
+                        <input type="hidden" value="{{assignment.id}}" name="assignmentID">
+                        <button type="submit" value="editAssignment"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>
+                    </form>
+
                 </td>
             </tr>
             {% endfor %}

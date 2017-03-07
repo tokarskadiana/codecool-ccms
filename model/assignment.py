@@ -52,7 +52,7 @@ class Assignment:
         assignment_id = \
         SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
         assignment.set_id(assignment_id)
-        assignment.make_submit_list()
+        # assignment.make_submit_list()
 
     def __str__(self):
         '''
