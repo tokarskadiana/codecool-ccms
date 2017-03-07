@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block content%}
+			<h3>Add New Team</h3>
+        <div class="small-wrapper">
+					<form class="main-form" action="#" method="post">
+            <label>Team name</label>
+            <input name="name" type="text" placeholder="Name"
+						{% if team %}
+						value="{{team.name}}">
+						{% else %}
+						value = "">
+						{% endif %}
+						<input class='main-button' type="submit" value="Save">
+          </form>
+				</div>
+    <div class="back-button"><a href="{{url_for('list_teams')}}"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
+{% endblock %}

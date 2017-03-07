@@ -90,6 +90,37 @@ def statistics():
     return render_template('statistics.html', students=students)
 
 
+@app.route('/list-teams')
+def list_teams():
+    teams = Team.list_teams()
+    return render_template('viewteams.html', teams=teams)
+
+
+@app.route('/list-teams/add', methods=["GET", 'POST'])
+def add_team():
+    if request.method == 'POST':
+        Team(request.form['name']).add_team()
+        return redirect('list-teams')
+    return render_template("team_form.html")
+
+
+@app.route('/list-teams/edit/<team_id>', methods=["GET", 'POST'])
+def edit_team(team_id):
+    team = Team.get_by_id(team_id)
+    if request.method == 'POST':
+        team.name = request.form['name']
+        team.edit_team()
+        return redirect(url_for('list_teams'))
+    return render_template('team_form.html', team=team)
+
+
+@app.route('/list-teams/delete/<team_id>')
+def delete_team(team_id):
+    team = Team.get_by_id(team_id)
+    team.delete_team()
+    return redirect(url_for('list_teams'))
+
+
 @app.route('/list-assistants', methods=['GET', 'POST'])
 def list_assistants():
     """

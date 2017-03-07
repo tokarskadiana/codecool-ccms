@@ -190,6 +190,11 @@ input, select {
     border-bottom: 2px dashed #000;
 }
 
+.table-style ul li{
+  list-style-type: circle;
+  text-align: left;
+}
+
 /*submition*/
 
 .submition-wrapper {
@@ -339,4 +344,3 @@ input[type="radio"]:checked + label span {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-
