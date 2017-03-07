@@ -33,40 +33,39 @@ class Attendance:
 
         return present_list
 
-    def add(self):
+    @staticmethod
+    def add(id, value, date):
         """
         Add Attendance objc to list_of_attendance.
         """
-        for student in self.student_presence.keys():
-            request_id = SqlRequest.sql_request('SELECT id FROM student WHERE username="{}"'.format(
-                student))
 
-            request = 'INSERT INTO attendance (student_id, "date", status) VALUES ("{}","{}","{}")'.format(
-                request_id[0][0], self.date, self.student_presence[student])
-            SqlRequest.sql_request(request)
+        request = 'INSERT INTO attendance (student_id, "date", status) VALUES ("{}","{}","{}")'.format(
+            id, date, value)
+        SqlRequest.sql_request(request)
 
-    @staticmethod
-    def present_statistic():
-        """
-        Calculate overall present for each student.
-        :return (dict): SAMPLE DICT {'patrycja': '100', 'przemek': '50'}
-        """
-        percent_of_presence = {}
 
-        request = 'SELECT student_id, status FROM attendance'
-        stats = SqlRequest.sql_request(request)
-        if stats:
-            for pers_stat in stats:
-                request_s = 'SELECT first_name, last_name FROM student WHERE ID="{}"'.format(pers_stat[
-                                                                                                 0])
-                output = SqlRequest.sql_request(request_s)
-                full_name = output[0][1] + ' ' + output[0][1]
-                if full_name in percent_of_presence.keys():
-                    percent_of_presence[full_name] += pers_stat[1]
-                else:
-                    percent_of_presence[full_name] = pers_stat[1]
+@staticmethod
+def present_statistic():
+    """
+    Calculate overall present for each student.
+    :return (dict): SAMPLE DICT {'patrycja': '100', 'przemek': '50'}
+    """
+    percent_of_presence = {}
 
-            for person, value in percent_of_presence.items():
-                percent_of_presence[person] = (value / len(stats)) * 100
+    request = 'SELECT student_id, status FROM attendance'
+    stats = SqlRequest.sql_request(request)
+    if stats:
+        for pers_stat in stats:
+            request_s = 'SELECT first_name, last_name FROM student WHERE ID="{}"'.format(pers_stat[
+                                                                                             0])
+            output = SqlRequest.sql_request(request_s)
+            full_name = output[0][1] + ' ' + output[0][1]
+            if full_name in percent_of_presence.keys():
+                percent_of_presence[full_name] += pers_stat[1]
+            else:
+                percent_of_presence[full_name] = pers_stat[1]
 
-        return percent_of_presence
+        for person, value in percent_of_presence.items():
+            percent_of_presence[person] = (value / len(stats)) * 100
+
+    return percent_of_presence

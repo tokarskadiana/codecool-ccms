@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from model.employee import Employee
 from controller.database_controller import DatabaseController
 from model.mentor import Mentor
+from model.student import Student
+from model.attendance import Attendance
+import datetime
 
 app = Flask(__name__)
 
@@ -88,6 +91,7 @@ def remove_assistant(assistant_id):
     employee.delete()
     return redirect(url_for('list_assistants'))
 
+
 @app.route("/editassistant/<assistant_id>", methods=['GET', 'POST'])
 def edit_assistant(assistant_id):
     """ Edits todo item with selected id in the database
@@ -98,7 +102,7 @@ def edit_assistant(assistant_id):
     if request.method == 'GET':
         return render_template('editassistant.html', assistant=assistant)
     elif request.method == 'POST':
-        assistant.first_name =request.form['first-name']
+        assistant.first_name = request.form['first-name']
         assistant.last_name = request.form['last-name']
         assistant.telephone = request.form['phone-number']
         assistant.mail = request.form['mail']
@@ -106,6 +110,7 @@ def edit_assistant(assistant_id):
         assistant.username = assistant.get_username()
         assistant.save()
         return redirect(url_for('list_assistants'))
+
 
 @app.route("/addassistant", methods=['GET', 'POST'])
 def add_assistant():
@@ -121,6 +126,19 @@ def add_assistant():
         employee.save()
         return redirect(url_for('list_assistants'))
     return render_template('addassistant.html')
+
+
+@app.route("/attendance", methods=['GET', 'POST'])
+def attendance():
+    students = Student.list_students_at()
+    date = datetime.datetime.now().strftime("%Y-%m-%d")
+    if request.method == 'POST':
+        for student in students:
+            value = int(request.form[str(student.id)])
+            Attendance.add(student.id, value, date)
+
+    return render_template('attendance.html', students=students, date=date)
+
 
 if __name__ == '__main__':
     DatabaseController.createSqlDatabase()

@@ -20,8 +20,8 @@ class Student(User):
         username = '{}.{}'.format(first_name, last_name)
 
         query = (
-        'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(
-            first_name, last_name, password, telephone, mail, username, team_id))
+            'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES ("{}","{}","{}","{}","{}","{}","{}");'.format(
+                first_name, last_name, password, telephone, mail, username, team_id))
         SqlRequest.sql_request(query)
 
     @staticmethod
@@ -35,7 +35,7 @@ class Student(User):
         #         if key in self.__dict__.keys():
         #             self.__dict__[key] = value
         query = (
-        'UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
+            'UPDATE student SET mail="{}", telephone="{}", team_id={} WHERE id={}'.format(mail, telephone, team, index))
 
         SqlRequest.sql_request(query)
 
@@ -62,7 +62,6 @@ class Student(User):
         data = SqlRequest.sql_request(query)
 
         return data
-
 
     def get_username(self):
         """
@@ -97,7 +96,6 @@ class Student(User):
         query = 'SELECT id, first_name,last_name FROM student'
         data = SqlRequest.sql_request(query)
         return data
-
 
     def student_average_grade(self):
         """
@@ -134,3 +132,23 @@ class Student(User):
             stats = (data_att[0][0] / data_att[0][1]) * 100
             return stats
         return False
+
+    @classmethod
+    def list_students_at(cls):
+        """
+        Returns static variable list_of_students.
+        :return (list): list of students
+        """
+        list_of_students = []
+
+        query = 'SELECT id, first_name, last_name FROM student'
+
+        data = SqlRequest.sql_request(query)
+        for row in data:
+            list_of_students.append(cls(id=row[0],
+                                        password='noeloburaczki',
+                                        first_name=row[1],
+                                        last_name=row[2],
+                                        ))
+
+        return list_of_students
