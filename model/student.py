@@ -45,7 +45,8 @@ class Student(User):
         """
         username = '{}.{}'.format(self.first_name, self.last_name)
         query = (
-            'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) VALUES("{}","{}","{}","{}","{}","{}","{}");'.format(
+            'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) \
+             VALUES("{}","{}","{}","{}","{}","{}","{}");'.format(
                 self.first_name, self.last_name, self.password, self.telephone, self.mail, username, self.team_id))
         SqlRequest.sql_request(query)
 
