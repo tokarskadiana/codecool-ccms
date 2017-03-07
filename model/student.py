@@ -86,8 +86,8 @@ class Student(User):
                                         password=row[1],
                                         first_name=row[2],
                                         last_name=row[3],
-                                        telephone=row[5],
-                                        mail=row[4],
+                                        telephone=(row[5] if row[5] else '-----'),
+                                        mail=(row[4] if row[4] else '-----'),
                                         team_id=row[6]))
 
         return list_of_students
@@ -95,32 +95,25 @@ class Student(User):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
-    def student_average_grade(self):
+    def grade_average(self):
         """
         Get average student grade
         :return:
         """
-        get_id = 'SELECT * FROM student WHERE username="{}"'.format(
-            self.username)
-        student_id = SqlRequest.sql_request(get_id)
-        for id in student_id:
-            get_average_grade = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(
-                id[0])
-            student_average_grade = SqlRequest.sql_request(get_average_grade)
-            return student_average_grade[0][0]
+        query = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(self.id)
+        grade_average = SqlRequest.sql_request(query)
+        if grade_average[0][0]:
+            return grade_average[0][0]
+        return '-----'
 
-    def get_attandance(self):
+    def presence_average(self):
         """
         Get average present for student
         :return(int): average present
         """
-        query = 'SELECT id FROM student WHERE username="{}"'.format(
-            self.get_username())
-        data = SqlRequest.sql_request(query)
-        query_att = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(
-            data[0][0])
-        data_att = SqlRequest.sql_request(query_att)
-        if data_att[0][0]:
-            stats = (data_att[0][0] / data_att[0][1]) * 100
+        query = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(self.id)
+        presence_average = SqlRequest.sql_request(query)
+        if presence_average[0][0] and presence_average[0][1]:
+            stats = (presence_average[0][0] / presence_average[0][1]) * 100
             return stats
-        return False
+        return '-----'
