@@ -30,6 +30,18 @@ def list_mentors():
 
     return render_template('viewmentors.html')
 
+@app.route('/delete-mentor/<mentor_id>')
+def delete_mentor():
+    """
+
+    :return:
+    """
+    if request.method == 'GET':
+        mentorsObjectList = Mentor.list_mentors()
+        print(mentorsObjectList[0])
+        return render_template('viewmentors.html', mentorsObjectList=mentorsObjectList)
+
+    return redirect(render_template('viewmentors.html'))
 
 @app.route('/list-students', methods=['GET', 'POST'])
 def list_students():

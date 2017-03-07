@@ -19,7 +19,7 @@ class Mentor(Employee):
         username = '{}.{}'.format(first_name, last_name)
         SqlRequest.sql_request(
             'INSERT OR IGNORE INTO  employee (first_name,last_name,password,username,position) VALUES ("{}","{}","{}","{}","{}")'.format(
-                first_name, last_name, password, username, 'mentor'))
+                 first_name, last_name, password, username, 'mentor'))
 
     def edit_mentor(self, **kwargs):
         """
@@ -85,7 +85,7 @@ class Mentor(Employee):
         mentorSqlList = SqlRequest.sql_request(query)
         mentorObjectList = []
         for element in mentorSqlList:
-            mentorObject = cls(element[3], element[1], element[2], element[4], element[5])
+            mentorObject = cls(element[3], element[1], element[2], element[4], element[5], element[0])
             mentorObjectList.append(mentorObject)
         return mentorObjectList
 
