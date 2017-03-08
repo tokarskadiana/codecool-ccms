@@ -16,7 +16,7 @@
     <label for="mail">Mail</label>
     <input type="email" name="mail" value="">
     <label for="team">Team</label>
-    <select name='team' form="student-form" required>
+    <select name='team' form="student-form" >
       <option selected='selected' disabled>Chose team</option>
       {% for team in teams %}
         <option value="{{team.id}}">{{team.name}}</option>

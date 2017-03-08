@@ -11,8 +11,15 @@ from model.employee import Employee
 import datetime
 
 app = Flask(__name__)
+#
+app.user = Student(id=1,
+                   password='kkk',
+                   first_name='piotr',
+                   last_name='gurdek',
+                   team_id=1,
+                   telephone=6666666,
+                   mail='pgurdek@gmail.com')
 
-app.user = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 1)
 # app.user = Mentor(id=120,
 #                   password='kkk',
 #                   first_name='Mateusz',
@@ -20,7 +27,19 @@ app.user = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 
 #                   position='mentor',
 #                   telephone="222")
 
-print(app.user.__dict__)
+# app.user = Employee(id=120,
+#                     password='kkk',
+#                     first_name='Miriam',
+#                     last_name='Foo',
+#                     position='assistant',
+#                     telephone="222")
+
+# app.user = Menager(id=120,
+#                    password='kkk',
+#                    first_name='Jurek',
+#                    last_name='Bla',
+#                    position='menager',
+#                    telephone="222")
 
 
 @app.route('/')
@@ -168,7 +187,7 @@ def add_student():
                           password=request.form['password'],
                           telephone=request.form.get('phone-number', ''),
                           mail=request.form.get('mail', ''),
-                          team_id=request.form['team'])
+                          team_id=request.form.get('team', ''))
         student.add_student()
         return redirect(url_for('list_students'))
     return render_template('student_form.html', user=app.user, teams=teams)
@@ -186,7 +205,7 @@ def edit_student(student_id):
                     password=request.form['password'],
                     telephone=request.form.get('phone-number', ''),
                     mail=request.form.get('mail', ''),
-                    team_id=request.form['team']).edit_student()
+                    team_id=request.form.get('team', '')).edit_student()
             return redirect('list-students')
         return render_template('edit_student_form.html', user=app.user, student=student, teams=teams)
     return redirect('list-students')
@@ -246,7 +265,6 @@ def delete_team(team_id):
 
 # ------------ASSIGNMENTS----------------
 
-# =======================Assignments==================================
 
 @app.route('/list-assignments')
 def list_assignments():
@@ -254,18 +272,16 @@ def list_assignments():
 
     :return:
     """
-
     choose = None
     if isinstance(app.user, Mentor):
         choose = "Mentor"
         assignListOfObjects = Assignment.get_list()
         return render_template('viewassignments.html', user=app.user, choose=choose,
                                assignListOfObjects=assignListOfObjects)
-    elif (isinstance(app.user, Student)):
+    elif isinstance(app.user, Student):
         choose = "Student"
         student_id = app.user.id
         student_assignments = Assignment.get_all_assigmnets(student_id)
-        # print(student_assignments)
         return render_template('viewassignments.html', user=app.user, choose=choose,
                                student_assignments=student_assignments)
     else:
@@ -283,8 +299,7 @@ def add_assignment():
             Assignment.create(title, description, type,
                               app.user.username, due_to, app.user.id)
             return redirect(url_for('list_assignments'))
-
-    return render_template('addassignment.html',user=app.user,)
+    return render_template('addassignment.html', user=app.user,)
 
 
 @app.route('/list-assignments/grade-assignment', methods=['GET', 'POST'])
@@ -346,24 +361,12 @@ def assignment_submit(assignments_id):
     return render_template('stud-submit.html', user=app.user, assignment=assignment, submit=submit)
 
 
-# ======================= End assignments ==================================
-
-# -------------OTHER STAFF--------------
-
-
-@app.context_processor
-def override_url_for():
-    return dict(url_for=dated_url_for)
-
-
-def dated_url_for(endpoint, **values):
-    if endpoint == 'static':
-        filename = values.get('filename', None)
-        if filename:
-            file_path = os.path.join(app.root_path,
-                                     endpoint, filename)
-            values['q'] = int(os.stat(file_path).st_mtime)
-    return url_for(endpoint, **values)
+@app.route('/list-assignments/delete/<assignment_id>')
+def delete_assignment(assignment_id):
+    assignment = Assignment.get_by_id(assignment_id)
+    assignment.delete_assignment()
+    return redirect(url_for('list_assignments'))
+# ---------------ATTENDANCE-----------------
 
 
 @app.route("/attendance", methods=['GET', 'POST'])
@@ -384,6 +387,24 @@ def attendance():
     if Attendance.already_checked(date):
         return render_template('attendance.html', user=app.user, students_checked=students_checked, date=date)
     return render_template('attendance.html', user=app.user, students=students, date=date)
+
+
+# -------------OTHER STAFF--------------
+
+
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 
 if __name__ == '__main__':
