@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 from controller.database_controller import DatabaseController
+from model.mentor import Mentor
 from model.student import Student
 from model.submit import Submition
 from model.team import Team
@@ -9,15 +10,17 @@ from model.attendance import Attendance
 from model.employee import Employee
 import datetime
 
-
 app = Flask(__name__)
 
-
 app.user = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 1)
-#   app.user = Mentor('kkk', 'mateusz', 'ostafil', '123123123', 'mateusz@ostafil.pl', 842, 5000)
+# app.user = Mentor(id=120,
+#                   password='kkk',
+#                   first_name='Mateusz',
+#                   last_name='Ostafil',
+#                   position='mentor',
+#                   telephone="222")
 
 print(app.user.__dict__)
-
 
 
 @app.route('/')
@@ -139,6 +142,7 @@ def delete_assistant(employee_id):
     assistant.delete_employee()
     return redirect('list-assistants')
 
+
 # ----------------STUDENTS--------------
 
 
@@ -255,13 +259,15 @@ def list_assignments():
     if isinstance(app.user, Mentor):
         choose = "Mentor"
         assignListOfObjects = Assignment.get_list()
-        return render_template('viewassignments.html', choose=choose,assignListOfObjects=assignListOfObjects)
+        return render_template('viewassignments.html', user=app.user, choose=choose,
+                               assignListOfObjects=assignListOfObjects)
     elif (isinstance(app.user, Student)):
         choose = "Student"
         student_id = app.user.id
-        student_assignments  = Assignment.get_all_assigmnets(student_id)
+        student_assignments = Assignment.get_all_assigmnets(student_id)
         # print(student_assignments)
-        return render_template('viewassignments.html',choose=choose,student_assignments=student_assignments)
+        return render_template('viewassignments.html', user=app.user, choose=choose,
+                               student_assignments=student_assignments)
     else:
         return render_template('404.html')
 
@@ -278,7 +284,7 @@ def add_assignment():
                               app.user.username, due_to, app.user.id)
             return redirect(url_for('list_assignments'))
 
-    return render_template('addassignment.html')
+    return render_template('addassignment.html',user=app.user,)
 
 
 @app.route('/list-assignments/grade-assignment', methods=['GET', 'POST'])
@@ -288,11 +294,11 @@ def grade_assignment():
             assigID = Assignment.get_by_id(request.form['assignmentID'])
             studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
 
-            return render_template('grade_assignment.html', students=studentsDetails, assignment=assigID)
+            return render_template('grade_assignment.html', user=app.user, students=studentsDetails, assignment=assigID)
     elif request.method == "GET":
         assigID = Assignment.get_by_id(request.args['assignmentID'])
         studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
-        return render_template('grade_assignment.html', students=studentsDetails, assignment=assigID)
+        return render_template('grade_assignment.html', user=app.user, students=studentsDetails, assignment=assigID)
     else:
         return "Not Implemented"
 
@@ -307,7 +313,7 @@ def grade_user_assignments(username):
             assignment = Assignment.get_by_id(assignment_id)
             student = Student.get_by_id(student_id)
             student_submit = Submition.get_submit(student_id, assignment_id)
-            return render_template('grade_user_assignments.html', student=student, assignment=assignment,
+            return render_template('grade_user_assignments.html', user=app.user, student=student, assignment=assignment,
                                    student_submit=student_submit)
         elif request.form['grade_user'] == 'Save':
             submit_id = request.form['submit_id']
@@ -320,23 +326,24 @@ def grade_user_assignments(username):
             return redirect(url_for('grade_assignment', assignmentID=assignment_id))
     return 'Not permited fool'
 
+
 @app.route('/list-assignments/view-assignments/<int:assignments_id>', methods=['GET', 'POST'])
 def view_assignments(assignments_id):
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(app.user.id,assignments_id)
-    return render_template('stud_view_assiment.html',assignment=assignment,submit=submit)
+    submit = Submition.get_submit(app.user.id, assignments_id)
+    return render_template('stud_view_assiment.html', user=app.user, assignment=assignment, submit=submit)
 
-@app.route('/list-assignments/view-assignments/<int:assignments_id>/submit_edition',methods=["GET","POST"])
+
+@app.route('/list-assignments/view-assignments/<int:assignments_id>/submit_edition', methods=["GET", "POST"])
 def assignment_submit(assignments_id):
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(app.user.id,assignments_id)
+    submit = Submition.get_submit(app.user.id, assignments_id)
     if request.method == "POST":
         content = request.form['content']
         submit.change_content(content)
-        return redirect(url_for('view_assignments',assignments_id=assignments_id))
+        return redirect(url_for('view_assignments', assignments_id=assignments_id))
 
-    return render_template('stud-submit.html',assignment=assignment,submit=submit)
-
+    return render_template('stud-submit.html', user=app.user, assignment=assignment, submit=submit)
 
 
 # ======================= End assignments ==================================
