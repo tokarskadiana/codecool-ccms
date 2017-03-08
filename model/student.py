@@ -55,6 +55,7 @@ class Student(User):
         Edit student attr.
         :param kwargs: name of attr and value of it
         """
+
         username = '{}.{}'.format(self.first_name, self.last_name)
         query = ("""UPDATE student SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
         team_id={}, username="{}" WHERE id={};""".format(self.first_name, self.last_name, self.password,

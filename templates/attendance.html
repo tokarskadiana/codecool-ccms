@@ -1,83 +1,33 @@
-<!DOCTYPE html>
-<html lang="pl-PL">
-	<head>
-	<title>CCMS</title>
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
-	<link rel="stylesheet"  href="css/style.css" type="text/css" media="all">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'index.html' %}
+{% block content %}
+<h3>Check Attendance {{ date }}</h3>
+<form class="main-form" action="" method="post">
+    <div class="small-wrapper">
+        <table class='table-style' onclick="toggleButtonRadioForm('attendance-sub-button', 'attendance-radio')">
+            <thead>
+            <th>Name</th>
+            <th>Absent</th>
+            <th>Present</th>
+            </thead>
+            <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.first_name }} {{ student.last_name }}</td>
+                <td><input type="radio" id="{{ student.id }}-yes" name="{{ student.id }}" class="attendance-radio" value="1"/>
+                    <label for="{{ student.id }}-yes"><span></span>Yes</label>
+                </td>
+                <td><input type="radio" id="{{ student.id }}-no" name="{{ student.id }}" class="attendance-radio" value="0"/>
+                    <label for="{{ student.id }}-no"><span></span>No</label>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            </tfoot>
 
-
-	</head>
-<!-- Header -->
-	<body id="homepage" class="container">
-
-		<aside class="user-info">
-			<div class="user-first-section">
-				<h3>You are logged as</h3>
-				<div class="image-wrapper default-image-spin">
-					<img src="images/codecool.png" />
-					<div class="details">
-						<h1>Mateusz</h1>
-						<a href="login.html" class='main-button'>Log Out</a>
-					</div>
-				</div>
-			</div>
-			<div class="user-capabilities">
-				<div class="group-capabilities">
-					<h3>MENU</h3>
-					<ul>
-						<li><a href="stud_list_assiments.html">List available assignments</a></li>
-				    <li><a href="avaragestatistics.html">Show average score</a></li>
-						<li class="active"><a href="attendance.html">Check attendance</a></li>
-						<li><a href="presencestats.html">View presence statistics</a></li>
-						<li><a href="viewteams.html">View Teams	</a></li>
-						<li><a href="viewmentors.html">List mentors</a></li>
-						<li><a href="viewassistants.html">List assistants</a></li>
-						<li><a href="viewstudents.html">List students</a></li>
-						<li><a href="mentor_list_assiments.html">List assignments</a></li>  <!-- For mentor -->
-					</ul>
-				</div>
-			</div>
-
-		</aside>
-
-		<section class="user-actions">
-			<h3>Check Attendance 20.12.2017</h3>
-	 <div class="small-wrapper">
-      <table class='table-style' onclick="toggleButtonRadioForm('attendance-sub-button', 'attendance-radio')">
-        <thead>
-          <th>Name</th>
-          <th>Present</th>
-          <th>Absent</th>
-        </thead>
-        <tbody>
-	    	<tr>
-	          <td>Dupa</td>
-	          <td>      <input type="radio" id="dupa-yes" name="present" class="attendance-radio"/>
-	    				<label for="dupa-yes"><span></span>Yes</label>
-	    	  </td>
-	          <td>      <input type="radio" id="dupa-no" name="present" class="attendance-radio"/>
-	    				<label for="dupa-no"><span></span>No</label>
-	    	  </td>
-	        </tr>
-	         <tr>
-	              <td>Marcin</td>
-	              <td>      <input type="radio" id="Marcin-yes" name="present-marcin" class="attendance-radio"/>
-	                        <label for="Marcin-yes"><span></span>Yes</label>
-	              </td>
-	              <td>      <input type="radio" id="Marcin-no" name="present-marcin" class="attendance-radio"/>
-	                        <label for="Marcin-no"><span></span>No</label>
-	              </td>
-	        </tr>
-        </tbody>
-        <tfoot>
-        </tfoot>
-
-      </table>
-			<input class='main-button' type="button" value="Submit" id="attendance-sub-button" disabled="disabled">
-
-		</div>
-		</section>
-<script src="js/main.js"></script>
-	</body>
-</html>
+        </table>
+        <input class='main-button' type="submit" value="Submit" id="attendance-sub-button" disabled="disabled">
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/main.js') }}"></script>
+    </div>
+</form>
+{% endblock %}

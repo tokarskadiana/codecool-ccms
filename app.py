@@ -1,14 +1,13 @@
 import os
-
 from flask import Flask, render_template, request, redirect, url_for
 from model.student import Student
 from model.submit import Submition
 from model.team import Team
+from model.employee import Employee
 from controller.database_controller import DatabaseController
 from model.assignment import Assignment
-from model.employee import Employee
-from model.mentor import Mentor
-from model.student import Student
+from model.attendance import Attendance
+import datetime
 
 app = Flask(__name__)
 
@@ -154,11 +153,11 @@ def list_assistants():
 
     :return:
     """
-
+    assistants = Employee.list_employee()
     if request.method == 'POST':
         pass
 
-    return render_template('viewassistants.html')
+    return render_template('viewassistants.html', assistants=assistants)
 
 
 @app.route('/list-assignments')
@@ -250,6 +249,62 @@ def test():
     if request.method == 'POST':
         users = request.form.getlist('users')
     return render_template('test.html')
+
+
+@app.route("/remove-assistant/<assistant_id>")
+def remove_assistant(assistant_id):
+    """ Removes assistant with selected id from the database """
+    employee = Employee.get_assistant_by_id(assistant_id)
+    employee.delete()
+    return redirect(url_for('list_assistants'))
+
+
+@app.route("/editassistant/<assistant_id>", methods=['GET', 'POST'])
+def edit_assistant(assistant_id):
+    """ Edits todo item with selected id in the database
+    If the method was GET it should show todo item form.
+    If the method was POST it shold update todo item in database.
+    """
+    assistant = Employee.get_assistant_by_id(assistant_id)
+    if request.method == 'GET':
+        return render_template('editassistant.html', assistant=assistant)
+    elif request.method == 'POST':
+        assistant.first_name = request.form['first-name']
+        assistant.last_name = request.form['last-name']
+        assistant.telephone = request.form['phone-number']
+        assistant.mail = request.form['mail']
+        assistant.salary = request.form['salary']
+        assistant.username = assistant.get_username()
+        assistant.save()
+        return redirect(url_for('list_assistants'))
+
+
+@app.route("/addassistant", methods=['GET', 'POST'])
+def add_assistant():
+    if request.method == 'POST':
+        first_name = request.form['first-name']
+        last_name = request.form['last-name']
+        telephone = request.form['phone-number']
+        email = request.form['email']
+        salary = request.form['salary']
+        password = request.form['password']
+        employee = Employee(password, first_name, last_name, telephone, email, salary)
+        employee.position = 'employee'
+        employee.save()
+        return redirect(url_for('list_assistants'))
+    return render_template('addassistant.html')
+
+
+@app.route("/attendance", methods=['GET', 'POST'])
+def attendance():
+    students = Student.list_students_at()
+    date = datetime.datetime.now().strftime("%Y-%m-%d")
+    if request.method == 'POST':
+        for student in students:
+            value = int(request.form[str(student.id)])
+            Attendance.add(student.id, value, date)
+
+    return render_template('attendance.html', students=students, date=date)
 
 
 if __name__ == '__main__':

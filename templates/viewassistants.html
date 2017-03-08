@@ -1,35 +1,39 @@
 {% extends 'index.html' %}
 {% block content %}
 
-			<h3>Assistants List</h3>
-			<div class="large-wrapper">
-            <a href="addassistant.html"><input class="sub-right main-button" type="button" value="Add New Assistant"></a>
-			<table class='table-style'>
-				<thead>
-					<th>ID</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-                    <th>User Name</th>
-					<th>Phone number</th>
-          			<th>E-mail</th>
-					<th>Salary</th>
-          			<th>Edit</th>
-				  	<th>Delete</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Kati</td>
-            <td>Hahaha</td>
-            <td>kati.hahaha</td>
-            <td>123-123-123</td>
-            <td>kati@codecool.pl</td>
-            <td>10000000</td>
-						<td><a href="editassistant.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-						<td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-					</tr>
-				</tbody>
-			</table>
-			</div>
+<h3>Assistants List</h3>
+<div class="large-wrapper">
+    <a href="/addassistant"><input class="sub-right main-button" type="button" value="Add New Assistant"></a>
+    <table class='table-style'>
+        <thead>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>User Name</th>
+        <th>Phone number</th>
+        <th>E-mail</th>
+        <th>Salary</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </thead>
+        <tbody>
+        {% if assistants %}
+        {% for assistant in assistants %}
+        <tr>
+            <td>{{ assistant.id }}</td>
+            <td>{{ assistant.first_name }}</td>
+            <td>{{ assistant.last_name }}</td>
+            <td>{{ assistant.get_username() }}</td>
+            <td>{{ assistant.telephone }}</td>
+            <td>{{ assistant.mail }}</td>
+            <td>{{ assistant.salary }}</td>
+            <td><a href="/editassistant/{{ assistant.id }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+            <td><a href="/remove-assistant/{{ assistant.id }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

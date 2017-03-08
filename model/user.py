@@ -6,7 +6,7 @@ class User:
     This class representing User class
     """
 
-    def __init__(self, id, password, first_name, last_name, telephone="", mail=""):
+    def __init__(self, password, first_name, last_name, telephone="", mail="", id=None):
         """
         Constructs User object
         :param password: (str) store of password of User object
