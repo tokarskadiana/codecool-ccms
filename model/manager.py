@@ -21,15 +21,34 @@ class Manager(Employee):
                 first_name, last_name, password, username, 'manager'))
 
     @classmethod
-    def list_manager(cls):
+    def get_by_id(cls, id , pos ="manager"):
+        query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id,pos)
+        manager = SqlRequest.sql_request(query)
+        if manager:
+            return cls(id=manager[0][0],
+                       password=manager[0][3],
+                       first_name=manager[0][1],
+                       last_name=manager[0][3],
+                       position=manager[0][8],
+                       telephone=manager[0][4],
+                       mail=manager[0][5],
+                       salary=manager[0][7])
+        return None
+
+    @classmethod
+    def list_managers(cls, position):
         """
-        Returns list of manager.
-        :return (list): manager list
         """
-        query = 'SELECT * FROM employee WHERE position = "manager"'
-        managerSqlList = SqlRequest.sql_request(query)
-        managerObjectList = []
-        for element in managerSqlList:
-            managerObject = cls(element[3], element[1], element[2])
-            managerObjectList.append(managerObject)
-        return managerObjectList
+        mangagers = []
+        query = 'SELECT * FROM employee WHERE position="{}"'.format(position)
+        manager_list = SqlRequest.sql_request(query)
+        for row in manager_list:
+            mangagers.append(cls(id=row[0],
+                                     password=row[3],
+                                     first_name=row[1],
+                                     last_name=row[2],
+                                     position=row[8],
+                                     telephone=(row[4] if row[4] else '-----'),
+                                     mail=(row[5] if row[5] else '-----'),
+                                     salary=(row[7] if row[7] else '-----')))
+        return mangagers

@@ -47,8 +47,7 @@
             <table class='table-style'>
                 <thead>
                 <th>Assiment</th>
-                <th>View</th>
-                <th>Submit</th>
+                <th >View/Submit</th>
                 </thead>
                 <tbody>
                 {% for student_assignment in student_assignments %}
@@ -56,8 +55,6 @@
                         <td>{{ student_assignment.title }}</td>
                         <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i
                                 class="fa fa-search" aria-hidden="true"></a></td>
-                        <td><a href="stud-submit.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -1,6 +1,11 @@
 import os
+from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for
+from flask import flash
+from flask import session
+
 from controller.database_controller import DatabaseController
+from model.manager import Manager
 from model.mentor import Mentor
 from model.student import Student
 from model.submit import Submition
@@ -11,25 +16,78 @@ from model.employee import Employee
 import datetime
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
-app.user = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 1)
-# app.user = Mentor(id=120,
+
+# user_session(session['user'],session['type']) = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 1)
+# user_session(session['user'],session['type']) = Mentor(id=120,
 #                   password='kkk',
 #                   first_name='Mateusz',
 #                   last_name='Ostafil',
 #                   position='mentor',
 #                   telephone="222")
 
-print(app.user.__dict__)
+# print(user_session(session['user'],session['type']).__dict__)
+
+
+# login required decorator
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You need to login first')
+            return redirect(url_for('login'))
+
+    return wrap
 
 
 @app.route('/')
+@login_required
 def index():
     """
     handle main index page, display nav of curent user
     :return:
     """
-    return render_template('index.html', user=app.user)
+
+    return render_template('index.html', user=user_session(session['user'], session['type']))
+
+
+# -----------------LOGIN------------------
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error = None
+    students = Student.list_students()
+    employees = Employee.list_employee('employee')
+    mentors = Mentor.list_mentors('mentor')
+    managers = Manager.list_managers('manager')
+    all_users = students + employees + mentors + managers
+
+    print(all_users)
+
+    if request.method == "POST":
+        for user in all_users:
+            if request.form['username'] == user.username and request.form['password'] == user.password:
+                session['logged_in'] = True
+                session['user'] = user.id
+                session['type'] = user.__class__.__name__
+                print('To jest user', user, 'i jego klasa to', user.__class__.__name__)
+                return redirect(url_for('index'))
+            else:
+                error = "Invalid Credentials. Please Try Again "
+
+    return render_template("login.html", error=error)
+
+
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    session.pop('logged_in', None)
+    session.pop('user', None)
+    session.pop('type', None)
+    flash('You are logged out, Have Fun')
+    return redirect(url_for('login'))
 
 
 # -----------------EMPLOYEE------------------
@@ -61,6 +119,7 @@ def edit_employee(position, employee):
 
 
 @app.route('/list-mentors')
+@login_required
 def list_mentors():
     """
     :return:
@@ -69,28 +128,33 @@ def list_mentors():
     add = 'add_mentor'
     edit = 'edit_mentor'
     delete = 'delete_mentor'
-    return render_template('viewemployee.html', user=app.user, employee_list=mentors_list, employee='Mentor',
+    return render_template('viewemployee.html', user=user_session(session['user'], session['type']),
+                           employee_list=mentors_list, employee='Mentor',
                            add=add, edit=edit, delete=delete)
 
 
 @app.route('/list-mentors/add', methods=['GET', 'POST'])
+@login_required
 def add_mentor():
     if request.method == 'POST':
         add_employee('mentor')
         return redirect(url_for('list_mentors'))
-    return render_template('addemployee.html', user=app.user, list='list_mentors')
+    return render_template('addemployee.html', user=user_session(session['user'], session['type']), list='list_mentors')
 
 
 @app.route('/list-mentors/edit/<employee_id>', methods=['GET', 'POST'])
+@login_required
 def edit_mentor(employee_id):
     mentor = Employee.get_by_id(employee_id)
     if request.method == 'POST':
         edit_employee('mentor', mentor)
         return redirect('list-mentors')
-    return render_template('editemployee.html', user=app.user, employee=mentor, list='list_mentors')
+    return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=mentor,
+                           list='list_mentors')
 
 
 @app.route('/delete-mentor/<employee_id>')
+@login_required
 def delete_mentor(employee_id):
     """
     :return:
@@ -104,6 +168,7 @@ def delete_mentor(employee_id):
 
 
 @app.route('/list-assistants')
+@login_required
 def list_assistants():
     """
     :return:
@@ -112,28 +177,34 @@ def list_assistants():
     add = 'add_assistant'
     edit = 'edit_assistant'
     delete = 'delete_assistant'
-    return render_template('viewemployee.html', user=app.user, employee_list=assistants_list, employee='Assistant',
+    return render_template('viewemployee.html', user=user_session(session['user'], session['type']),
+                           employee_list=assistants_list, employee='Assistant',
                            add=add, edit=edit, delete=delete)
 
 
 @app.route('/list-assistants/add', methods=['GET', 'POST'])
+@login_required
 def add_assistant():
     if request.method == 'POST':
         add_employee('assistant')
         return redirect(url_for('list_assistants'))
-    return render_template('addemployee.html', user=app.user, employee='Assistant', list='list_assistants')
+    return render_template('addemployee.html', user=user_session(session['user'], session['type']),
+                           employee='Assistant', list='list_assistants')
 
 
 @app.route('/list-assistant/edit/<employee_id>', methods=['GET', 'POST'])
+@login_required
 def edit_assistant(employee_id):
     assistant = Employee.get_by_id(employee_id)
     if request.method == 'POST':
         edit_employee('assistant', assistant)
         return redirect('list-assistants')
-    return render_template('editemployee.html', user=app.user, employee=assistant, list='list_assistants')
+    return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=assistant,
+                           list='list_assistants')
 
 
 @app.route('/delete-assistant/<employee_id>')
+@login_required
 def delete_assistant(employee_id):
     """
     :return:
@@ -147,16 +218,18 @@ def delete_assistant(employee_id):
 
 
 @app.route('/list-students', methods=['GET', 'POST'])
+@login_required
 def list_students():
     """
 
     :return:
     """
     students = Student.list_students()
-    return render_template('viewstudents.html', user=app.user, students=students)
+    return render_template('viewstudents.html', user=user_session(session['user'], session['type']), students=students)
 
 
 @app.route('/list-students/add', methods=['GET', 'POST'])
+@login_required
 def add_student():
     """
     """
@@ -171,10 +244,11 @@ def add_student():
                           team_id=request.form['team'])
         student.add_student()
         return redirect(url_for('list_students'))
-    return render_template('student_form.html', user=app.user, teams=teams)
+    return render_template('student_form.html', user=user_session(session['user'], session['type']), teams=teams)
 
 
 @app.route('/list-students/edit/<student_id>', methods=['GET', 'POST'])
+@login_required
 def edit_student(student_id):
     teams = Team.list_teams()
     student = Student.get_by_id(student_id)
@@ -188,11 +262,13 @@ def edit_student(student_id):
                     mail=request.form.get('mail', ''),
                     team_id=request.form['team']).edit_student()
             return redirect('list-students')
-        return render_template('edit_student_form.html', user=app.user, student=student, teams=teams)
+        return render_template('edit_student_form.html', user=user_session(session['user'], session['type']),
+                               student=student, teams=teams)
     return redirect('list-students')
 
 
 @app.route('/list-student/delete/<student_id>')
+@login_required
 def delete(student_id):
     student = Student.get_by_id(student_id)
     if student:
@@ -205,39 +281,44 @@ def delete(student_id):
 
 
 @app.route('/student-statistics')
+@login_required
 def statistics():
     students = Student.list_students()
-    return render_template('statistics.html', user=app.user, students=students)
+    return render_template('statistics.html', user=user_session(session['user'], session['type']), students=students)
 
 
 # ------------TEAMS----------------
 
 
 @app.route('/list-teams')
+@login_required
 def list_teams():
     teams = Team.list_teams()
-    return render_template('viewteams.html', user=app.user, teams=teams)
+    return render_template('viewteams.html', user=user_session(session['user'], session['type']), teams=teams)
 
 
 @app.route('/list-teams/add', methods=["GET", 'POST'])
+@login_required
 def add_team():
     if request.method == 'POST':
         Team(request.form['name']).add_team()
         return redirect('list-teams')
-    return render_template("team_form.html", user=app.user)
+    return render_template("team_form.html", user=user_session(session['user'], session['type']))
 
 
 @app.route('/list-teams/edit/<team_id>', methods=["GET", 'POST'])
+@login_required
 def edit_team(team_id):
     team = Team.get_by_id(team_id)
     if request.method == 'POST':
         team.name = request.form['name']
         team.edit_team()
         return redirect(url_for('list_teams'))
-    return render_template('team_form.html', user=app.user, team=team)
+    return render_template('team_form.html', user=user_session(session['user'], session['type']), team=team)
 
 
 @app.route('/list-teams/delete/<team_id>')
+@login_required
 def delete_team(team_id):
     team = Team.get_by_id(team_id)
     team.delete_team()
@@ -249,31 +330,40 @@ def delete_team(team_id):
 # =======================Assignments==================================
 
 @app.route('/list-assignments')
+@login_required
 def list_assignments():
     """
-
-    :return:
+    List all assignments
+    :return: template
     """
-
+    user = user_session(session['user'], session['type'])
+    print(user)
     choose = None
-    if isinstance(app.user, Mentor):
+    if isinstance(user, Mentor):
         choose = "Mentor"
         assignListOfObjects = Assignment.get_list()
-        return render_template('viewassignments.html', user=app.user, choose=choose,
+        return render_template('viewassignments.html', user=user_session(session['user'], session['type']),
+                               choose=choose,
                                assignListOfObjects=assignListOfObjects)
-    elif (isinstance(app.user, Student)):
+    elif (isinstance(user, Student)):
         choose = "Student"
-        student_id = app.user.id
+        student_id = user_session(session['user'], session['type']).id
         student_assignments = Assignment.get_all_assigmnets(student_id)
         # print(student_assignments)
-        return render_template('viewassignments.html', user=app.user, choose=choose,
+        return render_template('viewassignments.html', user=user_session(session['user'], session['type']),
+                               choose=choose,
                                student_assignments=student_assignments)
     else:
-        return render_template('404.html')
+        return render_template('404.html', user=user_session(session['user'], session['type']))
 
 
 @app.route('/list-assignments/add-assignment', methods=['GET', 'POST'])
+@login_required
 def add_assignment():
+    """
+    Add assignment
+    :return:
+    """
     if request.method == 'POST':
         if request.form['add_assignment']:
             title = request.form['title']
@@ -281,30 +371,44 @@ def add_assignment():
             due_to = request.form['due_to']
             type = request.form['type']
             Assignment.create(title, description, type,
-                              app.user.username, due_to, app.user.id)
+                              user_session(session['user'], session['type']).username, due_to,
+                              user_session(session['user'], session['type']).id)
             return redirect(url_for('list_assignments'))
 
-    return render_template('addassignment.html',user=app.user,)
+    return render_template('addassignment.html', user=user_session(session['user'], session['type']), )
 
 
 @app.route('/list-assignments/grade-assignment', methods=['GET', 'POST'])
+@login_required
 def grade_assignment():
+    """
+    List user of assignment
+    :return:
+    """
     if request.method == 'POST':
         if request.form['assignmentID']:
             assigID = Assignment.get_by_id(request.form['assignmentID'])
             studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
 
-            return render_template('grade_assignment.html', user=app.user, students=studentsDetails, assignment=assigID)
+            return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
+                                   students=studentsDetails, assignment=assigID)
     elif request.method == "GET":
         assigID = Assignment.get_by_id(request.args['assignmentID'])
         studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
-        return render_template('grade_assignment.html', user=app.user, students=studentsDetails, assignment=assigID)
+        return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
+                               students=studentsDetails, assignment=assigID)
     else:
         return "Not Implemented"
 
 
 @app.route('/list-assignments/grade-assignment/<username>', methods=['GET', 'POST'])
+@login_required
 def grade_user_assignments(username):
+    """
+    Grade assignment
+    :param username:
+    :return:
+    """
     if request.method == "POST":
 
         if request.form['grade_user'] == 'grade':
@@ -313,7 +417,8 @@ def grade_user_assignments(username):
             assignment = Assignment.get_by_id(assignment_id)
             student = Student.get_by_id(student_id)
             student_submit = Submition.get_submit(student_id, assignment_id)
-            return render_template('grade_user_assignments.html', user=app.user, student=student, assignment=assignment,
+            return render_template('grade_user_assignments.html', user=user_session(session['user'], session['type']),
+                                   student=student, assignment=assignment,
                                    student_submit=student_submit)
         elif request.form['grade_user'] == 'Save':
             submit_id = request.form['submit_id']
@@ -328,45 +433,44 @@ def grade_user_assignments(username):
 
 
 @app.route('/list-assignments/view-assignments/<int:assignments_id>', methods=['GET', 'POST'])
+@login_required
 def view_assignments(assignments_id):
+    """
+    Student list assignments
+    :param assignments_id:
+    :return:
+    """
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(app.user.id, assignments_id)
-    return render_template('stud_view_assiment.html', user=app.user, assignment=assignment, submit=submit)
+    submit = Submition.get_submit(user_session(session['user'], session['type']).id, assignments_id)
+    return render_template('stud_view_assiment.html', user=user_session(session['user'], session['type']),
+                           assignment=assignment, submit=submit)
 
 
 @app.route('/list-assignments/view-assignments/<int:assignments_id>/submit_edition', methods=["GET", "POST"])
+@login_required
 def assignment_submit(assignments_id):
+    """
+    Student submit assignment
+    :param assignments_id:
+    :return:
+    """
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(app.user.id, assignments_id)
+    submit = Submition.get_submit(user_session(session['user'], session['type']).id, assignments_id)
     if request.method == "POST":
         content = request.form['content']
         submit.change_content(content)
         return redirect(url_for('view_assignments', assignments_id=assignments_id))
 
-    return render_template('stud-submit.html', user=app.user, assignment=assignment, submit=submit)
+    return render_template('stud-submit.html', user=user_session(session['user'], session['type']),
+                           assignment=assignment, submit=submit)
 
 
 # ======================= End assignments ==================================
 
-# -------------OTHER STAFF--------------
-
-
-@app.context_processor
-def override_url_for():
-    return dict(url_for=dated_url_for)
-
-
-def dated_url_for(endpoint, **values):
-    if endpoint == 'static':
-        filename = values.get('filename', None)
-        if filename:
-            file_path = os.path.join(app.root_path,
-                                     endpoint, filename)
-            values['q'] = int(os.stat(file_path).st_mtime)
-    return url_for(endpoint, **values)
 
 
 @app.route("/attendance", methods=['GET', 'POST'])
+@login_required
 def attendance():
     students = Student.list_students()
     date = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -382,8 +486,47 @@ def attendance():
                 Attendance.add(student.id, value, date)
         return redirect(url_for('attendance'))
     if Attendance.already_checked(date):
-        return render_template('attendance.html', user=app.user, students_checked=students_checked, date=date)
-    return render_template('attendance.html', user=app.user, students=students, date=date)
+        return render_template('attendance.html', user=user_session(session['user'], session['type']),
+                               students_checked=students_checked, date=date)
+    return render_template('attendance.html', user=user_session(session['user'], session['type']), students=students,
+                           date=date)
+
+
+# -------------OTHER STAFF--------------
+
+
+@app.context_processor
+def override_url_for():
+    """Overrides url_for with additional values on end (cache prevent)"""
+    return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+    """Add on end to static files a int value(time)  """
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
+
+
+def user_session(id, class_name):
+    print('Class name to', class_name)
+    if class_name == "Student":
+
+        return Student.get_by_id(id)
+    elif class_name == "Mentor":
+
+        return Mentor.get_by_id(id)
+    elif class_name == "Employee":
+
+        return Employee.get_by_id(id)
+    elif class_name == "Manager":
+
+        return Manager.get_by_id(id)
+    return None
 
 
 if __name__ == '__main__':
