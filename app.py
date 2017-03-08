@@ -1,19 +1,21 @@
 import os
-
 from flask import Flask, render_template, request, redirect, url_for
+from controller.database_controller import DatabaseController
 from model.student import Student
 from model.submit import Submition
 from model.team import Team
-from controller.database_controller import DatabaseController
 from model.assignment import Assignment
 from model.employee import Employee
-from model.mentor import Mentor
 from model.student import Student
 
 app = Flask(__name__)
 
-app.user = Mentor('kkk', 'mateusz', 'ostafil', '123123123', 'mateusz@ostafil.pl', 842, 5000)
-print(app.user.__dict__)
+app.user = Employee(id=120,
+                    password='kkk',
+                    first_name='Mateusz',
+                    last_name='Ostafil',
+                    position='mentor',
+                    telephone="222")
 
 
 @app.route('/')
@@ -22,38 +24,120 @@ def index():
     handle main index page, display nav of curent user
     :return:
     """
-    return render_template('index.html')
+    return render_template('index.html', user=app.user)
 
 
-@app.route('/list-mentors', methods=['GET', 'POST'])
+# -----------------EMPLOYEE------------------
+
+
+def add_employee(position):
+    Employee(id=None,
+             password=request.form['password'],
+             first_name=request.form['first_name'],
+             last_name=request.form['last_name'],
+             position=position,
+             telephone=request.form.get('phone_number', ''),
+             mail=request.form.get('mail', ''),
+             salary=request.form.get('salary', '')).add_employee()
+
+
+def edit_employee(position, employee):
+    Employee(id=employee.id,
+             first_name=request.form['first_name'],
+             password=request.form['password'],
+             last_name=request.form['last_name'],
+             position=position,
+             telephone=request.form.get('phone_number', ''),
+             mail=request.form.get('mail', ''),
+             salary=request.form.get('salary', '')).edit_employee()
+
+
+# ----------------MENTORS-----------------
+
+
+@app.route('/list-mentors')
 def list_mentors():
     """
-
     :return:
     """
-    if request.method == 'GET':
-        mentorsObjectList = Mentor.list_mentors()
-        print(mentorsObjectList[0])
-        return render_template('viewmentors.html', mentorsObjectList=mentorsObjectList)
+    mentors_list = Employee.list_employee('mentor')
+    add = 'add_mentor'
+    edit = 'edit_mentor'
+    delete = 'delete_mentor'
+    return render_template('viewemployee.html', user=app.user, employee_list=mentors_list, employee='Employee',
+                           add=add, edit=edit, delete=delete)
 
+
+@app.route('/list-mentors/add', methods=['GET', 'POST'])
+def add_mentor():
     if request.method == 'POST':
-        pass
+        add_employee('mentor')
+        return redirect(url_for('list_mentors'))
+    return render_template('addemployee.html', user=app.user, list='list_mentors')
 
-    return render_template('viewmentors.html')
+
+@app.route('/list-mentor/edit/<employee_id>', methods=['GET', 'POST'])
+def edit_mentor(employee_id):
+    mentor = Employee.get_by_id(employee_id)
+    if request.method == 'POST':
+        edit_employee('mentor', mentor)
+        return redirect('list-mentors')
+    return render_template('editemployee.html', user=app.user, employee=mentor, list='list_mentors')
 
 
-@app.route('/delete-mentor/<mentor_id>')
-def delete_mentor():
+@app.route('/delete-mentor/<employee_id>')
+def delete_mentor(employee_id):
     """
-
     :return:
     """
-    if request.method == 'GET':
-        mentorsObjectList = Mentor.list_mentors()
-        print(mentorsObjectList[0])
-        return render_template('viewmentors.html', mentorsObjectList=mentorsObjectList)
+    mentor = Employee.get_by_id(employee_id)
+    mentor.delete_employee()
+    return redirect('list-mentors')
 
-    return redirect(render_template('viewmentors.html'))
+
+# ----------------ASSISTANTS-----------------
+
+
+@app.route('/list-assistants')
+def list_assistants():
+    """
+    :return:
+    """
+    assistants_list = Employee.list_employee('assistant')
+    add = 'add_assistant'
+    edit = 'edit_assistant'
+    delete = 'delete_assistant'
+    return render_template('viewemployee.html', user=app.user, employee_list=assistants_list, employee='Assistant',
+                           add=add, edit=edit, delete=delete)
+
+
+@app.route('/list-assistants/add', methods=['GET', 'POST'])
+def add_assistant():
+    if request.method == 'POST':
+        add_employee('assistant')
+        return redirect(url_for('list_assistants'))
+    return render_template('addemployee.html', user=app.user, employee='Assistant', list='list_assistants')
+
+
+@app.route('/list-assistant/edit/<employee_id>', methods=['GET', 'POST'])
+def edit_assistant(employee_id):
+    assistant = Employee.get_by_id(employee_id)
+    if request.method == 'POST':
+        edit_employee('assistant', assistant)
+        return redirect('list-assistants')
+    return render_template('editemployee.html', user=app.user, employee=assistant, list='list_assistants')
+
+
+@app.route('/delete-assistant/<employee_id>')
+def delete_assistant(employee_id):
+    """
+    :return:
+    """
+    assistant = Employee.get_by_id(employee_id)
+    assistant.delete_employee()
+    return redirect('list-assistants')
+
+# ----------------STUDENTS--------------
 
 
 @app.route('/list-students', methods=['GET', 'POST'])
@@ -63,7 +147,7 @@ def list_students():
     :return:
     """
     students = Student.list_students()
-    return render_template('viewstudents.html', students=students)
+    return render_template('viewstudents.html', user=app.user, students=students)
 
 
 @app.route('/list-students/add', methods=['GET', 'POST'])
@@ -81,7 +165,7 @@ def add_student():
                           team_id=request.form['team'])
         student.add_student()
         return redirect(url_for('list_students'))
-    return render_template('student_form.html', teams=teams)
+    return render_template('student_form.html', user=app.user, teams=teams)
 
 
 @app.route('/list-students/edit/<student_id>', methods=['GET', 'POST'])
@@ -98,7 +182,7 @@ def edit_student(student_id):
                     mail=request.form.get('mail', ''),
                     team_id=request.form['team']).edit_student()
             return redirect('list-students')
-        return render_template('edit_student_form.html', student=student, teams=teams)
+        return render_template('edit_student_form.html', user=app.user, student=student, teams=teams)
     return redirect('list-students')
 
 
@@ -111,16 +195,22 @@ def delete(student_id):
     return redirect('list-students')
 
 
+# ------------STUDENT STATISTICS------------------
+
+
 @app.route('/student-statistics')
 def statistics():
     students = Student.list_students()
-    return render_template('statistics.html', students=students)
+    return render_template('statistics.html', user=app.user, students=students)
+
+
+# ------------TEAMS----------------
 
 
 @app.route('/list-teams')
 def list_teams():
     teams = Team.list_teams()
-    return render_template('viewteams.html', teams=teams)
+    return render_template('viewteams.html', user=app.user, teams=teams)
 
 
 @app.route('/list-teams/add', methods=["GET", 'POST'])
@@ -128,7 +218,7 @@ def add_team():
     if request.method == 'POST':
         Team(request.form['name']).add_team()
         return redirect('list-teams')
-    return render_template("team_form.html")
+    return render_template("team_form.html", user=app.user)
 
 
 @app.route('/list-teams/edit/<team_id>', methods=["GET", 'POST'])
@@ -138,7 +228,7 @@ def edit_team(team_id):
         team.name = request.form['name']
         team.edit_team()
         return redirect(url_for('list_teams'))
-    return render_template('team_form.html', team=team)
+    return render_template('team_form.html', user=app.user, team=team)
 
 
 @app.route('/list-teams/delete/<team_id>')
@@ -148,17 +238,7 @@ def delete_team(team_id):
     return redirect(url_for('list_teams'))
 
 
-@app.route('/list-assistants', methods=['GET', 'POST'])
-def list_assistants():
-    """
-
-    :return:
-    """
-
-    if request.method == 'POST':
-        pass
-
-    return render_template('viewassistants.html')
+# ------------ASSIGNMENTS----------------
 
 
 @app.route('/list-assignments')
@@ -167,7 +247,7 @@ def list_assignments():
 
     :return:
     """
-    if isinstance(app.user, Mentor):
+    if isinstance(app.user, Employee):
         assignListOfObjects = Assignment.get_list()
         return render_template('viewassignments.html', assignListOfObjects=assignListOfObjects)
     elif (isinstance(app.user, Student)):
@@ -184,7 +264,8 @@ def add_assignment():
             description = request.form['description']
             due_to = request.form['due_to']
             type = request.form['type']
-            Assignment.create(title, description, type, app.user.username, due_to, app.user.id)
+            Assignment.create(title, description, type,
+                              app.user.username, due_to, app.user.id)
             return redirect(url_for('list_assignments'))
 
     return render_template('addassignment.html')
@@ -230,6 +311,9 @@ def grade_user_assignments(username):
     return 'Not permited fool'
 
 
+# -------------OTHER STAFF--------------
+
+
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
@@ -243,13 +327,6 @@ def dated_url_for(endpoint, **values):
                                      endpoint, filename)
             values['q'] = int(os.stat(file_path).st_mtime)
     return url_for(endpoint, **values)
-
-
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    if request.method == 'POST':
-        users = request.form.getlist('users')
-    return render_template('test.html')
 
 
 if __name__ == '__main__':

@@ -1,4 +1,47 @@
-{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>CCMS</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="all">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<!-- Header -->
+<body id="homepage" class="container">
+
+<aside class="user-info">
+    <div class="user-first-section">
+        <h3>You are logged as</h3>
+        <div class="image-wrapper default-image-spin">
+            <img src='{{ url_for("static", filename="images/codecool.png") }}'/>
+            <div class="details">
+                <h1>{{user.first_name}}</h1>
+                <a href="login.html" class='main-button'>Log Out</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-capabilities">
+        <div class="group-capabilities">
+            <h3>MENU</h3>
+            <ul>
+                <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
+                <li><a href="attendance.html">Check attendance</a></li>
+                <li><a href="{{ url_for('list_teams') }}">List teams</a></li>
+                <li><a href="{{ url_for('list_mentors') }}">List mentors</a></li>
+                <li><a href="{{ url_for('list_assistants') }}">List assistants</a></li>
+                <li><a href="{{ url_for('list_students') }}">List students</a></li>
+                <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
+            </ul>
+        </div>
+    </div>
+
+</aside>
+<section class="user-actions">
+
 {% block content %}
 {% endblock %}
-{% include 'footer.html' %}
+
+</section>
+	</body>
+</html>

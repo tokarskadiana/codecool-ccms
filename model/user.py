@@ -15,16 +15,13 @@ class User:
         :param telephone: (str) store of phone number of User object
         :param mail: (str) store of e-mail address of User object
         """
+        self.id = id
         self.username = '{}.{}'.format(first_name, last_name)
         self.password = password
         self.first_name = first_name
         self.last_name = last_name
         self.telephone = telephone
         self.mail = mail
-        self.id = id
-
-    def get_username(self):
-        return self.username
 
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
