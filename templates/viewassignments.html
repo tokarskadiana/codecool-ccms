@@ -54,7 +54,6 @@
             <table class='table-style'>
                 <thead>
                 <th>Assiment</th>
-                <th>View</th>
                 <th>Submit</th>
                 </thead>
                 <tbody>
@@ -63,7 +62,6 @@
                         <td>{{ student_assignment.title }}</td>
                         <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i
                                 class="fa fa-search" aria-hidden="true"></a></td>
-                        <td><a href="stud-submit.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -71,7 +69,10 @@
             </table>
         </div>
         {% else %}
-            <p>There is no assignments at the moment available for you</p>
+        <div class="small-wrapper no-content">
+          <p>There is no assignments at the moment available for you.</p>
+        </div>
+
         {% endif %}
     {% endif %}
 

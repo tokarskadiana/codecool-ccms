@@ -22,7 +22,7 @@ h2, h3 {
     font-size: 24px;
 }
 h4{
-  font-size: 20px;
+  font-size: 18px;
 }
 aside {
     width: 30%;
@@ -39,7 +39,7 @@ a, a:active, a:visited, a:hover {
     color: #000;
 }
 
-input, select {
+input, select, textarea {
     padding: 12px 20px;
     margin: 8px auto;
     display: block;
@@ -365,11 +365,32 @@ button i{
 .input-left{
   margin: 20px 0;
 }
+.inline-element{
+  margin: 15px 0;
+}
+.inline-element h4, p{
+  display: inline;
+}
+.last{
+  margin-bottom: 50px;
+}
 .default-image-spin img{
 
     -webkit-animation:spin 4s linear infinite;
     -moz-animation:spin 4s linear infinite;
     animation:spin 4s linear infinite;
+}
+
+.sub-assignment{
+  text-align: center;
+}
+.sub-assignment input{
+  margin: 30px auto;
+}
+.sub-assignment textarea{
+width: 400px;
+height: 100px;
+font-size: 15px;
 }
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }

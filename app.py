@@ -299,7 +299,7 @@ def add_assignment():
             Assignment.create(title, description, type,
                               app.user.username, due_to, app.user.id)
             return redirect(url_for('list_assignments'))
-    return render_template('addassignment.html', user=app.user,)
+    return render_template('addassignment.html', user=app.user)
 
 
 @app.route('/list-assignments/grade-assignment', methods=['GET', 'POST'])
