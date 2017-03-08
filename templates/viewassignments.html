@@ -15,11 +15,11 @@
                     <th>Due Date</th>
                     <th>Type</th>
                     <th>Grade</th>
+                    <th>Delete</th>
                     </thead>
                     <tbody>
                     {% for assignment in assignListOfObjects %}
                         <tr>
-
                             <td>{{ assignment.title }}</td>
                             <td>{{ assignment.description }}</td>
                             <td>{{ assignment.due_date }}</td>
@@ -31,14 +31,21 @@
                                                                                     aria-hidden='true'></i></button>
                                 </form>
                             </td>
+                            <td>
+                              <a href="{{url_for('delete_assignment', assignment_id=assignment.id)}}">
+                              <i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+              </div>
             {% else %}
-                <p>There is no Assignments. Please add assignment</p>
+              <div class="small-wrapper no-content">
+                <p>There is no Assignments. Please add assignment.</p>
+              </div>
             {% endif %}
-        </div>
+
     {% elif choose=="Student" %}
 
         <h3>Assignments avaiable to you</h3>
@@ -47,21 +54,27 @@
             <table class='table-style'>
                 <thead>
                 <th>Assiment</th>
+
                 <th >View/Submit</th>
-                </thead>
+
                 <tbody>
                 {% for student_assignment in student_assignments %}
                     <tr>
                         <td>{{ student_assignment.title }}</td>
                         <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i
                                 class="fa fa-search" aria-hidden="true"></a></td>
+                        </td>
+
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
         {% else %}
-            <p>There is no assignments at the moment available for you</p>
+        <div class="small-wrapper no-content">
+          <p>There is no assignments at the moment available for you.</p>
+        </div>
+
         {% endif %}
     {% endif %}
 

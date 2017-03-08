@@ -19,17 +19,6 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
-# user_session(session['user'],session['type']) = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 1)
-# user_session(session['user'],session['type']) = Mentor(id=120,
-#                   password='kkk',
-#                   first_name='Mateusz',
-#                   last_name='Ostafil',
-#                   position='mentor',
-#                   telephone="222")
-
-# print(user_session(session['user'],session['type']).__dict__)
-
-
 # login required decorator
 def login_required(f):
     @wraps(f)
@@ -65,15 +54,12 @@ def login():
     managers = Manager.list_managers('manager')
     all_users = students + employees + mentors + managers
 
-    print(all_users)
-
     if request.method == "POST":
         for user in all_users:
             if request.form['username'] == user.username and request.form['password'] == user.password:
                 session['logged_in'] = True
                 session['user'] = user.id
                 session['type'] = user.__class__.__name__
-                print('To jest user', user, 'i jego klasa to', user.__class__.__name__)
                 return redirect(url_for('index'))
             else:
                 error = "Invalid Credentials. Please Try Again "
@@ -241,7 +227,7 @@ def add_student():
                           password=request.form['password'],
                           telephone=request.form.get('phone-number', ''),
                           mail=request.form.get('mail', ''),
-                          team_id=request.form['team'])
+                          team_id=request.form.get('team', ''))
         student.add_student()
         return redirect(url_for('list_students'))
     return render_template('student_form.html', user=user_session(session['user'], session['type']), teams=teams)
@@ -260,7 +246,7 @@ def edit_student(student_id):
                     password=request.form['password'],
                     telephone=request.form.get('phone-number', ''),
                     mail=request.form.get('mail', ''),
-                    team_id=request.form['team']).edit_student()
+                    team_id=request.form.get('team', '')).edit_student()
             return redirect('list-students')
         return render_template('edit_student_form.html', user=user_session(session['user'], session['type']),
                                student=student, teams=teams)
@@ -327,7 +313,6 @@ def delete_team(team_id):
 
 # ------------ASSIGNMENTS----------------
 
-# =======================Assignments==================================
 
 @app.route('/list-assignments')
 @login_required
@@ -336,6 +321,7 @@ def list_assignments():
     List all assignments
     :return: template
     """
+
     user = user_session(session['user'], session['type'])
     print(user)
     choose = None
@@ -345,14 +331,15 @@ def list_assignments():
         return render_template('viewassignments.html', user=user_session(session['user'], session['type']),
                                choose=choose,
                                assignListOfObjects=assignListOfObjects)
+
     elif (isinstance(user, Student)):
+
         choose = "Student"
         student_id = user_session(session['user'], session['type']).id
         student_assignments = Assignment.get_all_assigmnets(student_id)
-        # print(student_assignments)
+
         return render_template('viewassignments.html', user=user_session(session['user'], session['type']),
-                               choose=choose,
-                               student_assignments=student_assignments)
+                               choose=choose, student_assignments=student_assignments)
     else:
         return render_template('404.html', user=user_session(session['user'], session['type']))
 
@@ -375,7 +362,7 @@ def add_assignment():
                               user_session(session['user'], session['type']).id)
             return redirect(url_for('list_assignments'))
 
-    return render_template('addassignment.html', user=user_session(session['user'], session['type']), )
+    return render_template('addassignment.html', user=user_session(session['user'], session['type']))
 
 
 @app.route('/list-assignments/grade-assignment', methods=['GET', 'POST'])
@@ -468,6 +455,16 @@ def assignment_submit(assignments_id):
 # ======================= End assignments ==================================
 
 
+@app.route('/list-assignments/delete/<assignment_id>')
+def delete_assignment(assignment_id):
+    assignment = Assignment.get_by_id(assignment_id)
+    assignment.delete_assignment()
+    return redirect(url_for('list_assignments'))
+
+
+# ---------------ATTENDANCE-----------------
+
+
 
 @app.route("/attendance", methods=['GET', 'POST'])
 @login_required
@@ -527,6 +524,24 @@ def user_session(id, class_name):
 
         return Manager.get_by_id(id)
     return None
+
+
+# -------------OTHER STAFF--------------
+
+
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 
 if __name__ == '__main__':

@@ -1,9 +1,9 @@
 {% extends 'index.html' %}
 {% block content %}
-
     <h3>Teams List:</h3>
     <div class="small-wrapper">
         <a href="{{ url_for('add_team') }}"><input class="sub-right main-button" type="button" value="Add New Team"></a>
+        {% if teams %}
         <table class='table-style'>
             <thead>
             <th>Name</th>
@@ -32,5 +32,10 @@
             {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <div class="no-content">
+          <p>There is no Teams. Please add team.</p>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

@@ -23,7 +23,6 @@ class Assignment:
     def set_id(self, id):
         self.id = id
 
-
     def make_submit_list(self):
         '''
         Make a list of submitions for particular assigment instance for every students.
@@ -42,8 +41,8 @@ class Assignment:
 
         Returns: boolean value
         '''
-        query = "SELECT * FROM employee WHERE (position='mentor' AND username='{}');".format(user_name)
-        # mentor_id = SqlRequest.sql_request(query)[0][0]
+        query = "SELECT * FROM employee WHERE (position='mentor' AND username='{}');".format(
+            user_name)
         assignment = cls(title, description, due_date, mentor_id, type)
         date = datetime.datetime.now().date()
         query = "INSERT OR IGNORE INTO assignment (title, description, date, due_date, type, mentor_id) \
@@ -52,20 +51,10 @@ class Assignment:
             assignment.due_date, assignment.type, assignment.mentor_id)
         SqlRequest.sql_request(query)
         assignment_id = \
-            SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
+            SqlRequest.sql_request(
+                'SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
         assignment.set_id(assignment_id)
         assignment.make_submit_list()
-
-    def __str__(self):
-        '''
-        Returns formated output of object.
-
-        Returns:str
-        '''
-        return '{} {} {}'.format(self.title, self.due_date, self.description)
-
-    def get_title(self):
-        return self.title
 
     @classmethod
     def get_list(cls):
@@ -75,16 +64,20 @@ class Assignment:
         Returns:list
         '''
         list_assignment = []
-        data = SqlRequest.sql_request('SELECT id,title,description,due_date,mentor_id,type FROM assignment')
+        data = SqlRequest.sql_request(
+            'SELECT id,title,description,due_date,mentor_id,type FROM assignment')
         for item in data:
-            assignment = cls(item[1], item[2], item[3], item[4], item[5], item[0])
+            assignment = cls(item[1], item[2], item[3],
+                             item[4], item[5], item[0])
             assignment.set_id(item[0])
             list_assignment.append(assignment)
         return list_assignment
 
     def get_submition_content(self, user_name):
-        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        user_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        submitions = SqlRequest.sql_request(
+            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        user_id = SqlRequest.sql_request(
+            "SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
         for submition in submitions:
             if submition[2] == user_id:
                 return submition[3]
@@ -96,8 +89,10 @@ class Assignment:
 
         Returns: bool
         '''
-        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        user_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        submitions = SqlRequest.sql_request(
+            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        user_id = SqlRequest.sql_request(
+            "SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
         for submition in submitions:
             if submition[2] == user_id:
                 Submition.change_content(submition[0], content)
@@ -110,9 +105,12 @@ class Assignment:
 
         Returns:bool/int
         '''
-        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        student = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(student_username))
-        mentor = SqlRequest.sql_request("SELECT * FROM employee WHERE username='{}'".format(mentor_username))
+        submitions = SqlRequest.sql_request(
+            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        student = SqlRequest.sql_request(
+            "SELECT * FROM student WHERE username='{}'".format(student_username))
+        mentor = SqlRequest.sql_request(
+            "SELECT * FROM employee WHERE username='{}'".format(mentor_username))
         if student and mentor:
             student_id = student[0][0]
             mentor_id = mentor[0][0]
@@ -129,9 +127,11 @@ class Assignment:
         Returns:list
         '''
         details = []
-        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        submitions = SqlRequest.sql_request(
+            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
         for submition in submitions:
-            user_name = SqlRequest.sql_request('SELECT * FROM student WHERE id="{}"'.format(submition[2]))[0][6]
+            user_name = SqlRequest.sql_request(
+                'SELECT * FROM student WHERE id="{}"'.format(submition[2]))[0][6]
             if not submition[3]:
                 con = 'No content'
             else:
@@ -149,17 +149,19 @@ class Assignment:
 
         Returns:list
         '''
-        submitions = SqlRequest.sql_request("SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        user_id = SqlRequest.sql_request("SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        submitions = SqlRequest.sql_request(
+            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
+        user_id = SqlRequest.sql_request(
+            "SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
         for submition in submitions:
             if submition[2] == user_id:
                 return submition[4]
         return None
 
-    # title, description, due_date, mentor_id, type, id = None
     @classmethod
     def get_by_id(cls, id):
-        query = 'SELECT id,title,"date",description,due_date,mentor_id,type FROM assignment WHERE id={}'.format(id)
+        query = 'SELECT id,title,"date",description,due_date,mentor_id,type FROM assignment WHERE id={}'.format(
+            id)
         assignments = SqlRequest.sql_request(query)
         if assignments:
             return cls(id=assignments[0][0],
@@ -173,17 +175,16 @@ class Assignment:
 
     @classmethod
     def get_studentsOfAssigmnent(cls, id):
-        query = "SELECT student.ID, first_name,last_name,grade,content,update_data, (student.first_name || '.' || student.last_name ) as username  \
-                from submition LEFT JOIN student ON student.ID = student_id WHERE assignment_id={}".format(id)
+        query = "SELECT student.ID, first_name,last_name,grade,content,update_data, (\
+        student.first_name || '.' || student.last_name ) as username from submition LEFT JOIN \
+        student ON student.ID = student_id WHERE assignment_id={}".format(id)
         return SqlRequest.sql_request(query)
 
     @classmethod
-    def get_all_assigmnets(cls,id):
-        query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(
-            id)
-
+    def get_all_assigmnets(cls, id):
+        query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM \
+        assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(id)
         assignments = SqlRequest.sql_request(query)
-
         assignments_list = []
         if assignments:
             for assignment in assignments:
@@ -196,3 +197,7 @@ class Assignment:
                                             ))
             return assignments_list
         return None
+
+    def delete_assignment(self):
+        query = 'DELETE FROM assignment WHERE id={}'.format(self.id)
+        SqlRequest.sql_request(query)

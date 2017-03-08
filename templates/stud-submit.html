@@ -1,12 +1,11 @@
 {% extends 'index.html' %}
 {% block content %}{% if assignment and submit %}
 
-<div class="submition-wrapper">
-      <h3>Submit assignment for {{ assignment.title }}</h3>
-
+<h3>Submit assignment for {{ assignment.title }}</h3>
+<div class="small-wrapper sub-assignment">
         <form action="" method="post">
             <textarea name="content" placeholder="Your Submition Content"></textarea>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" class='main-button'>
         </form>
 
   </div>
