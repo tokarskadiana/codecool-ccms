@@ -1,76 +1,43 @@
-<!DOCTYPE html>
-<html lang="pl-PL">
+{% extends 'index.html' %}
+{% block content %}
+    <h3>Assignment {{ assignment.title }}</h3>
+    <h5>Due To: {{ assignment.due_date }}</h5>
+    <h5>Type:   {{ assignment.type }}</h5>
+    <div class="description">
+        <p>{{ assignment.description }}</p>
+    </div>
+    <div class="submition-wrapper">
+        {% if submit %}
+            <h4>Your Content:
+                {% if submit.content %}
+                    {{ submit.content }}
+                {% else %}
+                    <p>No content yet</p>
+                {% endif %}
+            </h4>
 
-<head>
-	<title>CCMS</title>
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<!-- Header -->
+            <h4>Your submit Data:
+                {% if submit.update %}
+                    {{ submit.update }}
+                {% else %}
+                    <p>No submited yet</p>
+                {% endif %}
+            </h4>
 
-<body id="homepage" class="container">
+            <h4>Your Grade:
+                {% if submit.grade or submit.grade == 0 %}
+                    {{ submit.grade }}
+                {% else %}
+                    <p>No graded yet</p>
+                {% endif %}
 
-	<aside class="user-info">
-		<div class="user-first-section">
-			<h3>You are logged as</h3>
-				<div class="image-wrapper default-image-spin">
-					<img src="images/codecool.png" />
-					<div class="details">
-						<h1>Piotrek</h1>
-						<a href="login.html" class='main-button'>Log Out</a>
-					</div>
-				</div>
-		</div>
+            </h4>
+            {% if submit.grade == None or submit.grade == 0 %}<a href="{{ url_for('assignment_submit',assignments_id=assignment.id) }}">Add submit</a>{% endif %}
+        {% else %}
+            <h2>Ups... smth is wrong, please try again</h2>
 
-		<div class="user-capabilities">
-				<div class="group-capabilities">
-					<h3>MENU</h3>
-					<ul>
-						<li class="active"><a href="stud_list_assiments.html">List available assignments</a></li>
-				        <li><a href="avaragestatistics.html">Show average score</a></li>
-						<li><a href="attendance.html">Check attendance</a></li>
-						<li><a href="presencestats.html">View presence statistics</a></li>
-						<li><a href="viewteams.html">View Teams	</a></li>
-						<li><a href="viewmentors.html">List mentors</a></li>
-						<li><a href="viewassistants.html">List assistants</a></li>
-						<li><a href="viewstudents.html">List students</a></li>
-						<li><a href="mentor_list_assiments.html">List assignments</a></li>  <!-- For mentor -->
-					</ul>
-				</div>
-		</div>
-
-	</aside>
-
-	<section class="user-actions">
-		<h3>Assignments avaiable to you</h3>
-		<div class="large-wrapper">
-
-		<table class='table-style'>
-			<thead>
-				<th>Assiment</th>
-				<th>Description</th>
-				<th>Due Date</th>
-				<th>Type</th>
-				<th>Submited</th>
-				<th>Grade</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Dupa</td>
-					<td>Dupanknknkn, dududupaaa</td>
-					<td>12/12/12</td>
-					<td>Individual</td>
-					<td><i class="fa fa-check" aria-hidden="true"></i>
-					</td>
-					<td>15ptk</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-		<div class="back-button"><a href="stud_list_assiments.html"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
-	</section>
-
-</body>
-
-</html>
+        {% endif %}
+    </div>
+    <div class="back-button"><a href="{{ url_for('list_assignments') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Back</a></div>
+{% endblock %}

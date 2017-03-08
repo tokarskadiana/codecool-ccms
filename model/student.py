@@ -1,9 +1,9 @@
+
 from model.user import User
 from model.sqlRequest import SqlRequest
 
 
 class Student(User):
-
     def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id=""):
         super(Student, self).__init__(id, password, first_name,
                                       last_name, telephone, mail)
@@ -93,9 +93,6 @@ class Student(User):
 
         return list_of_students
 
-    def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
-
     def grade_average(self):
         """
         Get average student grade
@@ -118,3 +115,4 @@ class Student(User):
             stats = (presence_average[0][0] / presence_average[0][1]) * 100
             return stats
         return '-----'
+

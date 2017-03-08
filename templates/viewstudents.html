@@ -5,6 +5,7 @@
       <a href="{{url_for('add_student')}}"><input class="sub-right main-button" type="button" value="Add New Student"></a>
 			<table class='table-style'>
 				<thead>
+					<th>ID</th>
 					<th>Name</th>
 					<th>Phone number</th>
           <th>E-mail</th>
@@ -15,6 +16,7 @@
 				<tbody>
 				{% for student in students %}
 						<tr>
+							<td>{{student.id}}</td>
 							<td>{{student.full_name()}}</td>
 							<td>{{student.telephone}}</td>
 							<td>{{student.mail}}</td>

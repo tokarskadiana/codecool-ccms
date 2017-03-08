@@ -89,38 +89,9 @@ class Mentor(Employee):
             mentorObjectList.append(mentorObject)
         return mentorObjectList
 
-    def __str__(self):
-        """
-        Returns full name of objc.
-        :return (str): full name
-        """
-        return ('{} {} {}'.format(self.first_name, self.last_name, self.username))
-
     def get_username(self):
         """
         Returns username of objc.
         :return (str): username of objc
         """
         return self.username
-
-    @staticmethod
-    def list_teams():
-        """
-        Returns list of teams form database.
-        :return: list of tuples.
-        """
-        return SqlRequest.sql_request('SELECT * from team')
-
-    @staticmethod
-    def addOrRemoveTeam():
-        """
-        Add or remove team from database.
-        """
-        option = input('What u want to do 1 for add 2 for delete other command leave,')
-
-        if option == '1':
-            teamName = input('Name of Team to add')
-            SqlRequest.sql_request('INSERT OR IGNORE INTO team (name) VALUES("{}")'.format(teamName))
-        elif option == '2':
-            teamName = input('Index of Team to delete')
-            SqlRequest.sql_request('DELETE FROM team WHERE id ="{}"'.format(teamName))

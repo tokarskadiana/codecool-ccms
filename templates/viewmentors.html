@@ -1,19 +1,13 @@
 {% extends 'index.html' %}
 {% block content %}
 
-{%for mentor in mentorsObjectList %}
- {{mentor.first_name}}
-{% endfor %}
-
 <h3>Mentors List:</h3>
 <div class="large-wrapper">
     <a href="addmentor.html"><input class="sub-right main-button" type="button" value="Add New Mentor"></a>
     <table class='table-style'>
         <thead>
         <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>User Name</th>
+        <th>Name</th>
         <th>Phone number</th>
         <th>E-mail</th>
         <th>Salary</th>
@@ -24,9 +18,7 @@
         {% for mentor in mentorsObjectList %}
         <tr>
             <td>{{mentor.id}}</td>
-            <td>{{mentor.first_name}}</td>
-            <td>{{mentor.last_name}}</td>
-            <td>{{mentor.username}}</td>
+            <td>{{mentor.full_name()}}</td>
             <td>{{mentor.telephone}}</td>
             <td>{{mentor.mail}}</td>
             <td>{{mentor.salary}}</td>

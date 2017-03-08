@@ -12,7 +12,9 @@ from model.student import Student
 
 app = Flask(__name__)
 
-app.user = Mentor('kkk', 'mateusz', 'ostafil', '123123123', 'mateusz@ostafil.pl', 842, 5000)
+app.user = Student('1', 'piotr', 'gurdek', 'kkk', 6666666, 'pgurdek@gmail.com', 1)
+#   app.user = Mentor('kkk', 'mateusz', 'ostafil', '123123123', 'mateusz@ostafil.pl', 842, 5000)
+
 print(app.user.__dict__)
 
 
@@ -31,7 +33,6 @@ def list_mentors():
 
     :return:
     """
-
     if request.method == 'GET':
         mentorsObjectList = Mentor.list_mentors()
         print(mentorsObjectList[0])
@@ -161,6 +162,7 @@ def list_assistants():
 
     return render_template('viewassistants.html')
 
+# =======================Assignments==================================
 
 @app.route('/list-assignments')
 def list_assignments():
@@ -168,11 +170,17 @@ def list_assignments():
 
     :return:
     """
+    choose = None
     if isinstance(app.user, Mentor):
+        choose = "Mentor"
         assignListOfObjects = Assignment.get_list()
-        return render_template('viewassignments.html', assignListOfObjects=assignListOfObjects)
+        return render_template('viewassignments.html', choose=choose,assignListOfObjects=assignListOfObjects)
     elif (isinstance(app.user, Student)):
-        pass
+        choose = "Student"
+        student_id = app.user.id
+        student_assignments  = Assignment.get_all_assigmnets(student_id)
+        # print(student_assignments)
+        return render_template('viewassignments.html',choose=choose,student_assignments=student_assignments)
     else:
         return render_template('404.html')
 
@@ -230,7 +238,25 @@ def grade_user_assignments(username):
             return redirect(url_for('grade_assignment', assignmentID=assignment_id))
     return 'Not permited fool'
 
+@app.route('/list-assignments/view-assignments/<int:assignments_id>', methods=['GET', 'POST'])
+def view_assignments(assignments_id):
+    assignment = Assignment.get_by_id(assignments_id)
+    submit = Submition.get_submit(app.user.id,assignments_id)
+    return render_template('stud_view_assiment.html',assignment=assignment,submit=submit)
 
+@app.route('/list-assignments/view-assignments/<int:assignments_id>/submit_edition',methods=["GET","POST"])
+def assignment_submit(assignments_id):
+    assignment = Assignment.get_by_id(assignments_id)
+    submit = Submition.get_submit(app.user.id,assignments_id)
+    if request.method == "POST":
+        content = request.form['content']
+        submit.change_content(content)
+        return redirect(url_for('view_assignments',assignments_id=assignments_id))
+
+    return render_template('stud-submit.html',assignment=assignment,submit=submit)
+
+
+# ======================= End assignments ==================================
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
@@ -247,15 +273,6 @@ def dated_url_for(endpoint, **values):
 
 
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    if request.method == 'POST':
-        users = request.form.getlist('users')
-    return render_template('test.html')
-
-
-def xxx():
-    return 'lol'
 
 
 if __name__ == '__main__':

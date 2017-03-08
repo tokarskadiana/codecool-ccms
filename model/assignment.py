@@ -23,6 +23,7 @@ class Assignment:
     def set_id(self, id):
         self.id = id
 
+
     def make_submit_list(self):
         '''
         Make a list of submitions for particular assigment instance for every students.
@@ -35,7 +36,7 @@ class Assignment:
             Submition.create(self.id, student[0])
 
     @classmethod
-    def create(cls, title, description, type, user_name, due_date,mentor_id):  # add user_name
+    def create(cls, title, description, type, user_name, due_date, mentor_id):  # add user_name
         '''
         Make new assignment and add it to assigment list.
 
@@ -70,13 +71,13 @@ class Assignment:
     def get_list(cls):
         '''
         Contains the list with all available assigment.
-
+        title, description, due_date, mentor_id, type, id=None):
         Returns:list
         '''
         list_assignment = []
-        data = SqlRequest.sql_request('SELECT * FROM assignment')
+        data = SqlRequest.sql_request('SELECT id,title,description,due_date,mentor_id,type FROM assignment')
         for item in data:
-            assignment = cls(item[1], item[2], item[3], item[4], item[6], item[0])
+            assignment = cls(item[1], item[2], item[3], item[4], item[5], item[0])
             assignment.set_id(item[0])
             list_assignment.append(assignment)
         return list_assignment
@@ -175,3 +176,23 @@ class Assignment:
         query = "SELECT student.ID, first_name,last_name,grade,content,update_data, (student.first_name || '.' || student.last_name ) as username  \
                 from submition LEFT JOIN student ON student.ID = student_id WHERE assignment_id={}".format(id)
         return SqlRequest.sql_request(query)
+
+    @classmethod
+    def get_all_assigmnets(cls,id):
+        query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(
+            id)
+
+        assignments = SqlRequest.sql_request(query)
+
+        assignments_list = []
+        if assignments:
+            for assignment in assignments:
+                assignments_list.append(cls(id=assignment[0],
+                                            title=assignment[1],
+                                            description=assignment[2],
+                                            due_date=assignment[3],
+                                            mentor_id=assignment[4],
+                                            type=assignment[5],
+                                            ))
+            return assignments_list
+        return None

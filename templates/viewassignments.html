@@ -1,37 +1,73 @@
 {% extends 'index.html' %}
 {% block content %}
-<section>
-    <h3>List assignments</h3>
-    <div class="large-wrapper">
-        <a href="{{url_for('add_assignment')}}"><input class="sub-right main-button" type="button" value="Add New Assignment"></a>
-        <table class='table-style'>
-            <thead>
-            <th>Assignment</th>
-            <th>Description</th>
-            <th>Due Date</th>
-            <th>Type</th>
-            <th>Grade</th>
-            </thead>
-            <tbody>
-            {% for assignment in assignListOfObjects %}
-            <tr>
 
-                <td>{{assignment.title}}</td>
-                <td>{{assignment.description}}</td>
-                <td>{{assignment.due_date}}</td>
-                <td>{{assignment.type}}</td>
-                <td>
-                    <form method="post"  action="{{url_for('grade_assignment')}}">
-                        <input type="hidden" value="{{assignment.id}}" name="assignmentID">
-                        <button type="submit" value="editAssignment"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>
-                    </form>
+    {% if choose == "Mentor" %}
+        <h3>List assignments</h3>
+        <div class="large-wrapper">
+            <a href="{{ url_for('add_assignment') }}"><input class="sub-right main-button" type="button"
+                                                             value="Add New Assignment"></a>
 
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</section>
+            {% if assignListOfObjects %}
+                <table class='table-style'>
+                    <thead>
+                    <th>Assignment</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Type</th>
+                    <th>Grade</th>
+                    </thead>
+                    <tbody>
+                    {% for assignment in assignListOfObjects %}
+                        <tr>
+
+                            <td>{{ assignment.title }}</td>
+                            <td>{{ assignment.description }}</td>
+                            <td>{{ assignment.due_date }}</td>
+                            <td>{{ assignment.type }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('grade_assignment') }}">
+                                    <input type="hidden" value="{{ assignment.id }}" name="assignmentID">
+                                    <button type="submit" value="editAssignment"><i class='fa fa-pencil-square-o'
+                                                                                    aria-hidden='true'></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>There is no Assignments. Please add assignment</p>
+            {% endif %}
+        </div>
+    {% elif choose=="Student" %}
+
+        <h3>Assignments avaiable to you</h3>
+        {% if student_assignments %}
+        <div class="small-wrapper">
+            <table class='table-style'>
+                <thead>
+                <th>Assiment</th>
+                <th>View</th>
+                <th>Submit</th>
+                </thead>
+                <tbody>
+                {% for student_assignment in student_assignments %}
+                    <tr>
+                        <td>{{ student_assignment.title }}</td>
+                        <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i
+                                class="fa fa-search" aria-hidden="true"></a></td>
+                        <td><a href="stud-submit.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>There is no assignments at the moment available for you</p>
+        {% endif %}
+    {% endif %}
+
+
 
 {% endblock %}

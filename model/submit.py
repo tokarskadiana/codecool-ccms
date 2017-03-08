@@ -7,7 +7,7 @@ class Submition:
     Represent an submit of individual student_username
     '''
 
-    def __init__(self, assignment_id, student_id,id=None,content=None,grade=None,update=None,mentor_id=None):
+    def __init__(self, assignment_id, student_id, id=None, content=None, grade=None, update=None, mentor_id=None):
         '''
         Constructor of Submition object.
         '''
@@ -52,15 +52,14 @@ class Submition:
         '''
         return self.grade
 
-    def update_grade(self,new_grade):
+    def update_grade(self, new_grade):
         '''
         Changes a submition grage to new value.
 
         Returns: boolean
         '''
         SqlRequest.sql_request(
-            'UPDATE submition SET grade={} WHERE id={}'.format(new_grade,self.id))
-
+            'UPDATE submition SET grade={} WHERE id={}'.format(new_grade, self.id))
 
     @staticmethod
     def change_grade(mentor_id, id, new_grade):
@@ -72,8 +71,8 @@ class Submition:
         SqlRequest.sql_request(
             'UPDATE submition SET grade="{}", mentor_id="{}" WHERE id="{}";'.format(new_grade, mentor_id, id))
 
-    @staticmethod
-    def change_content(id, new_content):
+
+    def change_content(self, new_content):
         '''
         Changes a content of submition.
 
@@ -81,14 +80,13 @@ class Submition:
         '''
         date = datetime.datetime.now().date()
         SqlRequest.sql_request(
-            'UPDATE submition SET content="{}", update_data="{}" WHERE id="{}";'.format(new_content, date, id))
+            'UPDATE submition SET content="{}", update_data="{}" WHERE id="{}";'.format(new_content, date, self.id))
 
     # assignment_id, student_id, id = None, grade = None, update = None, mentor_id = None
     @classmethod
-    def get_submit(cls, student_id,assignment_id):
+    def get_submit(cls, student_id, assignment_id):
         query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE student_id={} \
-                AND assignment_id={}' .format(student_id,assignment_id)
-
+                AND assignment_id={}'.format(student_id, assignment_id)
 
         submit = SqlRequest.sql_request(query)
         if submit:
@@ -105,7 +103,8 @@ class Submition:
     @classmethod
     def get_by_id(cls, id):
         print(id)
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE id={}'.format(id)
+        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE id={}'.format(
+            id)
         submit = SqlRequest.sql_request(query)
         print(submit)
         if submit:
