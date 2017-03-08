@@ -1,33 +1,51 @@
 {% extends 'index.html' %}
 {% block content %}
-<h3>Check Attendance {{ date }}</h3>
-<form class="main-form" action="" method="post">
-    <div class="small-wrapper">
-        <table class='table-style' onclick="toggleButtonRadioForm('attendance-sub-button', 'attendance-radio')">
-            <thead>
-            <th>Name</th>
-            <th>Absent</th>
-            <th>Present</th>
-            </thead>
-            <tbody>
-            {% for student in students %}
-            <tr>
-                <td>{{ student.first_name }} {{ student.last_name }}</td>
-                <td><input type="radio" id="{{ student.id }}-yes" name="{{ student.id }}" class="attendance-radio" value="1"/>
-                    <label for="{{ student.id }}-yes"><span></span>Yes</label>
-                </td>
-                <td><input type="radio" id="{{ student.id }}-no" name="{{ student.id }}" class="attendance-radio" value="0"/>
-                    <label for="{{ student.id }}-no"><span></span>No</label>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-            </tfoot>
+    <h3>Check Attendance {{ date }}</h3>
+    <form class="main-form" action="" method="post">
+        <div class="small-wrapper">
+            <table class='table-style' onclick="toggleButtonRadioForm('attendance-sub-button', 'attendance-radio')">
+                <thead>
+                <th>Name</th>
+                <th colspan="2">Present</th>
+                </thead>
+                <tbody>
+                {% if not students_checked %}
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.first_name }} {{ student.last_name }}</td>
+                            <td><input type="radio" id="{{ student.id }}-yes" name="{{ student.id }}"
+                                       class="attendance-radio" value="1"/>
+                                <label for="{{ student.id }}-yes"><span></span>Yes</label>
+                            </td>
+                            <td><input type="radio" id="{{ student.id }}-no" name="{{ student.id }}"
+                                       class="attendance-radio" value="0"/>
+                                <label for="{{ student.id }}-no"><span></span>No</label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for student in students_checked %}
+                        <tr>
+                            <td>{{ student[-2] }} {{ student[-1] }}</td>
+                            <td><input type="radio" id="{{ student[0] }}-yes" name="{{ student[0] }}"
+                                       class="attendance-radio" value="1" {% if student[1]==1 %} checked {% endif %}/>
+                                <label for="{{ student[0] }}-yes"><span></span>Yes</label>
+                            </td>
+                            <td><input type="radio" id="{{ student[0] }}-no" name="{{ student[0] }}"
+                                       class="attendance-radio" value="0" {% if student[1]==0 %} checked {% endif %}/>
+                                <label for="{{ student[0] }}-no"><span></span>No</label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+                <tfoot>
+                </tfoot>
 
-        </table>
-        <input class='main-button' type="submit" value="Submit" id="attendance-sub-button" disabled="disabled">
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/main.js') }}"></script>
-    </div>
-</form>
+
+            </table>
+            <input class='main-button' type="submit" value="Submit" id="attendance-sub-button" disabled="disabled">
+            <script type="text/javascript" src="{{ url_for('static', filename = 'js/main.js') }}"></script>
+        </div>
+    </form>
 {% endblock %}

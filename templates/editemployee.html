@@ -1,0 +1,24 @@
+{% extends 'index.html'%}
+{% block content %}
+      <h3>Add {{employee.position.title()}}</h3>
+      <div class="large-wrapper">
+        <form name='add_employee' class="main-form" action="" method="post">
+          <div class="right-side">
+            <label for="first_name">First name</label>
+            <input type="text" name="first_name" value="{{employee.first_name}}" required>
+            <label for="last_name">Last name</label>
+            <input type="text" name="last_name" value="{{employee.last_name}}" required>
+            <label for="password">Password</label>
+            <input type="text" name="password" value="{{employee.password}}" required>
+          </div>
+          <label for="phone_number">Telephone number</label>
+          <input type="tel" name="phone_number"  value="{{employee.telephone}}">
+          <label for="mail">Mail</label>
+          <input type="email" name="mail" value="{{employee.mail}}">
+          <label for="salary">Salary</label>
+          <input type="number" name="salary" value="{{employee.salary}}">
+          <input class='main-button' type="submit" name="submition" value="Save">
+        </form>
+      </div>
+		<div class="back-button"><a href="{{url_for(list)}}"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
+{% endblock %}

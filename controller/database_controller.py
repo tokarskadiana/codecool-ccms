@@ -1,10 +1,4 @@
 from model.create_data import Database
-from model.manager import Manager
-from model.mentor import Mentor
-from model.employee import Employee
-from model.student import Student
-from model.assignment import Assignment
-from model.attendance import Attendance
 import sqlite3
 
 
@@ -48,7 +42,6 @@ class DatabaseController:
         cursor = conn.cursor()
         for sample_list in samples:
             for task in sample_list:
-                # print(task)
                 cursor.execute(task)
         conn.commit()
         cursor.close()

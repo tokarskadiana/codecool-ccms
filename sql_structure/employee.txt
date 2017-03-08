@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS employee
     username TEXT,
     salary INT,
     position TEXT
-    CONSTRAINT chk_position CHECK (position IN ('manager', 'employee', 'mentor')),
+    CONSTRAINT chk_position CHECK (position IN ('manager', 'assistant', 'mentor')),
     UNIQUE(username)
 );

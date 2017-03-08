@@ -43,11 +43,10 @@ class Student(User):
         :param telephone (str): telephone
         :param mail (str): mail
         """
-        username = '{}.{}'.format(self.first_name, self.last_name)
         query = (
             'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) \
             VALUES("{}","{}","{}","{}","{}","{}","{}");'.format(self.first_name, self.last_name, self.password,
-                                                                self.telephone, self.mail, username, self.team_id))
+                                                                self.telephone, self.mail, self.username, self.team_id))
         SqlRequest.sql_request(query)
 
     def edit_student(self):
@@ -55,11 +54,10 @@ class Student(User):
         Edit student attr.
         :param kwargs: name of attr and value of it
         """
-
-        username = '{}.{}'.format(self.first_name, self.last_name)
         query = ("""UPDATE student SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
         team_id={}, username="{}" WHERE id={};""".format(self.first_name, self.last_name, self.password,
-                                                         self.telephone, self.mail, self.team_id, username, self.id))
+                                                         self.telephone, self.mail, self.team_id,
+                                                         self.username, self.id))
 
         SqlRequest.sql_request(query)
 
