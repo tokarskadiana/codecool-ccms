@@ -5,7 +5,6 @@ class User:
     """
     This class representing User class
     """
-    line = 0
 
     def __init__(self, id, password, first_name, last_name, telephone="", mail=""):
         """
@@ -26,6 +25,9 @@ class User:
 
     def get_username(self):
         return self.username
+
+    def full_name(self):
+        return "{} {}".format(self.first_name, self.last_name)
 
     @staticmethod
     def encodeBase64(password):

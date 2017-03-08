@@ -13,8 +13,6 @@ class Employee(User):
         self.salary = salary
 
 
-
-
     @classmethod
     def add_employee(cls, password, first_name, last_name, telephone="", mail=""):
         """

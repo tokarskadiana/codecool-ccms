@@ -93,9 +93,6 @@ class Student(User):
 
         return list_of_students
 
-    def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
-
     def grade_average(self):
         """
         Get average student grade
