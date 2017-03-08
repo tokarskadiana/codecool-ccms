@@ -1,14 +1,5 @@
 import sqlite3
 from model.user import User
-from model.employee import Employee
-from model.mentor import Mentor
-from model.student import Student
-from model.manager import Manager
-from model.assignment import Assignment
-from model.submit import Submition
-from model.attendance import Attendance
-
-import csv
 
 
 class Database(object):
@@ -43,9 +34,6 @@ class Database(object):
             sql_output = fileSql.readlines()
 
         return sql_output
-
-    def __str__(self, *args, **kwargs):
-        return super().__str__(*args, **kwargs)
 
     @staticmethod
     def user_data(row):
