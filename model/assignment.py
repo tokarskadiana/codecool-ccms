@@ -31,17 +31,18 @@ class Assignment:
         '''
         student_list = SqlRequest.sql_request('SELECT * FROM student')
         for student in student_list:
+            print(student[0])
             Submition.create(self.id, student[0])
 
     @classmethod
-    def create(cls, title, description, type, user_name, due_date):  # add user_name
+    def create(cls, title, description, type, user_name, due_date,mentor_id):  # add user_name
         '''
         Make new assignment and add it to assigment list.
 
         Returns: boolean value
         '''
         query = "SELECT * FROM employee WHERE (position='mentor' AND username='{}');".format(user_name)
-        mentor_id = SqlRequest.sql_request(query)[0][0]
+        # mentor_id = SqlRequest.sql_request(query)[0][0]
         assignment = cls(title, description, due_date, mentor_id, type)
         date = datetime.datetime.now().date()
         query = "INSERT OR IGNORE INTO assignment (title, description, date, due_date, type, mentor_id) \
@@ -52,7 +53,7 @@ class Assignment:
         assignment_id = \
             SqlRequest.sql_request('SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
         assignment.set_id(assignment_id)
-        # assignment.make_submit_list()
+        assignment.make_submit_list()
 
     def __str__(self):
         '''

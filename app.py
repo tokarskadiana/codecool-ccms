@@ -185,7 +185,7 @@ def add_assignment():
             description = request.form['description']
             due_to = request.form['due_to']
             type = request.form['type']
-            Assignment.create(title, description, type, app.user.username, due_to)
+            Assignment.create(title, description, type, app.user.username, due_to,app.user.id)
             return redirect(url_for('list_assignments'))
 
     return render_template('addassignment.html')

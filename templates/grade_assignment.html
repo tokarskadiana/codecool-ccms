@@ -21,7 +21,7 @@
                         <td>{{ details[4] }}</td>
                     <td>{{ details[5] }}</td>
                         <td>
-                            {% if details[3] == 0 %}
+                            {% if details[3] == 0 or details[3] == None %}
                                 <p class="not-grade">Not graded yet</p>
                             {% elif details[3] < 4 %}
                                 <p class="low-grade"> {{ details[3] }}</p>
