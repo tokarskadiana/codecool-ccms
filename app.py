@@ -185,7 +185,7 @@ def add_assignment():
             description = request.form['description']
             due_to = request.form['due_to']
             type = request.form['type']
-            Assignment.create(title, description, type, app.user.username, due_to,app.user.id)
+            Assignment.create(title, description, type, app.user.username, due_to, app.user.id)
             return redirect(url_for('list_assignments'))
 
     return render_template('addassignment.html')
@@ -245,17 +245,6 @@ def dated_url_for(endpoint, **values):
             values['q'] = int(os.stat(file_path).st_mtime)
     return url_for(endpoint, **values)
 
-# WTF IS THIS ?
-# @app.route('/view-teams', methods=['GET', 'POST'])
-# def list_teams():
-#     """
-#
-#     :return:
-#     """
-#     if request.method == 'POST':
-#         pass
-#
-#     return render_template('viewteams.html')
 
 
 @app.route('/test', methods=['GET', 'POST'])
