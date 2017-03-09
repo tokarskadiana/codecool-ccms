@@ -45,16 +45,6 @@ class Submition:
         SqlRequest.sql_request(
             'UPDATE submition SET grade={} WHERE id={}'.format(new_grade, self.id))
 
-    @staticmethod
-    def change_grade(mentor_id, id, new_grade):
-        '''
-        Changes a submition grage to new value.
-
-        Returns: boolean
-        '''
-        SqlRequest.sql_request(
-            'UPDATE submition SET grade="{}", mentor_id="{}" WHERE id="{}";'.format(new_grade, mentor_id, id))
-
     def change_content(self, new_content):
         '''
         Changes a content of submition.
@@ -67,8 +57,8 @@ class Submition:
 
     @classmethod
     def get_submit(cls, student_id, assignment_id):
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE student_id={} \
-                AND assignment_id={}'.format(student_id, assignment_id)
+        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
+         student_id={} AND assignment_id={}'.format(student_id, assignment_id)
 
         submit = SqlRequest.sql_request(query)
         if submit:
@@ -85,8 +75,8 @@ class Submition:
     @classmethod
     def get_by_id(cls, id):
         print(id)
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE id={}'.format(
-            id)
+        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
+        id={}'.format(id)
         submit = SqlRequest.sql_request(query)
         print(submit)
         if submit:

@@ -261,8 +261,6 @@ def delete(student_id):
 @app.route('/student-statistics')
 @login_required
 def statistics():
-
-
     students = Student.list_students()
     if session['type'] == 'Student':
         students = [student for student in students if student.id == int(session['user'])]
@@ -372,13 +370,13 @@ def grade_assignment():
     if request.method == 'POST':
         if request.form['assignmentID']:
             assigID = Assignment.get_by_id(request.form['assignmentID'])
-            studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
+            studentsDetails = Assignment.get_students_of_assigmnent(assigID.id)
 
             return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
                                    students=studentsDetails, assignment=assigID)
     elif request.method == "GET":
         assigID = Assignment.get_by_id(request.args['assignmentID'])
-        studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
+        studentsDetails = Assignment.get_students_of_assigmnent(assigID.id)
         return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
                                students=studentsDetails, assignment=assigID)
     else:
@@ -408,10 +406,17 @@ def grade_user_assignments(username):
             submit_id = request.form['submit_id']
             new_grade = request.form['new_grade']
             assignment_id = request.form['assignment_id']
-            print(new_grade)
+            assignment = Assignment.get_by_id(assignment_id)
             submit = Submition.get_by_id(submit_id)
-            print(submit)
-            submit.update_grade(new_grade)
+            if assignment.type == 'group':
+                team_id = Student.get_by_id(submit.student_id).team_id
+                team = Team.get_by_id(team_id)
+                team_members = team.get_members()
+                for student in team_members:
+                    submit = Submition.get_submit(student.id, assignment_id)
+                    submit.update_grade(new_grade)
+            else:
+                submit.update_grade(new_grade)
             return redirect(url_for('grade_assignment', assignmentID=assignment_id))
     return 'Not permited fool'
 
@@ -444,7 +449,15 @@ def assignment_submit(assignments_id):
         session['user'], session['type']).id, assignments_id)
     if request.method == "POST":
         content = request.form['content']
-        submit.change_content(content)
+        if assignment.type == 'group':
+            team_id = user_session(session['user'], session['type']).team_id
+            team = Team.get_by_id(team_id)
+            team_members = team.get_members()
+            for student in team_members:
+                submit = Submition.get_submit(student.id, assignments_id)
+                submit.change_content(content)
+        else:
+            submit.change_content(content)
         return redirect(url_for('view_assignments', assignments_id=assignments_id))
 
     return render_template('stud-submit.html', user=user_session(session['user'], session['type']),

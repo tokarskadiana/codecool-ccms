@@ -19,7 +19,7 @@
                         {% if team.get_members() %}
                             <ul>
                                 {% for student in team.get_members() %}
-                                    <li>{{ student }}</li>
+                                    <li>{{ student.full_name() }}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
