@@ -131,7 +131,7 @@ def add_mentor():
 @app.route('/list-mentors/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_mentor(employee_id):
-    mentor = Employee.get_by_id(employee_id)
+    mentor = Employee.get_by_id(employee_id, 'mentor')
     if request.method == 'POST':
         edit_employee('mentor', mentor)
         return redirect('list-mentors')
@@ -145,7 +145,7 @@ def delete_mentor(employee_id):
     """
     :return:
     """
-    mentor = Employee.get_by_id(employee_id)
+    mentor = Employee.get_by_id(employee_id, 'mentor')
     mentor.delete_employee()
     return redirect('list-mentors')
 
@@ -181,7 +181,7 @@ def add_assistant():
 @app.route('/list-assistant/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_assistant(employee_id):
-    assistant = Employee.get_by_id(employee_id)
+    assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
         edit_employee('assistant', assistant)
         return redirect('list-assistants')
@@ -195,7 +195,7 @@ def delete_assistant(employee_id):
     """
     :return:
     """
-    assistant = Employee.get_by_id(employee_id)
+    assistant = Employee.get_by_id(employee_id, 'assistant')
     assistant.delete_employee()
     return redirect('list-assistants')
 
@@ -247,7 +247,7 @@ def edit_student(student_id):
                     telephone=request.form.get('phone-number', ''),
                     mail=request.form.get('mail', ''),
                     team_id=request.form.get('team', '')).edit_student()
-            return redirect('list-students')
+            return redirect(url_for('list_students'))
         return render_template('edit_student_form.html', user=user_session(session['user'], session['type']),
                                student=student, teams=teams)
     return redirect('list-students')

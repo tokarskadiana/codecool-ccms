@@ -42,8 +42,8 @@ class Employee(User):
         SqlRequest.sql_request(query)
 
     @classmethod
-    def get_by_id(cls, id , pos ="employee"):
-        query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id,pos)
+    def get_by_id(cls, id, position):
+        query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id, position)
         employee = SqlRequest.sql_request(query)
         if employee:
             return cls(id=employee[0][0],

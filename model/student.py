@@ -55,9 +55,9 @@ class Student(User):
         :param kwargs: name of attr and value of it
         """
         query = ("""UPDATE student SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
-        team_id={}, username="{}" WHERE id={};""".format(self.first_name, self.last_name, self.password,
-                                                         self.telephone, self.mail, self.team_id,
-                                                         self.username, self.id))
+        team_id="{}", username="{}" WHERE id={};""".format(self.first_name, self.last_name, self.password,
+                                                           self.telephone, self.mail, self.team_id,
+                                                           self.username, self.id))
 
         SqlRequest.sql_request(query)
 
@@ -114,4 +114,3 @@ class Student(User):
             stats = (presence_average[0][0] / presence_average[0][1]) * 100
             return stats
         return '-----'
-
