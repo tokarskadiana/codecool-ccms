@@ -28,6 +28,9 @@ class Employee(User):
                                                                         self.salary))
 
     def edit_employee(self):
+        """
+        Update employee in database.
+        """
         query = ("""UPDATE employee SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
                 username="{}", salary="{}" WHERE id={}""".format(self.first_name, self.last_name, self.password,
                                                                  self.telephone, self.mail, self.username, self.salary,
@@ -43,6 +46,12 @@ class Employee(User):
 
     @classmethod
     def get_by_id(cls, id, position):
+        """
+        Get Object by given id and position in database.
+        :param id: id
+        :param position: position
+        :return: Object
+        """
         query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id, position)
         employee = SqlRequest.sql_request(query)
         if employee:
@@ -59,6 +68,9 @@ class Employee(User):
     @classmethod
     def list_employee(cls, position):
         """
+        Return list of Employee objects by given position.
+        :param position (str): position
+        :return: list of objects
         """
         employee_list = []
         query = 'SELECT * FROM employee WHERE position="{}"'.format(position)
