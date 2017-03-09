@@ -6,6 +6,7 @@ class Mentor(Employee):
 
     @classmethod
     def get_by_id(cls, id):
+
         query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id, 'mentor')
         employee = SqlRequest.sql_request(query)
         if employee:
@@ -23,16 +24,4 @@ class Mentor(Employee):
     def list_mentors(cls):
         """
         """
-        employee_list = []
-        query = 'SELECT * FROM employee WHERE position="{}"'.format('mentor')
-        employees = SqlRequest.sql_request(query)
-        for row in employees:
-            employee_list.append(cls(id=row[0],
-                                     password=row[3],
-                                     first_name=row[1],
-                                     last_name=row[2],
-                                     position=row[8],
-                                     telephone=(row[4] if row[4] else '-----'),
-                                     mail=(row[5] if row[5] else '-----'),
-                                     salary=(row[7] if row[7] else '-----')))
-        return employee_list
+        return super(Mentor, cls).list_employee('mentor')
