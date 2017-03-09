@@ -16,7 +16,7 @@ class User:
         :param mail: (str) store of e-mail address of User object
         """
         self.id = id
-        self.username = '{}.{}'.format(first_name, last_name)
+        self.username = '{}.{}'.format(first_name.lower(), last_name.lower())
         self.password = password
         self.first_name = first_name
         self.last_name = last_name
