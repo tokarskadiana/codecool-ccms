@@ -202,7 +202,6 @@ def list_students():
     :return:
     """
     students = Student.list_students()
-    print(session)
     return render_template('viewstudents.html', user=user_session(session['user'], session['type']), students=students)
 
 
@@ -317,7 +316,6 @@ def list_assignments():
     """
 
     user = user_session(session['user'], session['type'])
-    print(user)
     choose = None
     if isinstance(user, Mentor):
         choose = "Mentor"
@@ -522,7 +520,6 @@ def dated_url_for(endpoint, **values):
 
 
 def user_session(id, class_name):
-    print('Class name to', class_name)
     if class_name == "Student":
 
         return Student.get_by_id(id)
