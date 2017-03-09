@@ -370,13 +370,13 @@ def grade_assignment():
     if request.method == 'POST':
         if request.form['assignmentID']:
             assigID = Assignment.get_by_id(request.form['assignmentID'])
-            studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
+            studentsDetails = Assignment.get_students_of_assigmnent(assigID.id)
 
             return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
                                    students=studentsDetails, assignment=assigID)
     elif request.method == "GET":
         assigID = Assignment.get_by_id(request.args['assignmentID'])
-        studentsDetails = Assignment.get_studentsOfAssigmnent(assigID.id)
+        studentsDetails = Assignment.get_students_of_assigmnent(assigID.id)
         return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
                                students=studentsDetails, assignment=assigID)
     else:

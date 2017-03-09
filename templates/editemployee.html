@@ -12,7 +12,7 @@
                 <input type="text" name="password" value="{{ employee.password }}" required>
             </div>
             <label for="phone_number">Telephone number</label>
-            <input type="tel" name="phone_number" value="{{ employee.telephone }}">
+            <input type="tel" pattern='^\+?\d{0,13}' name="phone_number" value="{{ employee.telephone }}">
             <label for="mail">Mail</label>
             <input type="email" name="mail" value="{{ employee.mail }}">
             <label for="salary">Salary</label>

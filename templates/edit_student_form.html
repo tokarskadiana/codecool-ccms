@@ -12,7 +12,7 @@
       <input type="text" name="password" value="{{student.password}}" required>
     </div>
     <label for="phone-number">Telephone number</label>
-    <input type="tel" name="phone-number" value="{{student.telephone}}">
+    <input type="tel" pattern='^\+?\d{0,13}' name="phone-number" value="{{student.telephone}}">
     <label for="mail">Mail</label>
     <input type="email" name="mail" value="{{student.mail}}">
     <label for="team">Team</label>

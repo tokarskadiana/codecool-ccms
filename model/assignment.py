@@ -99,67 +99,13 @@ class Assignment:
                 return True
         return False
 
-    def grade_assigment(self, mentor_username, student_username, grade):
-        '''
-        Make able mentor to grade students assigment.
-
-        Returns:bool/int
-        '''
-        submitions = SqlRequest.sql_request(
-            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        student = SqlRequest.sql_request(
-            "SELECT * FROM student WHERE username='{}'".format(student_username))
-        mentor = SqlRequest.sql_request(
-            "SELECT * FROM employee WHERE username='{}'".format(mentor_username))
-        if student and mentor:
-            student_id = student[0][0]
-            mentor_id = mentor[0][0]
-            for submition in submitions:
-                if submition[2] == student_id:
-                    Submition.change_grade(mentor_id, submition[0], grade)
-                    return True
-        return False
-
-    def view_details(self):
-        '''
-        View details of particular assigment.
-
-        Returns:list
-        '''
-        details = []
-        submitions = SqlRequest.sql_request(
-            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        for submition in submitions:
-            user_name = SqlRequest.sql_request(
-                'SELECT * FROM student WHERE id="{}"'.format(submition[2]))[0][6]
-            if not submition[3]:
-                con = 'No content'
-            else:
-                con = str(submition[3])
-            if not submition[4]:
-                grade = 'No grade'
-            else:
-                grade = str(submition[4])
-            details.append([self.title, user_name, con, grade])
-        return details
-
-    def list_assignment_grades(self, user_name):
-        '''
-        Find submittion by user name and return info about garade.
-
-        Returns:list
-        '''
-        submitions = SqlRequest.sql_request(
-            "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
-        user_id = SqlRequest.sql_request(
-            "SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
-        for submition in submitions:
-            if submition[2] == user_id:
-                return submition[4]
-        return None
-
     @classmethod
     def get_by_id(cls, id):
+        """
+        Return Assignment object by given id.
+        :param id: Assignment id in assignment table.
+        :return: object if exist row in table otherwise return None
+        """
         query = 'SELECT id,title,"date",description,due_date,mentor_id,type FROM assignment WHERE id={}'.format(
             id)
         assignments = SqlRequest.sql_request(query)
@@ -174,7 +120,12 @@ class Assignment:
         return None
 
     @classmethod
-    def get_studentsOfAssigmnent(cls, id):
+    def get_students_of_assigmnent(cls, id):
+        """
+        Get all student assigned to assigmnent given by id.
+        :param id: assigment id
+        :return: list of tuples
+        """
         query = "SELECT student.ID, first_name,last_name,grade,content,update_data, (\
         student.first_name || '.' || student.last_name ) as username from submition LEFT JOIN \
         student ON student.ID = student_id WHERE assignment_id={}".format(id)
@@ -182,6 +133,11 @@ class Assignment:
 
     @classmethod
     def get_all_assigmnets(cls, id):
+        """
+        Get all student submission by given student id
+        :param id: student id
+        :return: list of objects
+        """
         query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM \
         assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(id)
         assignments = SqlRequest.sql_request(query)
@@ -199,5 +155,8 @@ class Assignment:
         return None
 
     def delete_assignment(self):
+        """
+        Delete assignment form database.
+        """
         query = 'DELETE FROM assignment WHERE id={}'.format(self.id)
         SqlRequest.sql_request(query)
