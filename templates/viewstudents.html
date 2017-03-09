@@ -1,32 +1,44 @@
 {% extends 'index.html' %}
 {% block content %}
-	<h3>Student List:</h3>
-		<div class="large-table-wrapper">
-      <a href="{{url_for('add_student')}}"><input class="sub-right main-button" type="button" value="Add New Student"></a>
-			<table class='table-style'>
-				<thead>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Phone number</th>
-          <th>E-mail</th>
-          <th>Team</th>
-          <th>Edit</th>
-				  <th>Delete</th>
-				</thead>
-				<tbody>
-				{% for student in students %}
-						<tr>
-							<td>{{student.id}}</td>
-							<td>{{student.full_name()}}</td>
-							<td>{{student.telephone}}</td>
-							<td>{{student.mail}}</td>
-							<td>{{student.team_name}}</td>
-							<td><a href="{{url_for('edit_student', student_id=student.id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-							<td><a href="{{url_for('delete', student_id=student.id)}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-						</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>
+    <h3>Student List:</h3>
+    <div class="large-table-wrapper">
+        {% if user.__class__.__name__ == 'Mentor' %}
+            <a href="{{ url_for('add_student') }}"><input class="sub-right main-button" type="button"
+                                                          value="Add New Student"></a>
+        {% endif %}
+        <table class='table-style'>
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone number</th>
+            <th>E-mail</th>
+            <th>Team</th>
+            {% if user.__class__.__name__ == 'Mentor' %}
+                <th>Edit</th>
+                <th>Delete</th>
+            {% endif %}
+            </thead>
+            <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.full_name() }}</td>
+                    <td>{{ student.telephone }}</td>
+                    <td>{{ student.mail }}</td>
+                    <td>{{ student.team_name }}</td>
+                    {% if user.__class__.__name__ == 'Mentor' %}
+                        <td><a href="{{ url_for('edit_student', student_id=student.id) }}"><i
+                                class="fa fa-pencil-square-o"
+                                aria-hidden="true"></i></a>
+                        </td>
+                        <td><a href="{{ url_for('delete', student_id=student.id) }}"><i class="fa fa-trash"
+                                                                                    aria-hidden="true"></i>
+                    {% endif %}
+                    </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

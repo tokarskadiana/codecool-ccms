@@ -12,7 +12,7 @@ class Mentor(Employee):
             return cls(id=employee[0][0],
                        password=employee[0][3],
                        first_name=employee[0][1],
-                       last_name=employee[0][3],
+                       last_name=employee[0][2],
                        position=employee[0][8],
                        telephone=employee[0][4],
                        mail=employee[0][5],
