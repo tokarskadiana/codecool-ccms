@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask import flash
 from flask import session
 from controller.database_controller import DatabaseController
+from model.checkpoint import Checkpoint
 from model.manager import Manager
 from model.mentor import Mentor
 from model.student import Student
@@ -317,7 +318,6 @@ def list_assignments():
     """
 
     user = user_session(session['user'], session['type'])
-    print(user)
     choose = None
     if isinstance(user, Mentor):
         choose = "Mentor"
@@ -353,7 +353,7 @@ def add_assignment():
             type = request.form['type']
             Assignment.create(title, description, type,
                               user_session(session['user'], session[
-                                           'type']).username, due_to,
+                                  'type']).username, due_to,
                               user_session(session['user'], session['type']).id)
             return redirect(url_for('list_assignments'))
 
@@ -502,6 +502,100 @@ def attendance():
 
 
 # -------------OTHER STAFF--------------
+
+
+
+# ---------------CHECKPOINT-----------------
+
+
+@app.route('/list-checkpoints')
+@login_required
+def list_checkpoints():
+    """
+    List all checkpoints
+    :return: template
+    """
+
+    user = user_session(session['user'], session['type'])
+    print(user)
+    choose = None
+    if isinstance(user, Mentor):
+        choose = "Mentor"
+        list_checkpoints = Checkpoint.get_list_distinct()
+        print(list_checkpoints)
+        return render_template('viewcheckpoints.html', user=user_session(session['user'], session['type']),
+                               choose=choose,
+                               list_checkpoints=list_checkpoints)
+
+    # elif (isinstance(user, Student)):
+    #
+    #     choose = "Student"
+    #     student_id = user_session(session['user'], session['type']).id
+    #     student_assignments = Assignment.get_all_assigmnets(student_id)
+    #
+    #     return render_template('viewassignments.html', user=user_session(session['user'], session['type']),
+    #                            choose=choose, student_assignments=student_assignments)
+    else:
+        return render_template('404.html', user=user_session(session['user'], session['type']))
+
+
+@app.route('/list-checkpoints/add-checkpoint', methods=['GET', 'POST'])
+@login_required
+def add_checkpoint():
+    """
+    Add checkpoint
+    :return:
+    """
+    user = user_session(session['user'], session['type'])
+    choose = None
+    if isinstance(user, Mentor):
+        if request.method == 'POST':
+            if request.form['add_checkpoint']:
+                students = Student.list_students()
+                checkpoint_name = request.form['checkpoint_name']
+                date = request.form['date']
+                Checkpoint.add_checkpoint_students(checkpoint_name, date,
+                                                   user_session(session['user'], session[
+                                                       'type']).id, students)
+                return redirect(url_for('list_checkpoints'))
+
+        return render_template('add_checkpoint.html', user=user_session(session['user'], session['type']))
+
+    return render_template('404.html', user=user_session(session['user'], session['type']))
+
+
+@app.route('/list-checkpoints/remove-checkpoint', methods=['GET', 'POST'])
+@login_required
+def delete_checkpoint():
+    user = user_session(session['user'], session['type'])
+    choose = None
+    if isinstance(user, Mentor):
+        if request.method == 'POST':
+            if request.form['action']:
+                checkpoint_name = request.form['checkpoint_name']
+                Checkpoint.remove_checkpoint(checkpoint_name)
+                return redirect(url_for('list_checkpoints'))
+
+    return render_template('404.html', user=user_session(session['user'], session['type']))
+
+
+@app.route('/list-checkpoints/<checkpoint_name>', methods=['GET', 'POST'])
+@login_required
+def grade_checkpoint(checkpoint_name):
+    user = user_session(session['user'], session['type'])
+    choose = None
+    if isinstance(user, Mentor):
+        if request.method == 'POST':
+            id_list = request.form.getlist('id[]')
+            grade_list = request.form.getlist('checkpoint-grade[]')
+            Checkpoint.grade_checkpoints(grade_list,id_list)
+            return redirect(url_for('grade_checkpoint',checkpoint_name=checkpoint_name))
+
+        chkp_list = Checkpoint.get_details_checkpoint_by_name(checkpoint_name)
+        return render_template('grade_checkpoint.html', checkpoint_name=checkpoint_name, chkp_list=chkp_list,
+                               user=user_session(session['user'], session['type']))
+
+    return render_template('404.html', user=user_session(session['user'], session['type']))
 
 
 @app.context_processor

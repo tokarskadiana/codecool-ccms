@@ -4,10 +4,11 @@ from model.sqlRequest import SqlRequest
 
 
 class Student(User):
-    def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id=""):
+    def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id="",student_cards=""):
         super(Student, self).__init__(id, password, first_name,
                                       last_name, telephone, mail)
         self.team_id = team_id
+        self.student_cards = student_cards
         self.team_name = self.get_team_name(team_id)
 
     def get_team_name(self, team_id):

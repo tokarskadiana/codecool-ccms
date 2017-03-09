@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    {% if choose == "Mentor" %}
+        <h3>List of Checkpoints</h3>
+        <div class="large-wrapper">
+            <a href="{{ url_for('add_checkpoint') }}"><input class="sub-right main-button" type="button"
+                                                             value="Add New Checkpoint"></a>
+            {##}
+            {% if list_checkpoints %}
+                <table class='table-style'>
+                    <thead>
+                    <th>Checkpoint</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                    <th>Delete</th>
+                    </thead>
+                    <tbody>
+                    {% for checkpoint in list_checkpoints %}
+                        <tr>
+                            <td>{{ checkpoint[0] }}</td>
+                            <td>{{ checkpoint[1] }}</td>
+                            <td>
+                                <a href="{{ url_for('grade_checkpoint',checkpoint_name = checkpoint[0]) }}">
+                                    <i class='fa fa-pencil-square-o' aria-hidden='true'></i></a>
+                            </td>
+                            <td>
+                                <form method="post" action="{{ url_for('delete_checkpoint') }}">
+                                    <input type="hidden" value="{{ checkpoint[0] }}" name="checkpoint_name">
+                                    <button name="action" type="submit" value="editAssignment"><i class="fa fa-trash"
+                                                                                                  aria-hidden="true"></i>
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            {% else %}
+                <div class="small-wrapper no-content">
+                    <p>There is no Checkpoints. Please add checkpoint.</p>
+                </div>
+            {% endif %}
+
+    {% elif choose=="Student" %}
+
+        {#        <h3>Assignments avaiable to you</h3>#}
+        {#        {% if student_assignments %}#}
+        {#        <div class="small-wrapper">#}
+        {#            <table class='table-style'>#}
+        {#                <thead>#}
+        {#                <th>Assiment</th>#}
+        {##}
+        {#                <th >View/Submit</th>#}
+        {##}
+        {#                <tbody>#}
+        {#                {% for student_assignment in student_assignments %}#}
+        {#                    <tr>#}
+        {#                        <td>{{ student_assignment.title }}</td>#}
+        {#                        <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i#}
+        {#                                class="fa fa-search" aria-hidden="true"></a></td>#}
+        {#                        </td>#}
+        {##}
+        {#                    </tr>#}
+        {#                {% endfor %}#}
+        {#                </tbody>#}
+        {#            </table>#}
+        {#        </div>#}
+        {#        {% else %}#}
+        {#        <div class="small-wrapper no-content">#}
+        {#          <p>There is no assignments at the moment available for you.</p>#}
+        {#        </div>#}
+        {##}
+        {#        {% endif %}#}
+    {% endif %}
+
+
+
+{% endblock %}
