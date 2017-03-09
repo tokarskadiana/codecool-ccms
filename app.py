@@ -1,8 +1,6 @@
 import os
 from functools import wraps
-from flask import Flask, render_template, request, redirect, url_for
-from flask import flash
-from flask import session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from controller.database_controller import DatabaseController
 from model.manager import Manager
 from model.mentor import Mentor
@@ -30,6 +28,19 @@ def login_required(f):
             return redirect(url_for('login'))
 
     return wrap
+
+
+# user perrmitions decorator
+def required_roles(*roles):
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if session['type'] not in roles:
+                flash("Permission denied")
+                return redirect(url_for('index'))
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper
 
 
 @app.route('/')
@@ -98,6 +109,7 @@ def save_employee(position, save, id=None):
 
 @app.route('/list-mentors')
 @login_required
+@required_roles('Manager')
 def list_mentors():
     """
     :return:
@@ -113,6 +125,7 @@ def list_mentors():
 
 @app.route('/list-mentors/add', methods=['GET', 'POST'])
 @login_required
+@required_roles('Manager')
 def add_mentor():
     if request.method == 'POST':
         save_employee('mentor', 'add')
@@ -122,6 +135,7 @@ def add_mentor():
 
 @app.route('/list-mentors/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
+@required_roles('Manager')
 def edit_mentor(employee_id):
     mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
@@ -133,6 +147,7 @@ def edit_mentor(employee_id):
 
 @app.route('/delete-mentor/<employee_id>')
 @login_required
+@required_roles('Manager')
 def delete_mentor(employee_id):
     """
     :return:
@@ -147,6 +162,7 @@ def delete_mentor(employee_id):
 
 @app.route('/list-assistants')
 @login_required
+@required_roles('Manager')
 def list_assistants():
     """
     :return:
@@ -162,6 +178,7 @@ def list_assistants():
 
 @app.route('/list-assistants/add', methods=['GET', 'POST'])
 @login_required
+@required_roles('Manager')
 def add_assistant():
     if request.method == 'POST':
         save_employee('assistant', 'add')
@@ -172,6 +189,7 @@ def add_assistant():
 
 @app.route('/list-assistant/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
+@required_roles('Manager')
 def edit_assistant(employee_id):
     assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
@@ -183,6 +201,7 @@ def edit_assistant(employee_id):
 
 @app.route('/delete-assistant/<employee_id>')
 @login_required
+@required_roles('Manager')
 def delete_assistant(employee_id):
     """
     :return:
@@ -197,6 +216,7 @@ def delete_assistant(employee_id):
 
 @app.route('/list-students', methods=['GET', 'POST'])
 @login_required
+@required_roles('Manager', 'Mentor', 'Employee')
 def list_students():
     """
 
@@ -208,6 +228,7 @@ def list_students():
 
 @app.route('/list-students/add', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def add_student():
     """
     """
@@ -227,6 +248,7 @@ def add_student():
 
 @app.route('/list-students/edit/<student_id>', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def edit_student(student_id):
     teams = Team.list_teams()
     student = Student.get_by_id(student_id)
@@ -247,6 +269,7 @@ def edit_student(student_id):
 
 @app.route('/list-student/delete/<student_id>')
 @login_required
+@required_roles('Mentor')
 def delete(student_id):
     student = Student.get_by_id(student_id)
     if student:
@@ -260,6 +283,7 @@ def delete(student_id):
 
 @app.route('/student-statistics')
 @login_required
+@required_roles('Manager', 'Mentor', 'Student')
 def statistics():
     students = Student.list_students()
     if session['type'] == 'Student':
@@ -272,6 +296,7 @@ def statistics():
 
 @app.route('/list-teams')
 @login_required
+@required_roles('Mentor')
 def list_teams():
     teams = Team.list_teams()
     return render_template('viewteams.html', user=user_session(session['user'], session['type']), teams=teams)
@@ -279,6 +304,7 @@ def list_teams():
 
 @app.route('/list-teams/add', methods=["GET", 'POST'])
 @login_required
+@required_roles('Mentor')
 def add_team():
     if request.method == 'POST':
         Team(request.form['name']).add_team()
@@ -288,6 +314,7 @@ def add_team():
 
 @app.route('/list-teams/edit/<team_id>', methods=["GET", 'POST'])
 @login_required
+@required_roles('Mentor')
 def edit_team(team_id):
     team = Team.get_by_id(team_id)
     if request.method == 'POST':
@@ -299,6 +326,7 @@ def edit_team(team_id):
 
 @app.route('/list-teams/delete/<team_id>')
 @login_required
+@required_roles('Mentor')
 def delete_team(team_id):
     team = Team.get_by_id(team_id)
     team.delete_team()
@@ -310,6 +338,7 @@ def delete_team(team_id):
 
 @app.route('/list-assignments')
 @login_required
+@required_roles('Mentor', 'Student')
 def list_assignments():
     """
     List all assignments
@@ -339,6 +368,7 @@ def list_assignments():
 
 @app.route('/list-assignments/add-assignment', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def add_assignment():
     """
     Add assignment
@@ -361,6 +391,7 @@ def add_assignment():
 
 @app.route('/list-assignments/grade-assignment', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def grade_assignment():
     """
     List user of assignment
@@ -384,6 +415,7 @@ def grade_assignment():
 
 @app.route('/list-assignments/grade-assignment/<username>', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def grade_user_assignments(username):
     """
     Grade assignment
@@ -422,6 +454,7 @@ def grade_user_assignments(username):
 
 @app.route('/list-assignments/view-assignments/<int:assignments_id>', methods=['GET', 'POST'])
 @login_required
+@required_roles('Student')
 def view_assignments(assignments_id):
     """
     Student list assignments
@@ -437,6 +470,7 @@ def view_assignments(assignments_id):
 
 @app.route('/list-assignments/view-assignments/<int:assignments_id>/submit_edition', methods=["GET", "POST"])
 @login_required
+@required_roles('Student')
 def assignment_submit(assignments_id):
     """
     Student submit assignment
@@ -464,6 +498,8 @@ def assignment_submit(assignments_id):
 
 
 @app.route('/list-assignments/delete/<assignment_id>')
+@login_required
+@required_roles('Mentor')
 def delete_assignment(assignment_id):
     assignment = Assignment.get_by_id(assignment_id)
     assignment.delete_assignment()
@@ -475,6 +511,7 @@ def delete_assignment(assignment_id):
 
 @app.route("/attendance", methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def attendance():
     students = Student.list_students()
     date = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -531,9 +568,6 @@ def user_session(id, class_name):
 
         return Manager.get_by_id(id)
     return None
-
-
-# -------------OTHER STAFF--------------
 
 
 @app.context_processor
