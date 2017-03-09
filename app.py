@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
+
 # login required decorator
 def login_required(f):
     @wraps(f)
@@ -35,7 +36,7 @@ def login_required(f):
 @login_required
 def index():
     """
-    handle main index page, display nav of curent user
+    handle main index page, display nav of current user
     :return:
     """
     return render_template('index.html', user=user_session(session['user'], session['type']))
@@ -45,6 +46,12 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """
+    Login page
+    GET: returns a login form
+    POST: returns HTTP 200 on success and redirect to index page
+          returns HTTP 200 when login/password not correct and back to login page
+    """
     error = None
     students = Student.list_students()
     employees = Employee.list_employee('assistant')
@@ -67,6 +74,10 @@ def login():
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
+    """
+    Logout from user session
+    GET: Returns HTTP 302 and redirect to login page.
+    """
     session.pop('logged_in', None)
     session.pop('user', None)
     session.pop('type', None)
@@ -99,7 +110,7 @@ def save_employee(position, save, id=None):
 @login_required
 def list_mentors():
     """
-    :return:
+    GET to generate a list of mentors
     """
     mentors_list = Mentor.list_mentors()
     add = 'add_mentor'
@@ -113,6 +124,12 @@ def list_mentors():
 @app.route('/list-mentors/add', methods=['GET', 'POST'])
 @login_required
 def add_mentor():
+    """
+    GET: returns add mentor formula
+    POST: returns list of mentors with new mentor added
+
+    """
+
     if request.method == 'POST':
         save_employee('mentor', 'add')
         return redirect(url_for('list_mentors'))
@@ -122,6 +139,12 @@ def add_mentor():
 @app.route('/list-mentors/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_mentor(employee_id):
+    """
+    Edit mentor formula to edit mentor details
+    :param employee_id: int
+    GET return edit mentor formula
+    POST return list of mentors with edited mentor changes saved
+    """
     mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
         save_employee('mentor', 'edit', mentor.id)
@@ -134,7 +157,9 @@ def edit_mentor(employee_id):
 @login_required
 def delete_mentor(employee_id):
     """
-    :return:
+    Remove mentor from list(data base)
+    :param employee_id: int
+    GET return list of mentors without removed mentor
     """
     mentor = Mentor.get_by_id(employee_id)
     mentor.delete_employee()
@@ -148,7 +173,7 @@ def delete_mentor(employee_id):
 @login_required
 def list_assistants():
     """
-    :return:
+    GET to generate a list of assistants
     """
     assistants_list = Employee.list_employee('assistant')
     add = 'add_assistant'
@@ -162,6 +187,10 @@ def list_assistants():
 @app.route('/list-assistants/add', methods=['GET', 'POST'])
 @login_required
 def add_assistant():
+    """
+    GET: returns add assistant formula
+    POST: returns list of assistant with new assistant added
+    """
     if request.method == 'POST':
         save_employee('assistant', 'add')
         return redirect(url_for('list_assistants'))
@@ -172,6 +201,12 @@ def add_assistant():
 @app.route('/list-assistant/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_assistant(employee_id):
+    """
+    Edit assistant formula to edit assistant details
+    :param employee_id: int
+    GET return edit assistants formula
+    POST return list of assistants with edited assistant changes saved
+    """
     assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
         save_employee('assistant', 'edit', assistant.id)
@@ -184,7 +219,9 @@ def edit_assistant(employee_id):
 @login_required
 def delete_assistant(employee_id):
     """
-    :return:
+    Remove assistant from list(data base)
+    :param employee_id: int
+    GET return list of assistants without removed assistant
     """
     assistant = Employee.get_by_id(employee_id, 'assistant')
     assistant.delete_employee()
@@ -198,8 +235,7 @@ def delete_assistant(employee_id):
 @login_required
 def list_students():
     """
-
-    :return:
+    GET to generate a list of students
     """
     students = Student.list_students()
     print(session)
@@ -210,6 +246,8 @@ def list_students():
 @login_required
 def add_student():
     """
+    GET: returns add student formula
+    POST: returns list of students with new student added
     """
     teams = Team.list_teams()
     if request.method == 'POST':
@@ -228,6 +266,12 @@ def add_student():
 @app.route('/list-students/edit/<student_id>', methods=['GET', 'POST'])
 @login_required
 def edit_student(student_id):
+    """
+    Edit student formula to edit student details
+    :param student_id: int
+    GET return edit student formula
+    POST return list of students with edited student changes saved
+    """
     teams = Team.list_teams()
     student = Student.get_by_id(student_id)
     if student:
@@ -248,6 +292,11 @@ def edit_student(student_id):
 @app.route('/list-student/delete/<student_id>')
 @login_required
 def delete(student_id):
+    """
+    Remove student from list(data base)
+    :param student_id: int
+    GET return list of students without removed student
+    """
     student = Student.get_by_id(student_id)
     if student:
         student.delete_student()
