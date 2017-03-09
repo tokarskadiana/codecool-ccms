@@ -4,7 +4,7 @@ import datetime
 
 class Submition:
     '''
-    Represent an submit of individual student_username
+    Represent an submit of individual student for specific assignment
     '''
 
     def __init__(self, assignment_id, student_id, id=None, content=None, grade=None, update=None, mentor_id=None):
@@ -26,21 +26,18 @@ class Submition:
     def create(cls, assignment_id, student_id):
         '''
         Make new submition.
-
         Returns: instance of Submition class
         '''
         SqlRequest.sql_request(
             'INSERT INTO submition (assignment_id, student_id) VALUES("{}", "{}")'.format(assignment_id, student_id))
         submition = cls(assignment_id, student_id)
-        submition_id = SqlRequest.sql_request('SELECT * FROM submition WHERE id = (SELECT MAX(id) FROM submition);')[0][
-            0]
+        submition_id = SqlRequest.sql_request('SELECT * FROM submition WHERE id = (SELECT MAX(id) \
+        FROM submition);')[0][0]
         submition.set_id(submition_id)
 
     def update_grade(self, new_grade):
         '''
         Changes a submition grage to new value.
-
-        Returns: boolean
         '''
         SqlRequest.sql_request(
             'UPDATE submition SET grade={} WHERE id={}'.format(new_grade, self.id))
@@ -48,8 +45,6 @@ class Submition:
     def change_content(self, new_content):
         '''
         Changes a content of submition.
-
-        Returns: boolean
         '''
         date = datetime.datetime.now().date()
         SqlRequest.sql_request(
@@ -57,6 +52,12 @@ class Submition:
 
     @classmethod
     def get_submit(cls, student_id, assignment_id):
+        """
+        Get submit for student for specific assqgnment
+        arguments:  int(student_id)
+                    int(assignment_id)
+        return: obj(Submit)
+        """
         query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
          student_id={} AND assignment_id={}'.format(student_id, assignment_id)
 
@@ -68,17 +69,19 @@ class Submition:
                        id=submit[0][3],
                        grade=submit[0][4],
                        update=submit[0][5],
-                       mentor_id=submit[0][6],
-                       )
+                       mentor_id=submit[0][6])
         return None
 
     @classmethod
     def get_by_id(cls, id):
-        print(id)
+        """
+        Get submit object by id from database.
+        arguments: int(id)
+        return: obj(Submit)
+        """
         query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
         id={}'.format(id)
         submit = SqlRequest.sql_request(query)
-        print(submit)
         if submit:
             return cls(assignment_id=submit[0][0],
                        student_id=submit[0][1],
@@ -86,6 +89,5 @@ class Submition:
                        id=submit[0][3],
                        grade=submit[0][4],
                        update=submit[0][5],
-                       mentor_id=submit[0][6],
-                       )
+                       mentor_id=submit[0][6])
         return None

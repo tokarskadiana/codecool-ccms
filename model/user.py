@@ -9,6 +9,7 @@ class User:
     def __init__(self, id, password, first_name, last_name, telephone="", mail=""):
         """
         Constructs User object
+        :param id: (int) store of id of User object
         :param password: (str) store of password of User object
         :param first_name: (str) store of first name of User object
         :param last_name: (str) store of last name of User object
@@ -24,6 +25,10 @@ class User:
         self.mail = mail
 
     def full_name(self):
+        """
+        Retuns full name of user.
+        return: str(full name)
+        """
         return "{} {}".format(self.first_name, self.last_name)
 
     @staticmethod
