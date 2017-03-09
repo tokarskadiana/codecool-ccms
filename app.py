@@ -78,14 +78,18 @@ def logout():
 
 
 def save_employee(position, save, id=None):
-    Employee(id=id,
-             password=request.form['password'],
-             first_name=request.form['first_name'],
-             last_name=request.form['last_name'],
-             position=position,
-             telephone=request.form.get('phone_number', ''),
-             mail=request.form.get('mail', ''),
-             salary=request.form.get('salary', '')).save()
+    employee = Employee(id=id,
+                        password=request.form['password'],
+                        first_name=request.form['first_name'],
+                        last_name=request.form['last_name'],
+                        position=position,
+                        telephone=request.form.get('phone_number', ''),
+                        mail=request.form.get('mail', ''),
+                        salary=request.form.get('salary', ''))
+    if save == 'add':
+        employee.add_employee()
+    elif save == 'edit':
+        employee.edit_employee()
 
 
 # ----------------MENTORS-----------------
@@ -110,7 +114,7 @@ def list_mentors():
 @login_required
 def add_mentor():
     if request.method == 'POST':
-        save_employee('mentor', add_employee)
+        save_employee('mentor', 'add')
         return redirect(url_for('list_mentors'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']), list='list_mentors')
 
@@ -120,7 +124,7 @@ def add_mentor():
 def edit_mentor(employee_id):
     mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
-        save_employee('mentor', edit_employee, mentor.id)
+        save_employee('mentor', 'edit', mentor.id)
         return redirect('list-mentors')
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=mentor,
                            list='list_mentors')
@@ -159,7 +163,7 @@ def list_assistants():
 @login_required
 def add_assistant():
     if request.method == 'POST':
-        save_employee('assistant', add_employee)
+        save_employee('assistant', 'add')
         return redirect(url_for('list_assistants'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']),
                            employee='Assistant', list='list_assistants')
@@ -170,7 +174,7 @@ def add_assistant():
 def edit_assistant(employee_id):
     assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
-        save_employee('assistant', edit_employee, assistant.id)
+        save_employee('assistant', 'edit', assistant.id)
         return redirect('list-assistants')
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=assistant,
                            list='list_assistants')
@@ -345,7 +349,8 @@ def add_assignment():
             due_to = request.form['due_to']
             type = request.form['type']
             Assignment.create(title, description, type,
-                              user_session(session['user'], session['type']).username, due_to,
+                              user_session(session['user'], session[
+                                           'type']).username, due_to,
                               user_session(session['user'], session['type']).id)
             return redirect(url_for('list_assignments'))
 
@@ -415,7 +420,8 @@ def view_assignments(assignments_id):
     :return:
     """
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(user_session(session['user'], session['type']).id, assignments_id)
+    submit = Submition.get_submit(user_session(
+        session['user'], session['type']).id, assignments_id)
     return render_template('stud_view_assiment.html', user=user_session(session['user'], session['type']),
                            assignment=assignment, submit=submit)
 
@@ -429,7 +435,8 @@ def assignment_submit(assignments_id):
     :return:
     """
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(user_session(session['user'], session['type']).id, assignments_id)
+    submit = Submition.get_submit(user_session(
+        session['user'], session['type']).id, assignments_id)
     if request.method == "POST":
         content = request.form['content']
         submit.change_content(content)
@@ -462,7 +469,8 @@ def attendance():
         if Attendance.already_checked(date):
             for student in students_checked:
                 value = int(request.form[str(student[0])])
-                Attendance.update_attendance_day(int(student[0]), date, int(value))
+                Attendance.update_attendance_day(
+                    int(student[0]), date, int(value))
         else:
             for student in students:
                 value = int(request.form[str(student.id)])
@@ -518,16 +526,6 @@ def user_session(id, class_name):
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
-
-
-def dated_url_for(endpoint, **values):
-    if endpoint == 'static':
-        filename = values.get('filename', None)
-        if filename:
-            file_path = os.path.join(app.root_path,
-                                     endpoint, filename)
-            values['q'] = int(os.stat(file_path).st_mtime)
-    return url_for(endpoint, **values)
 
 
 if __name__ == '__main__':
