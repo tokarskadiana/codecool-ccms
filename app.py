@@ -3,7 +3,6 @@ from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for
 from flask import flash
 from flask import session
-
 from controller.database_controller import DatabaseController
 from model.manager import Manager
 from model.mentor import Mentor
@@ -39,7 +38,6 @@ def index():
     handle main index page, display nav of curent user
     :return:
     """
-
     return render_template('index.html', user=user_session(session['user'], session['type']))
 
 
@@ -49,9 +47,9 @@ def index():
 def login():
     error = None
     students = Student.list_students()
-    employees = Employee.list_employee('employee')
-    mentors = Mentor.list_mentors('mentor')
-    managers = Manager.list_managers('manager')
+    employees = Employee.list_employee('assistant')
+    mentors = Mentor.list_mentors()
+    managers = Manager.list_managers()
     all_users = students + employees + mentors + managers
 
     if request.method == "POST":
@@ -79,26 +77,15 @@ def logout():
 # -----------------EMPLOYEE------------------
 
 
-def add_employee(position):
-    Employee(id=None,
+def save_employee(position, save, id=None):
+    Employee(id=id,
              password=request.form['password'],
              first_name=request.form['first_name'],
              last_name=request.form['last_name'],
              position=position,
              telephone=request.form.get('phone_number', ''),
              mail=request.form.get('mail', ''),
-             salary=request.form.get('salary', '')).add_employee()
-
-
-def edit_employee(position, employee):
-    Employee(id=employee.id,
-             first_name=request.form['first_name'],
-             password=request.form['password'],
-             last_name=request.form['last_name'],
-             position=position,
-             telephone=request.form.get('phone_number', ''),
-             mail=request.form.get('mail', ''),
-             salary=request.form.get('salary', '')).edit_employee()
+             salary=request.form.get('salary', '')).save()
 
 
 # ----------------MENTORS-----------------
@@ -110,7 +97,7 @@ def list_mentors():
     """
     :return:
     """
-    mentors_list = Employee.list_employee('mentor')
+    mentors_list = Mentor.list_mentors()
     add = 'add_mentor'
     edit = 'edit_mentor'
     delete = 'delete_mentor'
@@ -123,7 +110,7 @@ def list_mentors():
 @login_required
 def add_mentor():
     if request.method == 'POST':
-        add_employee('mentor')
+        save_employee('mentor', add_employee)
         return redirect(url_for('list_mentors'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']), list='list_mentors')
 
@@ -131,9 +118,9 @@ def add_mentor():
 @app.route('/list-mentors/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_mentor(employee_id):
-    mentor = Employee.get_by_id(employee_id)
+    mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
-        edit_employee('mentor', mentor)
+        save_employee('mentor', edit_employee, mentor.id)
         return redirect('list-mentors')
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=mentor,
                            list='list_mentors')
@@ -145,7 +132,7 @@ def delete_mentor(employee_id):
     """
     :return:
     """
-    mentor = Employee.get_by_id(employee_id)
+    mentor = Mentor.get_by_id(employee_id)
     mentor.delete_employee()
     return redirect('list-mentors')
 
@@ -172,7 +159,7 @@ def list_assistants():
 @login_required
 def add_assistant():
     if request.method == 'POST':
-        add_employee('assistant')
+        save_employee('assistant', add_employee)
         return redirect(url_for('list_assistants'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']),
                            employee='Assistant', list='list_assistants')
@@ -181,9 +168,9 @@ def add_assistant():
 @app.route('/list-assistant/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_assistant(employee_id):
-    assistant = Employee.get_by_id(employee_id)
+    assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
-        edit_employee('assistant', assistant)
+        save_employee('assistant', edit_employee, assistant.id)
         return redirect('list-assistants')
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=assistant,
                            list='list_assistants')
@@ -195,7 +182,7 @@ def delete_assistant(employee_id):
     """
     :return:
     """
-    assistant = Employee.get_by_id(employee_id)
+    assistant = Employee.get_by_id(employee_id, 'assistant')
     assistant.delete_employee()
     return redirect('list-assistants')
 
@@ -247,7 +234,7 @@ def edit_student(student_id):
                     telephone=request.form.get('phone-number', ''),
                     mail=request.form.get('mail', ''),
                     team_id=request.form.get('team', '')).edit_student()
-            return redirect('list-students')
+            return redirect(url_for('list_students'))
         return render_template('edit_student_form.html', user=user_session(session['user'], session['type']),
                                student=student, teams=teams)
     return redirect('list-students')
@@ -465,7 +452,6 @@ def delete_assignment(assignment_id):
 # ---------------ATTENDANCE-----------------
 
 
-
 @app.route("/attendance", methods=['GET', 'POST'])
 @login_required
 def attendance():
@@ -519,7 +505,7 @@ def user_session(id, class_name):
         return Mentor.get_by_id(id)
     elif class_name == "Employee":
 
-        return Employee.get_by_id(id)
+        return Employee.get_by_id(id, 'assistant')
     elif class_name == "Manager":
 
         return Manager.get_by_id(id)
