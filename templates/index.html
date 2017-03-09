@@ -25,13 +25,36 @@
         <div class="group-capabilities">
             <h3>MENU</h3>
             <ul>
-                <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
-                <li><a href="{{ url_for('attendance') }}">Check attendance</a></li>
-                <li><a href="{{ url_for('list_teams') }}">List teams</a></li>
-                <li><a href="{{ url_for('list_mentors') }}">List mentors</a></li>
-                <li><a href="{{ url_for('list_assistants') }}">List assistants</a></li>
-                <li><a href="{{ url_for('list_students') }}">List students</a></li>
-                <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
+
+                {% if user.__class__.__name__ == 'Student' %}
+                    {{  user.__class__.__name__ }}
+                    <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
+                    <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
+                {% elif user.__class__.__name__ == 'Mentor' %}
+                    {{  user.__class__.__name__ }}
+                    <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
+                    <li><a href="{{ url_for('attendance') }}">Check attendance</a></li>
+                    <li><a href="{{ url_for('list_teams') }}">List teams</a></li>
+                    <li><a href="{{ url_for('list_students') }}">List students</a></li>
+                    <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
+                {% elif user.__class__.__name__ == 'Employee' %}
+                    {{  user.__class__.__name__ }}
+                    <li><a href="{{ url_for('list_students') }}">List students</a></li>
+                {% elif user.__class__.__name__ == 'Manager' %}
+                    {{  user.__class__.__name__ }}
+                    <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
+                    <li><a href="{{ url_for('list_mentors') }}">List mentors</a></li>
+                    <li><a href="{{ url_for('list_assistants') }}">List assistants</a></li>
+                    <li><a href="{{ url_for('list_students') }}">List students</a></li>
+
+                {% endif %}
+{#                <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>#}
+{#                <li><a href="{{ url_for('attendance') }}">Check attendance</a></li>#}
+{#                <li><a href="{{ url_for('list_teams') }}">List teams</a></li>#}
+{#                <li><a href="{{ url_for('list_mentors') }}">List mentors</a></li>#}
+{#                <li><a href="{{ url_for('list_assistants') }}">List assistants</a></li>#}
+{#                <li><a href="{{ url_for('list_students') }}">List students</a></li>#}
+{#                <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>#}
             </ul>
         </div>
     </div>

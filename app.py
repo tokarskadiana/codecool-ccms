@@ -211,6 +211,7 @@ def list_students():
     :return:
     """
     students = Student.list_students()
+    print(session)
     return render_template('viewstudents.html', user=user_session(session['user'], session['type']), students=students)
 
 
@@ -269,7 +270,11 @@ def delete(student_id):
 @app.route('/student-statistics')
 @login_required
 def statistics():
+
+
     students = Student.list_students()
+    if session['type'] == 'Student':
+        students = [student for student in students if student.id == int(session['user'])]
     return render_template('statistics.html', user=user_session(session['user'], session['type']), students=students)
 
 
