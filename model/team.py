@@ -1,4 +1,5 @@
 from model.sqlRequest import SqlRequest
+from model.student import Student
 
 
 class Team:
@@ -9,11 +10,17 @@ class Team:
 
     def get_members(self):
         members = []
-        query = 'SELECT first_name, last_name FROM student WHERE team_id={}'.format(self.id)
+        query = 'SELECT * FROM student WHERE team_id={}'.format(self.id)
         students = SqlRequest.sql_request(query)
         if students:
             for student in students:
-                members.append('{} {}'.format(student[0], student[1]))
+                members.append(Student(id=student[0],
+                                       password=student[3],
+                                       first_name=student[1],
+                                       last_name=student[2],
+                                       telephone=student[4],
+                                       mail=student[5],
+                                       team_id=student[7]))
             return members
 
     def add_team(self):
