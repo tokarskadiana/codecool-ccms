@@ -111,8 +111,11 @@ class Student(User):
         """
         query = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(self.id)
         grade_average = SqlRequest.sql_request(query)
-        if grade_average[0][0]:
-            return grade_average[0][0]
+        grade = grade_average[0][0]
+        if grade:
+            return grade
+        elif grade == 0:
+            return 0.0
 
     def presence_average(self):
         """
@@ -122,5 +125,7 @@ class Student(User):
         query = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(self.id)
         presence_average = SqlRequest.sql_request(query)
         if presence_average[0][1]:
+            if not presence_average[0][0]:
+                stats = 0
             stats = (presence_average[0][0] / presence_average[0][1]) * 100
             return stats

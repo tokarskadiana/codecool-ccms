@@ -12,8 +12,8 @@
 		    	{% for student in students%}
 						<tr>
 							<td>{{student.full_name()}}</td>
-							<td>{% if student.grade_average()%}{{student.grade_average()}}{%else%}-----{%endif%}</td>
-							<td>{% if student.presence_average()%}{{student.presence_average()}}{%else%}-----{%endif%}</td>
+							<td>{% if student.grade_average() or student.grade_average()==0%}{{student.grade_average()}}{%else%}-----{%endif%}</td>
+							<td>{% if student.presence_average() or student.presence_average()==0%}{{student.presence_average()}}{%else%}-----{%endif%}</td>
 						</tr>
 					{% endfor %}
         </tbody>
