@@ -43,6 +43,14 @@ def required_roles(*roles):
     return wrapper
 
 
+# redirect to index page if url was not found
+@app.errorhandler(404)
+@login_required
+def page_not_found(e):
+    flash('Such url doesn\'t exist')
+    return render_template('index.html', user=user_session(session['user'], session['type'])), 404
+
+
 @app.route('/')
 @login_required
 def index():
