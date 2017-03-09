@@ -222,6 +222,20 @@ def delete_assistant(employee_id):
 # ----------------STUDENTS--------------
 
 
+def save_student(save, id=None):
+    student = Student(id=id,
+                      first_name=request.form['first-name'],
+                      last_name=request.form['last-name'],
+                      password=request.form['password'],
+                      telephone=request.form.get('phone-number', ''),
+                      mail=request.form.get('mail', ''),
+                      team_id=request.form.get('team', ''))
+    if save == 'add':
+        student.add_student()
+    elif save == 'edit':
+        student.edit_student()
+
+
 @app.route('/list-students', methods=['GET', 'POST'])
 @login_required
 @required_roles('Manager', 'Mentor', 'Employee')
@@ -242,14 +256,7 @@ def add_student():
     """
     teams = Team.list_teams()
     if request.method == 'POST':
-        student = Student(id=None,
-                          first_name=request.form['first-name'],
-                          last_name=request.form['last-name'],
-                          password=request.form['password'],
-                          telephone=request.form.get('phone-number', ''),
-                          mail=request.form.get('mail', ''),
-                          team_id=request.form.get('team', ''))
-        student.add_student()
+        save_student('add')
         return redirect(url_for('list_students'))
     return render_template('student_form.html', user=user_session(session['user'], session['type']), teams=teams)
 
@@ -262,13 +269,7 @@ def edit_student(student_id):
     student = Student.get_by_id(student_id)
     if student:
         if request.method == 'POST':
-            Student(id=student.id,
-                    first_name=request.form['first-name'],
-                    last_name=request.form['last-name'],
-                    password=request.form['password'],
-                    telephone=request.form.get('phone-number', ''),
-                    mail=request.form.get('mail', ''),
-                    team_id=request.form.get('team', '')).edit_student()
+            save_student('edit', student.id)
             return redirect(url_for('list_students'))
         return render_template('edit_student_form.html', user=user_session(session['user'], session['type']),
                                student=student, teams=teams)
