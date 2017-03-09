@@ -293,6 +293,7 @@ def delete(student_id):
 @login_required
 @required_roles('Manager', 'Mentor', 'Student')
 def statistics():
+    """Return statistics.html with Student objects."""
     students = Student.list_students()
     if session['type'] == 'Student':
         students = [student for student in students if student.id == int(session['user'])]
@@ -306,6 +307,7 @@ def statistics():
 @login_required
 @required_roles('Mentor')
 def list_teams():
+    """Return viewteams.html with list of id teams and teams names."""
     teams = Team.list_teams()
     return render_template('viewteams.html', user=user_session(session['user'], session['type']), teams=teams)
 
@@ -314,6 +316,10 @@ def list_teams():
 @login_required
 @required_roles('Mentor')
 def add_team():
+    """
+    Return team_form.html
+    POST: Add team to database basing on data from request.form['name'] and redirect user to list-teams definition.
+    """
     if request.method == 'POST':
         Team(request.form['name']).add_team()
         return redirect('list-teams')
@@ -324,6 +330,11 @@ def add_team():
 @login_required
 @required_roles('Mentor')
 def edit_team(team_id):
+    """
+    Return team_form.html with team basing on given team_id
+    POST: Edit team with given values in request.form['name'] and redirect user to list-teams definition.
+    :param team_id: team id in database
+    """
     team = Team.get_by_id(team_id)
     if request.method == 'POST':
         team.name = request.form['name']
@@ -336,6 +347,7 @@ def edit_team(team_id):
 @login_required
 @required_roles('Mentor')
 def delete_team(team_id):
+    """Delete from database team by given id in team_id"""
     team = Team.get_by_id(team_id)
     team.delete_team()
     return redirect(url_for('list_teams'))
@@ -521,6 +533,10 @@ def delete_assignment(assignment_id):
 @login_required
 @required_roles('Mentor')
 def attendance():
+    """
+    GET: Return attendance.html with Students object.
+    POST: Add or update attendance in database by given value in request.form. Redirect to attendance definition.
+    """
     students = Student.list_students()
     date = datetime.datetime.now().strftime("%Y-%m-%d")
     students_checked = Attendance.get_attendance_day(date)
@@ -563,6 +579,7 @@ def dated_url_for(endpoint, **values):
 
 
 def user_session(id, class_name):
+    """Return object with given class name in class_name and id"""
     if class_name == "Student":
 
         return Student.get_by_id(id)
@@ -576,11 +593,6 @@ def user_session(id, class_name):
 
         return Manager.get_by_id(id)
     return None
-
-
-@app.context_processor
-def override_url_for():
-    return dict(url_for=dated_url_for)
 
 
 if __name__ == '__main__':
