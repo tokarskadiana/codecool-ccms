@@ -3,7 +3,6 @@ from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for
 from flask import flash
 from flask import session
-
 from controller.database_controller import DatabaseController
 from model.manager import Manager
 from model.mentor import Mentor
@@ -39,7 +38,6 @@ def index():
     handle main index page, display nav of curent user
     :return:
     """
-
     return render_template('index.html', user=user_session(session['user'], session['type']))
 
 
@@ -49,9 +47,9 @@ def index():
 def login():
     error = None
     students = Student.list_students()
-    employees = Employee.list_employee('employee')
-    mentors = Mentor.list_mentors('mentor')
-    managers = Manager.list_managers('manager')
+    employees = Employee.list_employee('assistant')
+    mentors = Mentor.list_mentors()
+    managers = Manager.list_managers()
     all_users = students + employees + mentors + managers
 
     if request.method == "POST":
@@ -79,26 +77,19 @@ def logout():
 # -----------------EMPLOYEE------------------
 
 
-def add_employee(position):
-    Employee(id=None,
-             password=request.form['password'],
-             first_name=request.form['first_name'],
-             last_name=request.form['last_name'],
-             position=position,
-             telephone=request.form.get('phone_number', ''),
-             mail=request.form.get('mail', ''),
-             salary=request.form.get('salary', '')).add_employee()
-
-
-def edit_employee(position, employee):
-    Employee(id=employee.id,
-             first_name=request.form['first_name'],
-             password=request.form['password'],
-             last_name=request.form['last_name'],
-             position=position,
-             telephone=request.form.get('phone_number', ''),
-             mail=request.form.get('mail', ''),
-             salary=request.form.get('salary', '')).edit_employee()
+def save_employee(position, save, id=None):
+    employee = Employee(id=id,
+                        password=request.form['password'],
+                        first_name=request.form['first_name'],
+                        last_name=request.form['last_name'],
+                        position=position,
+                        telephone=request.form.get('phone_number', ''),
+                        mail=request.form.get('mail', ''),
+                        salary=request.form.get('salary', ''))
+    if save == 'add':
+        employee.add_employee()
+    elif save == 'edit':
+        employee.edit_employee()
 
 
 # ----------------MENTORS-----------------
@@ -110,7 +101,7 @@ def list_mentors():
     """
     :return:
     """
-    mentors_list = Employee.list_employee('mentor')
+    mentors_list = Mentor.list_mentors()
     add = 'add_mentor'
     edit = 'edit_mentor'
     delete = 'delete_mentor'
@@ -123,7 +114,7 @@ def list_mentors():
 @login_required
 def add_mentor():
     if request.method == 'POST':
-        add_employee('mentor')
+        save_employee('mentor', 'add')
         return redirect(url_for('list_mentors'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']), list='list_mentors')
 
@@ -131,9 +122,9 @@ def add_mentor():
 @app.route('/list-mentors/edit/<employee_id>', methods=['GET', 'POST'])
 @login_required
 def edit_mentor(employee_id):
-    mentor = Employee.get_by_id(employee_id, 'mentor')
+    mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
-        edit_employee('mentor', mentor)
+        save_employee('mentor', 'edit', mentor.id)
         return redirect('list-mentors')
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=mentor,
                            list='list_mentors')
@@ -145,7 +136,7 @@ def delete_mentor(employee_id):
     """
     :return:
     """
-    mentor = Employee.get_by_id(employee_id, 'mentor')
+    mentor = Mentor.get_by_id(employee_id)
     mentor.delete_employee()
     return redirect('list-mentors')
 
@@ -172,7 +163,7 @@ def list_assistants():
 @login_required
 def add_assistant():
     if request.method == 'POST':
-        add_employee('assistant')
+        save_employee('assistant', 'add')
         return redirect(url_for('list_assistants'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']),
                            employee='Assistant', list='list_assistants')
@@ -183,7 +174,7 @@ def add_assistant():
 def edit_assistant(employee_id):
     assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
-        edit_employee('assistant', assistant)
+        save_employee('assistant', 'edit', assistant.id)
         return redirect('list-assistants')
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=assistant,
                            list='list_assistants')
@@ -363,7 +354,8 @@ def add_assignment():
             due_to = request.form['due_to']
             type = request.form['type']
             Assignment.create(title, description, type,
-                              user_session(session['user'], session['type']).username, due_to,
+                              user_session(session['user'], session[
+                                           'type']).username, due_to,
                               user_session(session['user'], session['type']).id)
             return redirect(url_for('list_assignments'))
 
@@ -433,7 +425,8 @@ def view_assignments(assignments_id):
     :return:
     """
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(user_session(session['user'], session['type']).id, assignments_id)
+    submit = Submition.get_submit(user_session(
+        session['user'], session['type']).id, assignments_id)
     return render_template('stud_view_assiment.html', user=user_session(session['user'], session['type']),
                            assignment=assignment, submit=submit)
 
@@ -447,7 +440,8 @@ def assignment_submit(assignments_id):
     :return:
     """
     assignment = Assignment.get_by_id(assignments_id)
-    submit = Submition.get_submit(user_session(session['user'], session['type']).id, assignments_id)
+    submit = Submition.get_submit(user_session(
+        session['user'], session['type']).id, assignments_id)
     if request.method == "POST":
         content = request.form['content']
         submit.change_content(content)
@@ -470,7 +464,6 @@ def delete_assignment(assignment_id):
 # ---------------ATTENDANCE-----------------
 
 
-
 @app.route("/attendance", methods=['GET', 'POST'])
 @login_required
 def attendance():
@@ -481,7 +474,8 @@ def attendance():
         if Attendance.already_checked(date):
             for student in students_checked:
                 value = int(request.form[str(student[0])])
-                Attendance.update_attendance_day(int(student[0]), date, int(value))
+                Attendance.update_attendance_day(
+                    int(student[0]), date, int(value))
         else:
             for student in students:
                 value = int(request.form[str(student.id)])
