@@ -4,8 +4,8 @@ from model.sqlRequest import SqlRequest
 
 class Mentor(Employee):
     @classmethod
-    def get_by_id(cls, id , pos ="mentor"):
-        query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id,pos)
+    def get_by_id(cls, id , position ="mentor"):
+        query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id,position)
         mentor = SqlRequest.sql_request(query)
         if mentor:
             return cls(id=mentor[0][0],
