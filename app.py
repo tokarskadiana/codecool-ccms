@@ -14,6 +14,7 @@ from model.attendance import Attendance
 from model.employee import Employee
 import datetime
 
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -462,9 +463,6 @@ def assignment_submit(assignments_id):
 
     return render_template('stud-submit.html', user=user_session(session['user'], session['type']),
                            assignment=assignment, submit=submit)
-
-
-# ======================= End assignments ==================================
 
 
 @app.route('/list-assignments/delete/<assignment_id>')
