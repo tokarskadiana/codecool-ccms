@@ -45,16 +45,6 @@ class Submition:
         SqlRequest.sql_request(
             'UPDATE submition SET grade={} WHERE id={}'.format(new_grade, self.id))
 
-    @staticmethod
-    def change_grade(mentor_id, id, new_grade):
-        '''
-        Changes a submition grage to new value.
-
-        Returns: boolean
-        '''
-        SqlRequest.sql_request(
-            'UPDATE submition SET grade="{}", mentor_id="{}" WHERE id="{}";'.format(new_grade, mentor_id, id))
-
     def change_content(self, new_content):
         '''
         Changes a content of submition.

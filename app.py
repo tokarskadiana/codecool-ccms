@@ -408,10 +408,17 @@ def grade_user_assignments(username):
             submit_id = request.form['submit_id']
             new_grade = request.form['new_grade']
             assignment_id = request.form['assignment_id']
-            print(new_grade)
+            assignment = Assignment.get_by_id(assignment_id)
             submit = Submition.get_by_id(submit_id)
-            print(submit)
-            submit.update_grade(new_grade)
+            if assignment.type == 'group':
+                team_id = Student.get_by_id(submit.student_id).team_id
+                team = Team.get_by_id(team_id)
+                team_members = team.get_members()
+                for student in team_members:
+                    submit = Submition.get_submit(student.id, assignment_id)
+                    submit.update_grade(new_grade)
+            else:
+                submit.update_grade(new_grade)
             return redirect(url_for('grade_assignment', assignmentID=assignment_id))
     return 'Not permited fool'
 
@@ -444,7 +451,15 @@ def assignment_submit(assignments_id):
         session['user'], session['type']).id, assignments_id)
     if request.method == "POST":
         content = request.form['content']
-        submit.change_content(content)
+        if assignment.type == 'group':
+            team_id = user_session(session['user'], session['type']).team_id
+            team = Team.get_by_id(team_id)
+            team_members = team.get_members()
+            for student in team_members:
+                submit = Submition.get_submit(student.id, assignments_id)
+                submit.change_content(content)
+        else:
+            submit.change_content(content)
         return redirect(url_for('view_assignments', assignments_id=assignments_id))
 
     return render_template('stud-submit.html', user=user_session(session['user'], session['type']),
