@@ -110,7 +110,7 @@ class Student(User):
         """
         query = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(self.id)
         presence_average = SqlRequest.sql_request(query)
-        if presence_average[0][0] and presence_average[0][1]:
+        if presence_average[0][1]:
             stats = (presence_average[0][0] / presence_average[0][1]) * 100
             return stats
         return '-----'

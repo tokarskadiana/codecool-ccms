@@ -261,8 +261,6 @@ def delete(student_id):
 @app.route('/student-statistics')
 @login_required
 def statistics():
-
-
     students = Student.list_students()
     if session['type'] == 'Student':
         students = [student for student in students if student.id == int(session['user'])]

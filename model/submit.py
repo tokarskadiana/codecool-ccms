@@ -57,8 +57,8 @@ class Submition:
 
     @classmethod
     def get_submit(cls, student_id, assignment_id):
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE student_id={} \
-                AND assignment_id={}'.format(student_id, assignment_id)
+        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
+         student_id={} AND assignment_id={}'.format(student_id, assignment_id)
 
         submit = SqlRequest.sql_request(query)
         if submit:
@@ -75,8 +75,8 @@ class Submition:
     @classmethod
     def get_by_id(cls, id):
         print(id)
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE id={}'.format(
-            id)
+        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
+        id={}'.format(id)
         submit = SqlRequest.sql_request(query)
         print(submit)
         if submit:
