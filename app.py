@@ -374,8 +374,10 @@ def delete_team(team_id):
 @login_required
 def list_assignments():
     """
-    List all assignments
-    :return: template
+    List assignments
+
+    GET: returns 404 or Student view or Mentor view
+    POST: returns HTTP 200 on success and redirect to list-assignments page
     """
 
     user = user_session(session['user'], session['type'])
