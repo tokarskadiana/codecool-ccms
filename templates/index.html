@@ -29,6 +29,7 @@
                 {% if user.__class__.__name__ == 'Student' %}
                     <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
                     <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
+                    <li><a href="{{ url_for('list_checkpoints') }}">List checkpoints</a></li>
                 {% elif user.__class__.__name__ == 'Mentor' %}
                     <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
                     <li><a href="{{ url_for('attendance') }}">Check attendance</a></li>

@@ -5,45 +5,41 @@
 
         {% if chkp_list %}
             <table class='table-style'>
-            <thead>
-            <th>Student</th>
-            <th>Card</th>
-            </thead>
-            <tbody>
-            <form method="post" action="">
-                {% for checkpoint in chkp_list %}
-                    <tr>
-                        <td>{{ checkpoint.get_checkpoint_username() }}</td>
-                        <td>
-                            <input name="id[]" type="hidden" value="{{ checkpoint.id }}">
-                            <select name="checkpoint-grade[]" class="select-graded">
-                                <option style="color: gray;" value="0" {% if checkpoint.card == 0 %}
-                                        selected {% else %}{% endif %}>Not Graded
-                                </option>
-                                <option style="color: red;" value="1" {% if checkpoint.card == 1 %}
-                                        selected {% else %}{% endif %}>Red
-                                </option>
-                                <option style="color: yellow;" value="2" {% if checkpoint.card == 2 %}
-                                        selected {% else %}{% endif %}>Yellow
-                                </option>
-                                <option style="color: green;" value="3" {% if checkpoint.card == 3 %}
-                                        selected {% else %}{% endif %}>Green
-                                </option>
+                <thead>
+                <th>Student</th>
+                <th>Card</th>
+                </thead>
+                <tbody>
+                <form method="post" action="">
+                    {% for checkpoint in chkp_list %}
+                        <tr>
+                            <td>{{ checkpoint.get_checkpoint_username() }}</td>
+                            <td>
+                                <input name="id[]" type="hidden" value="{{ checkpoint.id }}">
+                                <select name="checkpoint-grade[]" class="select-graded">
+                                    <option style="color: gray;" value="0" {% if checkpoint.card == 0 %}
+                                            selected {% else %}{% endif %}>Not Graded
+                                    </option>
+                                    <option style="color: red;" value="1" {% if checkpoint.card == 1 %}
+                                            selected {% else %}{% endif %}>Red
+                                    </option>
+                                    <option style="color: yellow;" value="2" {% if checkpoint.card == 2 %}
+                                            selected {% else %}{% endif %}>Yellow
+                                    </option>
+                                    <option style="color: green;" value="3" {% if checkpoint.card == 3 %}
+                                            selected {% else %}{% endif %}>Green
+                                    </option>
 
-                            </select>
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td>
-                        <button type="submit" value="Submit">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                </tr>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            <button type="submit" class='main-button' value="Submit">Add grade</button>
+
             </form>
         {% endif %}
-        </tbody>
-        </table>
     </div>
 {% endblock %}

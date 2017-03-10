@@ -615,15 +615,12 @@ def attendance():
                            date=date)
 
 
-# -------------OTHER STAFF--------------
-
-
-
 # ---------------CHECKPOINT-----------------
 
 
 @app.route('/list-checkpoints')
 @login_required
+@required_roles('Mentor', 'Student')
 def list_checkpoints():
     """
     List all checkpoints
@@ -631,21 +628,25 @@ def list_checkpoints():
     """
 
     user = user_session(session['user'], session['type'])
-    print(user)
     choose = None
     if isinstance(user, Mentor):
         choose = "Mentor"
-        list_checkpoints = Checkpoint.get_list_distinct()
-        print(list_checkpoints)
+        student_checkpoints = Checkpoint.get_by_studedent_id()
         return render_template('viewcheckpoints.html', user=user_session(session['user'], session['type']),
                                choose=choose,
                                list_checkpoints=list_checkpoints)
+    elif isinstance(user, Student):
+        choose = "Student"
+        list_checkpoints = Checkpoint.get_by_studedent_id(user.id)
+        return render_template('viewcheckpoints.html', user=user_session(session['user'], session['type']),
+                                choose=choose, list_checkpoints=list_checkpoints)
     else:
         return render_template('404.html', user=user_session(session['user'], session['type']))
 
 
 @app.route('/list-checkpoints/add-checkpoint', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def add_checkpoint():
     """
     GET: returns add assistant formula
@@ -670,6 +671,7 @@ def add_checkpoint():
 
 @app.route('/list-checkpoints/remove-checkpoint', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def delete_checkpoint():
     user = user_session(session['user'], session['type'])
     if isinstance(user, Mentor):
@@ -684,6 +686,7 @@ def delete_checkpoint():
 
 @app.route('/list-checkpoints/<checkpoint_name>', methods=['GET', 'POST'])
 @login_required
+@required_roles('Mentor')
 def grade_checkpoint(checkpoint_name):
     user = user_session(session['user'], session['type'])
 
