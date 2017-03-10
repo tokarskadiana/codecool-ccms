@@ -86,3 +86,27 @@ class Checkpoint():
         :return: List of objects
         """
         return Student.get_by_id(self.student_id).username
+
+
+    @classmethod
+    def get_by_studedent_id(cls, student_id):
+        """
+        Get list of checkpoin objects by  student id
+        """
+        chkp_objects = []
+        query = 'SELECT * FROM checkpoint WHERE student_id={}'.format(student_id)
+        checkpoints = SqlRequest.sql_request(query)
+        if checkpoints:
+            for chkp in checkpoints:
+                check = 'Not graded'
+                if chkp[5] == 1:
+                    check = 'Red'
+                elif chkp[5] == 2:
+                    check = 'Yellow'
+                elif chkp[5] == 2:
+                    check = 'Green'
+
+                temp_object = cls(chkp[0], chkp[1], chkp[2], chkp[3], chkp[4], check)
+                chkp_objects.append(temp_object)
+            return chkp_objects
+        return None

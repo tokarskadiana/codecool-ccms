@@ -12,7 +12,7 @@
                     <thead>
                     <th>Checkpoint</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Grade students</th>
                     <th>Delete</th>
                     </thead>
                     <tbody>
@@ -45,35 +45,22 @@
             {% endif %}
 
     {% elif choose=="Student" %}
-
-        {#        <h3>Assignments avaiable to you</h3>#}
-        {#        {% if student_assignments %}#}
-        {#        <div class="small-wrapper">#}
-        {#            <table class='table-style'>#}
-        {#                <thead>#}
-        {#                <th>Assiment</th>#}
-        {##}
-        {#                <th >View/Submit</th>#}
-        {##}
-        {#                <tbody>#}
-        {#                {% for student_assignment in student_assignments %}#}
-        {#                    <tr>#}
-        {#                        <td>{{ student_assignment.title }}</td>#}
-        {#                        <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i#}
-        {#                                class="fa fa-search" aria-hidden="true"></a></td>#}
-        {#                        </td>#}
-        {##}
-        {#                    </tr>#}
-        {#                {% endfor %}#}
-        {#                </tbody>#}
-        {#            </table>#}
-        {#        </div>#}
-        {#        {% else %}#}
-        {#        <div class="small-wrapper no-content">#}
-        {#          <p>There is no assignments at the moment available for you.</p>#}
-        {#        </div>#}
-        {##}
-        {#        {% endif %}#}
+          <table class="table-style">
+            <thead>
+              <th>Checkpoint</th>
+              <th>Date</th>
+              <th>Card</th>
+            </thead>
+            <tbody>
+                {% if list_checkpoints %}
+                {% for checkpoint in list_checkpoints%}
+                  <td>{{checkpoint.name}}</td>
+                  <td>{{checkpoint.checkpoint_date}}</td>
+                  <td>{{checkpoint.card}}</td>
+                  {% endfor %}
+                {% endif %}
+            </tbody>
+          </table>
     {% endif %}
 
 
