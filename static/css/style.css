@@ -21,9 +21,11 @@ h1 {
 h2, h3 {
     font-size: 24px;
 }
-h4{
-  font-size: 18px;
+
+h4 {
+    font-size: 18px;
 }
+
 aside {
     width: 30%;
     float: left;
@@ -49,14 +51,16 @@ input, select, textarea {
 }
 
 .main-button {
-  background-color: #0b5463;
-  color: white!important;
-  padding: 14px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 10px;
+    background-color: #0b5463;
+    color: white!important;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
 }
+
+
 /*spesific MENU*/
 
 .user-info {
@@ -129,30 +133,30 @@ input, select, textarea {
     text-align: right;
 }
 
+
 /*------------------login------------*/
 
 .login-wrapper {
     width: 50%;
     margin: auto auto 0 auto;
     text-align: center;
-
 }
 
 .login {
     width: 70%;
     margin: inherit;
     padding: 20px;
-
 }
 
 .login .main-button {
-  margin: 10px auto;
+    margin: 10px auto;
 }
 
-.login-background{
+.login-background {
     padding-top: 150px;
 }
-.login-background:before{
+
+.login-background:before {
     content: '';
     background: url(../images/codecool.png) no-repeat;
     background-position: center;
@@ -173,14 +177,16 @@ input, select, textarea {
 
 /*listing*/
 
-.small-wrapper{
-  width: 60%;
-  margin: 0 auto;
+.small-wrapper {
+    width: 60%;
+    margin: 0 auto;
 }
-.large-wrapper{
-  width: 90%;
-  margin: 0 auto;
+
+.large-wrapper {
+    width: 90%;
+    margin: 0 auto;
 }
+
 .table-style {
     width: 100%;
     margin: 10px auto;
@@ -192,10 +198,11 @@ input, select, textarea {
     border-bottom: 2px dashed #000;
 }
 
-.table-style ul li{
-  list-style-type: circle;
-  text-align: left;
+.table-style ul li {
+    list-style-type: circle;
+    text-align: left;
 }
+
 
 /*submition*/
 
@@ -212,51 +219,58 @@ input, select, textarea {
     border-radius: 5px;
     margin: 0 0;
     width: 50%;
-
 }
 
-.submition-wrapper .main-button{
-  width: auto;
+.submition-wrapper .main-button {
+    width: auto;
 }
 
-.main-form{
-  text-align: center;
-  margin-top: 5%;
+.main-form {
+    text-align: center;
+    margin-top: 5%;
 }
-.main-form input, select{
-  width: 40%;
-  margin: 10px auto;
+
+.main-form input, select {
+    width: 40%;
+    margin: 10px auto;
 }
- .main-form .main-button{
-   width: 20%;
-   margin: 10% auto;
- }
+
+.main-form .main-button {
+    width: 20%;
+    margin: 10% auto;
+}
+
 .right-side {
-  float: left;
-  width: 40%;
+    float: left;
+    width: 40%;
+}
 
+.right-side input {
+    width: 100%;
 }
-.right-side input{
-  width: 100%;
+
+.button-td {
+    border: none;
 }
-.button-td{
-    border:none;
-}
-.sub-right{
+
+.sub-right {
     text-align: right;
-    float:right
+    float: right
 }
+
 
 /*group-capabilities*/
 
-.group-capabilities ul{
+.group-capabilities ul {
     list-style-type: none;
 }
-.group-capabilities ul li a{
+
+.group-capabilities ul li a {
     font-size: 18px;
     padding-left: 15px;
 }
-.group-capabilities ul li:before{
+
+.group-capabilities ul li:before {
     background: url(../images/codecool.png);
     content: '';
     display: inline-block;
@@ -269,129 +283,162 @@ input, select, textarea {
     position: relative;
     left: -5px;
 }
-.group-capabilities ul li.active:before{
 
+.group-capabilities ul li.active:before {
     left: -5px;
-        -webkit-animation:spin 4s linear infinite;
-    -moz-animation:spin 4s linear infinite;
-    animation:spin 4s linear infinite;
+    -webkit-animation: spin 4s linear infinite;
+    -moz-animation: spin 4s linear infinite;
+    animation: spin 4s linear infinite;
 }
-.group-capabilities ul li.active a{
+
+.group-capabilities ul li.active a {
     font-weight: bold;
 }
-.group-capabilities h3{
+
+.group-capabilities h3 {
     margin-left: 40px;
 }
-i.fa{
+
+i.fa {
     font-size: 20px;
 }
+
+
 /*Custom styles checkbox*/
 
-
 input[type="checkbox"] {
-    display:none;
+    display: none;
 }
 
-input[type="checkbox"] + label {
-    color:black;
+input[type="checkbox"]+label {
+    color: black;
 }
 
-input[type="checkbox"] + label span {
-    display:inline-block;
-    width:19px;
-    height:19px;
-    margin:-2px 10px 0 0;
-    vertical-align:middle;
-    background:url(../images/check_radio_sheet.png) left top no-repeat;
-    cursor:pointer;
+input[type="checkbox"]+label span {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    margin: -2px 10px 0 0;
+    vertical-align: middle;
+    background: url(../images/check_radio_sheet.png) left top no-repeat;
+    cursor: pointer;
 }
 
-input[type="checkbox"]:checked + label span {
-    background:url(../images/check_radio_sheet.png) -19px top no-repeat;
+input[type="checkbox"]:checked+label span {
+    background: url(../images/check_radio_sheet.png) -19px top no-repeat;
 }
 
 input[type="radio"] {
-    display:none;
+    display: none;
 }
 
-input[type="radio"] + label {
-    color:black;
-    font-family:Arial, sans-serif;
+input[type="radio"]+label {
+    color: black;
+    font-family: Arial, sans-serif;
 }
 
-input[type="radio"] + label span {
-    display:inline-block;
-    width:19px;
-    height:19px;
-    margin:-2px 10px 0 0;
-    vertical-align:middle;
-    background:url(../images/check_radio_sheet.png) -38px top no-repeat;
-    cursor:pointer;
+input[type="radio"]+label span {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    margin: -2px 10px 0 0;
+    vertical-align: middle;
+    background: url(../images/check_radio_sheet.png) -38px top no-repeat;
+    cursor: pointer;
 }
 
-input[type="radio"]:checked + label span {
-    background:url(../images/check_radio_sheet.png) -57px top no-repeat;
+input[type="radio"]:checked+label span {
+    background: url(../images/check_radio_sheet.png) -57px top no-repeat;
 }
-button{
+
+button {
     background: none;
     border: none;
     cursor: pointer;
 }
-button i{
+
+button i {
     background: none;
     border: none;
     cursor: pointer;
 }
-/*Animations */
-.not-grade,.low-grade,.good-grade{
-    font-weight:bold;
+
+.not-grade, .low-grade, .good-grade {
+    font-weight: bold;
 }
-.not-grade{
+
+.not-grade {
     color: rgb(80, 78, 78);
 }
-.low-grade{
+
+.low-grade {
     color: darkred;
 }
-.good-grade{
-    color:green;
+
+.good-grade {
+    color: green;
 }
 
-.no-content p{
-  text-align: center;
-  padding-top: 100px;
-  font-size: 20px;
+.no-content p {
+    text-align: center;
+    padding-top: 100px;
+    font-size: 20px;
 }
 
-.input-left{
-  margin: 20px 0;
-}
-.inline-element{
-  margin: 15px 0;
-}
-.inline-element h4, p{
-  display: inline;
-}
-.last{
-  margin-bottom: 50px;
-}
-.default-image-spin img{
-
-    -webkit-animation:spin 4s linear infinite;
-    -moz-animation:spin 4s linear infinite;
-    animation:spin 4s linear infinite;
+.input-left {
+    margin: 20px 0;
 }
 
-.sub-assignment{
-  text-align: center;
+.inline-element {
+    margin: 15px 0;
 }
-.sub-assignment input{
-  margin: 30px auto;
+
+.inline-element h4, p {
+    display: inline;
 }
-.sub-assignment textarea{
-width: 400px;
-height: 100px;
-font-size: 15px;
+
+.last {
+    margin-bottom: 50px;
 }
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+.sub-assignment {
+    text-align: center;
+}
+
+.sub-assignment input {
+    margin: 30px auto;
+}
+
+.sub-assignment textarea {
+    width: 400px;
+    height: 100px;
+    font-size: 15px;
+}
+
+
+/*Animations */
+
+.default-image-spin img {
+    -webkit-animation: spin 4s linear infinite;
+    -moz-animation: spin 4s linear infinite;
+    animation: spin 4s linear infinite;
+}
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

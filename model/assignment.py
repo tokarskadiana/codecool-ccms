@@ -31,7 +31,6 @@ class Assignment:
         '''
         student_list = SqlRequest.sql_request('SELECT * FROM student')
         for student in student_list:
-            print(student[0])
             Submition.create(self.id, student[0])
 
     @classmethod

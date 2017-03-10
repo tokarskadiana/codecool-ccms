@@ -8,32 +8,22 @@ class DatabaseController:
     @staticmethod
     def createSqlDatabase():
         """
-
-        :return:
+        Creates tables in database using schemas.
         """
-        sql_student = Database.readSqlTxt('student.txt')
-        sql_assiment = Database.readSqlTxt('assiment.txt')
-        sql_checkpoint = Database.readSqlTxt('checkpoint.txt')
-        sql_employee = Database.readSqlTxt('employee.txt')
-        sql_submition = Database.readSqlTxt('submition.txt')
-        sql_attendance = Database.readSqlTxt('attendence.txt')
-        sql_team = Database.readSqlTxt('team.txt')
+        tables = []
+        filenames = ['student.txt', 'assiment.txt', 'employee.txt', 'submition.txt', 'attendence.txt', 'team.txt']
+        for filename in filenames:
+            tables.append(Database.readSqlTxt(filename))
         conn = sqlite3.connect('codecool.sqlite')
         cursor = conn.cursor()
-        cursor.execute(sql_student)
-        cursor.execute(sql_assiment)
-        cursor.execute(sql_attendance)
-        cursor.execute(sql_checkpoint)
-        cursor.execute(sql_employee)
-        cursor.execute(sql_submition)
-        cursor.execute(sql_team)
+        for table in tables:
+            cursor.execute(table)
         cursor.close()
 
     @staticmethod
     def sample_data():
         """
-
-        :return:
+        Add seeds to tables.
         """
         sample_employee = Database.readSQLTxtLines('employee_sample.txt')
         sample_student = Database.readSQLTxtLines('student_sample.txt')

@@ -27,11 +27,9 @@
             <ul>
 
                 {% if user.__class__.__name__ == 'Student' %}
-                    {{  user.__class__.__name__ }}
                     <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
                     <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
                 {% elif user.__class__.__name__ == 'Mentor' %}
-                    {{  user.__class__.__name__ }}
                     <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
                     <li><a href="{{ url_for('attendance') }}">Check attendance</a></li>
                     <li><a href="{{ url_for('list_teams') }}">List teams</a></li>
@@ -39,10 +37,8 @@
                     <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
                     <li><a href="{{ url_for('list_checkpoints') }}">List checkpoints</a></li>
                 {% elif user.__class__.__name__ == 'Employee' %}
-                    {{  user.__class__.__name__ }}
                     <li><a href="{{ url_for('list_students') }}">List students</a></li>
                 {% elif user.__class__.__name__ == 'Manager' %}
-                    {{  user.__class__.__name__ }}
                     <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
                     <li><a href="{{ url_for('list_mentors') }}">List mentors</a></li>
                     <li><a href="{{ url_for('list_assistants') }}">List assistants</a></li>
@@ -57,6 +53,17 @@
 <section class="user-actions">
 
     {% block content %}
+
+    <div class="small-wrapper">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+        <h3>{{ message }}</h3>
+        {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
     {% endblock %}
 
 </section>
