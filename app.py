@@ -491,7 +491,7 @@ def grade_assignment():
 @required_roles('Mentor')
 def grade_user_assignments(username):
     """
-    Grade assignment
+    Grade assignment if you are mentor
     :param username:
     :return:
     """
@@ -636,15 +636,6 @@ def list_checkpoints():
         return render_template('viewcheckpoints.html', user=user_session(session['user'], session['type']),
                                choose=choose,
                                list_checkpoints=list_checkpoints)
-
-    # elif (isinstance(user, Student)):
-    #
-    #     choose = "Student"
-    #     student_id = user_session(session['user'], session['type']).id
-    #     student_assignments = Assignment.get_all_assigmnets(student_id)
-    #
-    #     return render_template('viewassignments.html', user=user_session(session['user'], session['type']),
-    #                            choose=choose, student_assignments=student_assignments)
     else:
         return render_template('404.html', user=user_session(session['user'], session['type']))
 
@@ -653,8 +644,8 @@ def list_checkpoints():
 @login_required
 def add_checkpoint():
     """
-    Add checkpoint
-    :return:
+    GET: returns add assistant formula
+    POST: returns list of assistant with new assistant added
     """
     user = user_session(session['user'], session['type'])
     choose = None

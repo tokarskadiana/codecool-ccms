@@ -24,17 +24,27 @@ class Checkpoint():
 
     @classmethod
     def add_checkpoint(cls, name, checkpoint_date, student_id, mentor_id, card):
+        """Add checkpoint to db"""
         SqlRequest.sql_request(
             "INSERT INTO checkpoint (name, checkpoint_date, student_id, mentor_id,card) VALUES ('{}', '{}', {}, {},{})".format(
                 name, checkpoint_date, student_id, mentor_id, card))
 
     @classmethod
     def get_list_distinct(cls):
+        """
+        Get all available checkpoints
+        :return:
+        """
         query = "SELECT name,checkpoint_date FROM checkpoint GROUP BY name"
         return SqlRequest.sql_request(query)
 
     @classmethod
     def remove_checkpoint(cls, name):
+        """
+        Remove checkpoint from db
+        :param name:
+        :return:
+        """
         SqlRequest.sql_request('DELETE  FROM checkpoint WHERE name="{}"'.format(name))
 
     @classmethod
@@ -56,13 +66,19 @@ class Checkpoint():
 
     @classmethod
     def grade_checkpoints(cls, grade_list, id_list):
+        """
+        Grade checkpoint
+        :param grade_list:
+        :param id_list:
+        :return:
+        """
         for i, grade in enumerate(grade_list):
             try:
                 if int(grade) >= 0 and int(grade) <= 3:
                     query = "UPDATE checkpoint SET card={} WHERE id={}".format(int(grade), id_list[i])
                     SqlRequest.sql_request(query)
             except:
-                'Hackers arent ya?'
+                print('Hackers arent ya?')
 
     def get_checkpoint_username(self):
         """
