@@ -631,7 +631,7 @@ def list_checkpoints():
     choose = None
     if isinstance(user, Mentor):
         choose = "Mentor"
-        student_checkpoints = Checkpoint.get_by_studedent_id()
+        list_checkpoints = Checkpoint.get_list_distinct()
         return render_template('viewcheckpoints.html', user=user_session(session['user'], session['type']),
                                choose=choose,
                                list_checkpoints=list_checkpoints)
