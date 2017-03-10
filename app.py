@@ -419,7 +419,6 @@ def list_assignments():
     """
 
     user = user_session(session['user'], session['type'])
-    choose = None
     if isinstance(user, Mentor):
         choose = "Mentor"
         assignListOfObjects = Assignment.get_list()
@@ -467,7 +466,7 @@ def add_assignment():
 @required_roles('Mentor')
 def grade_assignment():
     """
-    List user of assignment
+    List user of assignments and add possibility to grade it
     :return:
     """
     if request.method == 'POST':
@@ -483,7 +482,7 @@ def grade_assignment():
         return render_template('grade_assignment.html', user=user_session(session['user'], session['type']),
                                students=studentsDetails, assignment=assigID)
     else:
-        return "Not Implemented"
+        return render_template('404.html', user=user_session(session['user'], session['type']))
 
 
 @app.route('/list-assignments/grade-assignment/<username>', methods=['GET', 'POST'])
@@ -491,7 +490,7 @@ def grade_assignment():
 @required_roles('Mentor')
 def grade_user_assignments(username):
     """
-    Grade assignment if you are mentor
+    Grade assignment of user if you are mentor
     :param username:
     :return:
     """
@@ -522,7 +521,7 @@ def grade_user_assignments(username):
             else:
                 submit.update_grade(new_grade)
             return redirect(url_for('grade_assignment', assignmentID=assignment_id))
-    return 'Not permited fool'
+    return render_template('404.html', user=user_session(session['user'], session['type']))
 
 
 @app.route('/list-assignments/view-assignments/<int:assignments_id>', methods=['GET', 'POST'])
@@ -530,7 +529,7 @@ def grade_user_assignments(username):
 @required_roles('Student')
 def view_assignments(assignments_id):
     """
-    Student list assignments
+    List all assignments of user
     :param assignments_id:
     :return:
     """
@@ -574,6 +573,11 @@ def assignment_submit(assignments_id):
 @login_required
 @required_roles('Mentor')
 def delete_assignment(assignment_id):
+    """
+    Delete assignment
+    :param assignment_id:
+    :return:
+    """
     assignment = Assignment.get_by_id(assignment_id)
     assignment.delete_assignment()
     return redirect(url_for('list_assignments'))
@@ -649,7 +653,6 @@ def add_checkpoint():
     POST: returns list of assistant with new assistant added
     """
     user = user_session(session['user'], session['type'])
-    choose = None
     if isinstance(user, Mentor):
         if request.method == 'POST':
             if request.form['add_checkpoint']:
@@ -671,7 +674,6 @@ def add_checkpoint():
 @required_roles('Mentor')
 def delete_checkpoint():
     user = user_session(session['user'], session['type'])
-    choose = None
     if isinstance(user, Mentor):
         if request.method == 'POST':
             if request.form['action']:
@@ -687,7 +689,7 @@ def delete_checkpoint():
 @required_roles('Mentor')
 def grade_checkpoint(checkpoint_name):
     user = user_session(session['user'], session['type'])
-    choose = None
+
     if isinstance(user, Mentor):
         if request.method == 'POST':
             id_list = request.form.getlist('id[]')
