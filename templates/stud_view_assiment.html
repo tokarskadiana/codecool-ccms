@@ -2,58 +2,60 @@
 {% block content %}
     <h3>Assignment {{ assignment.title }}</h3>
     <div class="small-wrapper">
-      <div class="inline-element">
-        <h4>Due To: </h4>
-        <p>{% if assignment.due_date %}{{ assignment.due_date }}
-           {% else %}No due date{% endif %}</p>
-      </div>
-      <div class="inline-element">
-        <h4>Type: </h4>
-        <p>{{ assignment.type }}</p>
-      </div>
-      {% if assignment.description %}
-        <h4>Description: </h4>
-        <p>{{ assignment.description }}</p>
-      {% else %}
-      <div class="inline-element">
-        <h4>Description: </h4>
-        <p>No description</p>
-      </div>
-      {% endif %}
+        <div class="inline-element">
+            <h4>Due To: </h4>
+            <p>{% if assignment.due_date %}{{ assignment.due_date }}
+            {% else %}No due date{% endif %}</p>
+        </div>
+        <div class="inline-element">
+            <h4>Type: </h4>
+            <p>{{ assignment.type }}</p>
+        </div>
+        {% if assignment.description %}
+            <h4>Description: </h4>
+            <p>{{ assignment.description }}</p>
+        {% else %}
+            <div class="inline-element">
+                <h4>Description: </h4>
+                <p>No description</p>
+            </div>
+        {% endif %}
 
         {% if submit %}
-                {% if submit.content %}
+            {% if submit.content %}
                 <h4>Your Content:</h4>
-                    {{ submit.content }}
-                {% else %}
-                <div class="inline-element">
-                  <h4>Your Content: </h4>
-                  <p>You don't submit this assignment yet</p>
-                </div>
-                {% endif %}
-
-                <div class="inline-element">
-                  <h4>Your submit Date: </h4>
-                  <p>{% if submit.update %}{{ submit.update }}
-                     {% else %}------{% endif %}</p>
-                </div>
-
-                <div class="inline-element last">
-                  <h4>Your Grade: </h4>
-                  <p>{% if submit.grade or submit.grade == 0 %}{{ submit.grade }}
-                     {% else %}No graded yet{% endif %}</p>
-                </div>
-            {% if submit.grade == None or submit.grade == 0 %}
-            <a href="{{ url_for('assignment_submit',assignments_id=assignment.id) }}" class="main-button">Submit assignment</a>
+                {{ submit.content }}
             {% else %}
-            <p>You can't submit assignment if it is graded.</p>
+                <div class="inline-element">
+                    <h4>Your Content: </h4>
+                    <p>You don't submit this assignment yet</p>
+                </div>
+            {% endif %}
+
+            <div class="inline-element">
+                <h4>Your submit Date: </h4>
+                <p>{% if submit.update %}{{ submit.update }}
+                {% else %}------{% endif %}</p>
+            </div>
+
+            <div class="inline-element last">
+                <h4>Your Grade: </h4>
+                <p>{% if submit.grade or submit.grade == 0 %}{{ submit.grade }}
+                {% else %}No graded yet{% endif %}</p>
+            </div>
+            {% if submit.grade == None or submit.grade == 0 %}
+                <a href="{{ url_for('assignment_submit',assignments_id=assignment.id) }}" class="main-button">Submit
+                    assignment</a>
+            {% else %}
+                <p>You can't submit assignment if it is graded.</p>
             {% endif %}
 
         {% else %}
-        <h2>Ups... smth is wrong, please try again</h2>
+            <h2>Ups... smth is wrong, please try again</h2>
         {% endif %}
 
-  </div>
-    <div class="back-button"><a href="{{ url_for('list_assignments') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </div>
+    <div class="back-button"><a href="{{ url_for('list_assignments') }}"><i class="fa fa-chevron-left"
+                                                                            aria-hidden="true"></i>
         Back</a></div>
 {% endblock %}

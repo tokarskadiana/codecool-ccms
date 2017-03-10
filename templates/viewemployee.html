@@ -1,34 +1,36 @@
 {% extends 'index.html' %}
 {% block content %}
-<h3>{{employee}}s List:</h3>
-<div class="large-wrapper">
-    <a href="{{url_for(add)}}"><input class="sub-right main-button" type="button" value="Add New {{employee}}"></a>
-    <table class='table-style'>
-        <thead>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Phone number</th>
-        <th>E-mail</th>
-        <th>Salary</th>
-        <th>Edit</th>
-        <td>Delete</td>
-        </thead>
-        <tbody>
-        {% if employee_list %}
-        {% for employee in employee_list %}
-        <tr>
-            <td>{{employee.id}}</td>
-            <td>{{employee.full_name()}}</td>
-            <td>{{employee.telephone}}</td>
-            <td>{{employee.mail}}</td>
-            <td>{{employee.salary}}</td>
-            <td><a href="{{ url_for(edit, employee_id=employee.id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-            <td><a href="{{  url_for(delete, employee_id=employee.id)  }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-        </tr>
-        {% endfor %}
-        {% endif %}
-        </tbody>
-    </table>
-</div>
+    <h3>{{ employee }}s List:</h3>
+    <div class="large-wrapper">
+        <a href="{{ url_for(add) }}"><input class="sub-right main-button" type="button" value="Add New {{ employee }}"></a>
+        <table class='table-style'>
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone number</th>
+            <th>E-mail</th>
+            <th>Salary</th>
+            <th>Edit</th>
+            <td>Delete</td>
+            </thead>
+            <tbody>
+            {% if employee_list %}
+                {% for employee in employee_list %}
+                    <tr>
+                        <td>{{ employee.id }}</td>
+                        <td>{{ employee.full_name() }}</td>
+                        <td>{{ employee.telephone }}</td>
+                        <td>{{ employee.mail }}</td>
+                        <td>{{ employee.salary }}</td>
+                        <td><a href="{{ url_for(edit, employee_id=employee.id) }}"><i class="fa fa-pencil-square-o"
+                                                                                      aria-hidden="true"></i></a></td>
+                        <td><a href="{{ url_for(delete, employee_id=employee.id) }}"><i class="fa fa-trash"
+                                                                                        aria-hidden="true"></i></a></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

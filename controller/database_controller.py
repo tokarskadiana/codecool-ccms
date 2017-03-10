@@ -11,7 +11,8 @@ class DatabaseController:
         Creates tables in database using schemas.
         """
         tables = []
-        filenames = ['student.txt', 'assiment.txt', 'employee.txt', 'submition.txt', 'attendence.txt', 'team.txt', 'checkpoint.txt']
+        filenames = ['student.txt', 'assiment.txt', 'employee.txt', 'submition.txt', 'attendence.txt', 'team.txt',
+                     'checkpoint.txt']
         for filename in filenames:
             tables.append(Database.readSqlTxt(filename))
         conn = sqlite3.connect('codecool.sqlite')
