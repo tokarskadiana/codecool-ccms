@@ -7,10 +7,10 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
+
 class Mentor(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(30)
         self.base_url = "http://127.0.0.1:5000/"
         self.verificationErrors = []
         self.accept_next_alert = True
@@ -34,7 +34,8 @@ class Mentor(unittest.TestCase):
         if test_student:
             print('\tcheck if test student exist start')
             try:
-                driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]').text == "test test"
+                driver.find_element_by_xpath(
+                    '//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]').text == "test test"
             except:
                 raise ValueError('there is no test student')
             print('\tcheck if test student exist success')
@@ -60,14 +61,13 @@ class Mentor(unittest.TestCase):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List assignments").click()
         if test_assignments:
-            print('\tcheck if test assignments exist start')
+            print('\t\tcheck if test assignments exist start')
             try:
                 driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == "test"
             except:
                 raise ValueError('there is no test assignments')
-            print('\tcheck if test assignments exist success')
+            print('\t\tcheck if test assignments exist success')
         print('\tlist assignments success')
-
 
     def remove_assignments(self):
         print('\tremove assignments start')
@@ -88,6 +88,7 @@ class Mentor(unittest.TestCase):
         driver.find_element_by_id("attendance-sub-button").click()
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("Show student statistics").click()
+        print('\t\tcheck if students have correct attendance % start')
         try:
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[3]').text == "100.0"
         except:
@@ -96,7 +97,7 @@ class Mentor(unittest.TestCase):
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[3]').text == "100.0"
         except:
             raise ValueError('no visable present %% in monika')
-
+        print('\t\tcheck if students have correct attendance % success')
         print('\tattendance test success')
 
     def add_student(self):
@@ -117,11 +118,11 @@ class Mentor(unittest.TestCase):
         driver.find_element_by_name("phone-number").send_keys("123456789")
         driver.find_element_by_name("submition").click()
         try:
-            print("\tcheck if test student exist start")
+            print("\t\tcheck if test student exist start")
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]') == "test test"
         except:
             raise ValueError('there is no test student')
-        print("\tcheck if test student exist success")
+        print("\t\tcheck if test student exist success")
         print('\tadd student success')
 
     def remove_student(self):
@@ -148,11 +149,11 @@ class Mentor(unittest.TestCase):
         driver.find_element_by_name("mail").send_keys("edited@edited.com")
         driver.find_element_by_name("submition").click()
         try:
-            print("\tcheck if edited test student exist start")
+            print("\t\tcheck if edited test student exist start")
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]') == "edited edited"
         except:
             raise ValueError('there is no test student')
-        print("\tcheck if test edited student exist success")
+        print("\t\tcheck if test edited student exist success")
         print('\tedit student success')
 
     def add_team(self):
@@ -164,12 +165,12 @@ class Mentor(unittest.TestCase):
         driver.find_element_by_name("name").clear()
         driver.find_element_by_name("name").send_keys("test")
         driver.find_element_by_css_selector("input.main-button").click()
-        print('\tcheck if added team exist start')
+        print('\t\tcheck if added team exist start')
         try:
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == "test"
         except:
             raise ValueError('there is no test team')
-        print('\tcheck if added team exist success')
+        print('\t\tcheck if added team exist success')
         print('\tadd team success')
 
     def remove_team(self):
@@ -191,13 +192,93 @@ class Mentor(unittest.TestCase):
         driver.find_element_by_css_selector("input.main-button").click()
         print('\tedit team success')
 
-    def add_student_to_team(self):
+    def add_student_to_team(self, test_student=False):
         print('\tadd student to team start')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List students").click()
-        driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[6]/a')
+        number_of_student = 2
+        if test_student:
+            number_of_student = 3
+        for i in range(1, number_of_student + 1):
+            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[{}]/td[6]/a'.format(i)).click()
+            Select(driver.find_element_by_name("team")).select_by_visible_text("test")
+            driver.find_element_by_name("submition").click()
+            print('\t\tcheck if student of id {} have team start'.format(i))
+            try:
+                driver.find_element_by_xpath(
+                    '//*[@id="homepage"]/section/div/table/tbody/tr[{}]/td[5]'.format(i)) == 'test'
+            except:
+                raise ValueError('there is no test in student ')
+            print('\t\tcheck if student of id {} have team success'.format(i))
 
+    def check_student_team_status(self, test_student=False):
+        print('\tcheck student team status start')
+        driver = self.driver
+        driver.get(self.base_url + "/")
+        driver.find_element_by_link_text("List students").click()
+        number_of_student = 2
+        if test_student:
+            number_of_student = 3
+        for i in range(1, number_of_student + 1):
+            print('\t\tcheck if student of id {} have team start'.format(i))
+            try:
+                driver.find_element_by_xpath(
+                    '//*[@id="homepage"]/section/div/table/tbody/tr[{}]/td[5]'.format(i)) == 'test'
+            except:
+                raise ValueError('there is no test in student ')
+            print('\t\tcheck if student of id {} have team success'.format(i))
+
+        print('\tcheck student team status success')
+
+    def add_checkpoint(self):
+        print('\tadd checkpoint start')
+        driver = self.driver
+        driver.get(self.base_url + "/")
+        driver.find_element_by_link_text("List checkpoints").click()
+        driver.find_element_by_xpath('//*[@id="homepage"]/section/div/a/input').click()
+        driver.find_element_by_xpath('//*[@id="main-form-title"]').clear()
+        driver.find_element_by_xpath('//*[@id="main-form-title"]').send_keys('test')
+        driver.find_element_by_xpath('//*[@id="main-form-date"]').send_keys('12/12/2012')
+        driver.find_element_by_xpath('//*[@id="main-sub-button"]').click()
+        print('\t\tcheck if checkpoint exist start')
+        try:
+            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == 'test'
+        except:
+            raise ValueError('there is no checkpoint')
+        print('\t\tcheck if checkpoint exist success')
+        print('\tadd checkpoint success')
+
+    def remove_checkpoint(self):
+        print('\tremove checkpoint start')
+        driver = self.driver
+        driver.get(self.base_url + "/")
+        driver.find_element_by_link_text("List checkpoints").click()
+        driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[4]/form/button').click()
+        print('\t\tcheck if checkpoint still exist start')
+        try:
+            driver.find_element_by_xpath(
+                '//*[@id="homepage"]/section/div/div/p') == 'There is no Checkpoints. Please add checkpoint.'
+        except:
+            raise ValueError('there is still checkpoint')
+        print('\t\tcheck if checkpoint still exist success')
+        print('\tremove checkpoint success')
+
+    def rate_checkpoint(self, test_student=False):
+        print('\trate checkpoint start')
+        driver = self.driver
+        driver.get(self.base_url + "/")
+        driver.find_element_by_link_text("List checkpoints").click()
+        driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[3]/a/i').click()
+        Select(driver.find_element_by_name("checkpoint-grade[]")).select_by_visible_text("Red")
+        Select(driver.find_element_by_xpath("(//select[@name='checkpoint-grade[]'])[2]")).select_by_visible_text(
+            "Yellow")
+        if test_student:
+            Select(driver.find_element_by_xpath("(//select[@name='checkpoint-grade[]'])[3]")).select_by_visible_text(
+                "Green")
+        driver.find_element_by_css_selector("button[type=\"submit\"]").click()
+        driver.find_element_by_link_text("List checkpoints").click()
+        print('\trate checkpoint success')
 
     # ------------ TESTS -----------
 
@@ -253,7 +334,7 @@ class Mentor(unittest.TestCase):
         print('test add student to team')
         Mentor.login_mentor(self)
         Mentor.add_team(self)
-
+        Mentor.add_student_to_team(self)
 
     def test_edit_team(self):
         print('test edit team')
@@ -267,6 +348,28 @@ class Mentor(unittest.TestCase):
         Mentor.login_mentor(self)
         Mentor.add_team(self)
         Mentor.remove_team(self)
+
+    def test_remove_team_with_students(self):
+        print('test remove team with students')
+        Mentor.login_mentor(self)
+        Mentor.add_team(self)
+        Mentor.add_student(self)
+        Mentor.add_student_to_team(self, test_student=True)
+        Mentor.remove_team(self)
+        Mentor.check_student_team_status(self, test_student=True)
+
+    def test_add_checkpoint(self):
+        print('test add checkpoint')
+        Mentor.login_mentor(self)
+        Mentor.add_checkpoint(self)
+        Mentor.remove_checkpoint(self)
+
+    def test_rate_checkpoint(self):
+        print('test rate checkpoint')
+        Mentor.login_mentor(self)
+        Mentor.add_checkpoint(self)
+        Mentor.rate_checkpoint(self)
+        Mentor.remove_checkpoint(self)
 
     def is_element_present(self, how, what):
         try:
