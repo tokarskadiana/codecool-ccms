@@ -741,4 +741,4 @@ def user_session(id, class_name):
 if __name__ == '__main__':
     DatabaseController.createSqlDatabase()
     DatabaseController.sample_data()
-    app.run(debug=True)
+    app.run(host='192.170.20.98',debug=True)
