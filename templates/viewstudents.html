@@ -3,7 +3,7 @@
     <h3>Student List:</h3>
     <div class="large-table-wrapper">
         {% if user.__class__.__name__ == 'Mentor' %}
-            <a href="{{ url_for('add_student') }}"><input class="sub-right main-button" type="button"
+            <a href="{{ url_for('student_controller.add_student') }}"><input class="sub-right main-button" type="button"
                                                           value="Add New Student"></a>
         {% endif %}
         <table class='table-style'>
@@ -27,11 +27,11 @@
                     <td>{{ student.mail }}</td>
                     <td>{{ student.team_name }}</td>
                     {% if user.__class__.__name__ == 'Mentor' %}
-                        <td><a href="{{ url_for('edit_student', student_id=student.id) }}"><i
+                        <td><a href="{{ url_for('student_controller.edit_student', student_id=student.id) }}"><i
                                 class="fa fa-pencil-square-o"
                                 aria-hidden="true"></i></a>
                         </td>
-                        <td><a href="{{ url_for('delete', student_id=student.id) }}"><i class="fa fa-trash"
+                        <td><a href="{{ url_for('student_controller.delete', student_id=student.id) }}"><i class="fa fa-trash"
                                                                                     aria-hidden="true"></i>
                     {% endif %}
                     </a></td>

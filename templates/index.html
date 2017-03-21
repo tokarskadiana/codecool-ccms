@@ -16,7 +16,7 @@
             <img src='{{ url_for("static", filename="images/codecool.png") }}'/>
             <div class="details">
                 <h1>{{ user.first_name }}</h1>
-                <a href="{{ url_for('logout') }}" class='main-button'>Log Out</a>
+                <a href="{{ url_for('authorization.logout') }}" class='main-button'>Log Out</a>
             </div>
         </div>
     </div>
@@ -27,23 +27,23 @@
             <ul>
 
                 {% if user.__class__.__name__ == 'Student' %}
-                    <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
-                    <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
-                    <li><a href="{{ url_for('list_checkpoints') }}">List checkpoints</a></li>
+                    <li><a href="{{ url_for('student_controller.statistics') }}">Show student statistics</a></li>
+                    <li><a href="{{ url_for('assignment_controller.list_assignments') }}">List assignments</a></li>
+                    <li><a href="{{ url_for('checkpoint_controller.list_checkpoints') }}">List checkpoints</a></li>
                 {% elif user.__class__.__name__ == 'Mentor' %}
-                    <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
-                    <li><a href="{{ url_for('attendance') }}">Check attendance</a></li>
-                    <li><a href="{{ url_for('list_teams') }}">List teams</a></li>
-                    <li><a href="{{ url_for('list_students') }}">List students</a></li>
-                    <li><a href="{{ url_for('list_assignments') }}">List assignments</a></li>
-                    <li><a href="{{ url_for('list_checkpoints') }}">List checkpoints</a></li>
+                    <li><a href="{{ url_for('student_controller.statistics') }}">Show student statistics</a></li>
+                    <li><a href="{{ url_for('attendance_controller.attendance') }}">Check attendance</a></li>
+                    <li><a href="{{ url_for('team_controller.list_teams') }}">List teams</a></li>
+                    <li><a href="{{ url_for('student_controller.list_students') }}">List students</a></li>
+                    <li><a href="{{ url_for('assignment_controller.list_assignments') }}">List assignments</a></li>
+                    <li><a href="{{ url_for('checkpoint_controller.list_checkpoints') }}">List checkpoints</a></li>
                 {% elif user.__class__.__name__ == 'Employee' %}
-                    <li><a href="{{ url_for('list_students') }}">List students</a></li>
+                    <li><a href="{{ url_for('student_controller.list_students') }}">List students</a></li>
                 {% elif user.__class__.__name__ == 'Manager' %}
-                    <li><a href="{{ url_for('statistics') }}">Show student statistics</a></li>
-                    <li><a href="{{ url_for('list_mentors') }}">List mentors</a></li>
-                    <li><a href="{{ url_for('list_assistants') }}">List assistants</a></li>
-                    <li><a href="{{ url_for('list_students') }}">List students</a></li>
+                    <li><a href="{{ url_for('student_controller.statistics') }}">Show student statistics</a></li>
+                    <li><a href="{{ url_for('employee_controller.list_mentors') }}">List mentors</a></li>
+                    <li><a href="{{ url_for('employee_controller.list_assistants') }}">List assistants</a></li>
+                    <li><a href="{{ url_for('student_controller.list_students') }}">List students</a></li>
 
                 {% endif %}
             </ul>

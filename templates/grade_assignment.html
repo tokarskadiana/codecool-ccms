@@ -18,10 +18,14 @@
                 {% for details in students %}
                     <tr>
                         <td>{{ details[1] }} {{ details[2] }}</td>
-                        {% if details[4] %}<td>{{ details[4] }}</td>
-                        {% else %}<td>------</td>{% endif %}
-                        {% if details[5] %}<td>{{ details[5] }}</td>
-                        {% else %}<td>------</td>{% endif %}
+                        {% if details[4] %}
+                            <td>{{ details[4] }}</td>
+                        {% else %}
+                            <td>------</td>{% endif %}
+                        {% if details[5] %}
+                            <td>{{ details[5] }}</td>
+                        {% else %}
+                            <td>------</td>{% endif %}
                         <td>
                             {% if details[3] == 0 or details[3] == None %}
                                 <p class="not-grade">Not graded yet</p>
@@ -32,7 +36,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <form method="POST" action="{{ url_for('grade_user_assignments',username=details[6]) }}">
+                            <form method="POST" action="{{ url_for('assignment_controller.grade_user_assignments',username=details[6]) }}">
                                 <input type="hidden"  name="assignment" value="{{ assignment.id }}">
                                 <input type="hidden"  name="id" value="{{ details[0] }}">
                                 <button type="submit" name="grade_user" value="grade">
@@ -47,7 +51,7 @@
         </table>
 
     </div>
-    <div class="back-button"><a href="{{url_for('list_assignments')}}">
+    <div class="back-button"><a href="{{url_for('assignment_controller.list_assignments')}}">
       <i class="fa fa-chevron-left" aria-hidden="true"></i>  Back</a>
     </div>
 {% endblock %}

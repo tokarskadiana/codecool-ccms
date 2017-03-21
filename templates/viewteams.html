@@ -2,7 +2,7 @@
 {% block content %}
     <h3>Teams List:</h3>
     <div class="small-wrapper">
-        <a href="{{ url_for('add_team') }}"><input class="sub-right main-button" type="button" value="Add New Team"></a>
+        <a href="{{ url_for('team_controller.add_team') }}"><input class="sub-right main-button" type="button" value="Add New Team"></a>
         {% if teams %}
         <table class='table-style'>
             <thead>
@@ -24,18 +24,18 @@
                             </ul>
                         {% endif %}
                     </td>
-                    <td><a href="{{ url_for('edit_team', team_id=team.id) }}"><i class="fa fa-pencil-square-o"
+                    <td><a href="{{ url_for('team_controller.edit_team', team_id=team.id) }}"><i class="fa fa-pencil-square-o"
                                                                                  aria-hidden="true"></i></a></td>
-                    <td><a href="{{ url_for('delete_team', team_id=team.id) }}"><i class="fa fa-trash"
+                    <td><a href="{{ url_for('team_controller.delete_team', team_id=team.id) }}"><i class="fa fa-trash"
                                                                                    aria-hidden="true"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         {% else %}
-        <div class="no-content">
-          <p>There is no Teams. Please add team.</p>
-        </div>
+            <div class="no-content">
+                <p>There is no Teams. Please add team.</p>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
