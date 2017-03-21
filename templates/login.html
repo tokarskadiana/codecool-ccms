@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>CCMS</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  </head>
-  <body>
+</head>
+<body>
 
 <div class="login-background">
-  <div class="sub-assignment">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-      <h3>{{ message }}</h3>
-      {% endfor %}
-      {% endif %}
-    {% endwith %}
-  </div>
+    <div class="sub-assignment">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h3>{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     <div class="login-wrapper">
         <h1>Login to your account</h1>
         <form class="login" name="form" action="" method="post" onsubmit="return validateForm()">
@@ -28,7 +28,7 @@
     </div>
 </div>
 {% if error %}
-<h4>Error: {{ error }}</h4>
+    <h4>Error: {{ error }}</h4>
 {% endif %}
 <script type="text/javascript">
     function validateForm() {

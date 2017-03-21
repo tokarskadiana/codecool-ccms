@@ -6,6 +6,7 @@ class Team:
     """
     Represents team object.
     """
+
     def __init__(self, name, id=None):
         """
         Team object constructor.

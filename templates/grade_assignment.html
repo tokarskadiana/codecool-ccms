@@ -18,10 +18,14 @@
                 {% for details in students %}
                     <tr>
                         <td>{{ details[1] }} {{ details[2] }}</td>
-                        {% if details[4] %}<td>{{ details[4] }}</td>
-                        {% else %}<td>------</td>{% endif %}
-                        {% if details[5] %}<td>{{ details[5] }}</td>
-                        {% else %}<td>------</td>{% endif %}
+                        {% if details[4] %}
+                            <td>{{ details[4] }}</td>
+                        {% else %}
+                            <td>------</td>{% endif %}
+                        {% if details[5] %}
+                            <td>{{ details[5] }}</td>
+                        {% else %}
+                            <td>------</td>{% endif %}
                         <td>
                             {% if details[3] == 0 or details[3] == None %}
                                 <p class="not-grade">Not graded yet</p>
