@@ -4,7 +4,7 @@
     {% if choose == "Mentor" %}
         <h3>List assignments</h3>
         <div class="large-wrapper">
-            <a href="{{ url_for('add_assignment') }}"><input class="sub-right main-button" type="button"
+            <a href="{{ url_for('assignment_controller.add_assignment') }}"><input class="sub-right main-button" type="button"
                                                              value="Add New Assignment"></a>
 
             {% if assignListOfObjects %}
@@ -25,14 +25,14 @@
                             <td>{{ assignment.due_date }}</td>
                             <td>{{ assignment.type }}</td>
                             <td>
-                                <form method="post" action="{{ url_for('grade_assignment') }}">
+                                <form method="post" action="{{ url_for('assignment_controller.grade_assignment') }}">
                                     <input type="hidden" value="{{ assignment.id }}" name="assignmentID">
                                     <button type="submit" value="editAssignment"><i class='fa fa-pencil-square-o'
                                                                                     aria-hidden='true'></i></button>
                                 </form>
                             </td>
                             <td>
-                              <a href="{{url_for('delete_assignment', assignment_id=assignment.id)}}">
+                              <a href="{{url_for('assignment_controller.delete_assignment', assignment_id=assignment.id)}}">
                               <i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
@@ -61,7 +61,7 @@
                 {% for student_assignment in student_assignments %}
                     <tr>
                         <td>{{ student_assignment.title }}</td>
-                        <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i
+                        <td><a href="{{ url_for('assignment_controller.view_assignments',assignments_id=student_assignment.id) }}"><i
                                 class="fa fa-search" aria-hidden="true"></a></td>
                         </td>
 

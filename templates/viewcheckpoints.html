@@ -1,10 +1,10 @@
 {% extends 'index.html' %}
 {% block content %}
 
+<h3>List of Checkpoints</h3>
     {% if choose == "Mentor" %}
-        <h3>List of Checkpoints</h3>
         <div class="large-wrapper">
-            <a href="{{ url_for('add_checkpoint') }}"><input class="sub-right main-button" type="button"
+            <a href="{{ url_for('checkpoint_controller.add_checkpoint') }}"><input class="sub-right main-button" type="button"
                                                              value="Add New Checkpoint"></a>
             {##}
             {% if list_checkpoints %}
@@ -21,11 +21,11 @@
                             <td>{{ checkpoint[0] }}</td>
                             <td>{{ checkpoint[1] }}</td>
                             <td>
-                                <a href="{{ url_for('grade_checkpoint',checkpoint_name = checkpoint[0]) }}">
+                                <a href="{{ url_for('checkpoint_controller.grade_checkpoint',checkpoint_name = checkpoint[0]) }}">
                                     <i class='fa fa-pencil-square-o' aria-hidden='true'></i></a>
                             </td>
                             <td>
-                                <form method="post" action="{{ url_for('delete_checkpoint') }}">
+                                <form method="post" action="{{ url_for('checkpoint_controller.delete_checkpoint') }}">
                                     <input type="hidden" value="{{ checkpoint[0] }}" name="checkpoint_name">
                                     <button name="action" type="submit" value="editAssignment"><i class="fa fa-trash"
                                                                                                   aria-hidden="true"></i>
@@ -45,6 +45,8 @@
             {% endif %}
 
     {% elif choose=="Student" %}
+    <div class="small-wrapper">
+
           <table class="table-style">
             <thead>
               <th>Checkpoint</th>
@@ -54,13 +56,17 @@
             <tbody>
                 {% if list_checkpoints %}
                 {% for checkpoint in list_checkpoints%}
+                <tr>
+
                   <td>{{checkpoint.name}}</td>
                   <td>{{checkpoint.checkpoint_date}}</td>
                   <td>{{checkpoint.card}}</td>
+                </tr>
                   {% endfor %}
                 {% endif %}
             </tbody>
           </table>
+        </div>
     {% endif %}
 
 

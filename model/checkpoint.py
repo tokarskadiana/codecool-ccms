@@ -19,7 +19,6 @@ class Checkpoint():
         """
 
         for student in student_list:
-            print(student.first_name)
             cls.add_checkpoint(name, checkpoint_date, student.id, mentor_id, card)
 
     @classmethod
@@ -85,7 +84,10 @@ class Checkpoint():
         Get student name
         :return: List of objects
         """
-        return Student.get_by_id(self.student_id).username
+        student = Student.get_by_id(self.student_id)
+        if student:
+            return student.username
+        return None
 
 
     @classmethod

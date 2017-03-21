@@ -44,7 +44,7 @@
                      {% else %}No graded yet{% endif %}</p>
                 </div>
             {% if submit.grade == None or submit.grade == 0 %}
-            <a href="{{ url_for('assignment_submit',assignments_id=assignment.id) }}" class="main-button">Submit assignment</a>
+            <a href="{{ url_for('assignment_controller.assignment_submit',assignments_id=assignment.id) }}" class="main-button">Submit assignment</a>
             {% else %}
             <p>You can't submit assignment if it is graded.</p>
             {% endif %}
@@ -54,6 +54,6 @@
         {% endif %}
 
   </div>
-    <div class="back-button"><a href="{{ url_for('list_assignments') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+    <div class="back-button"><a href="{{ url_for('assignment_controller.list_assignments') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
         Back</a></div>
 {% endblock %}

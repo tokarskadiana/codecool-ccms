@@ -13,7 +13,7 @@
             <form method="post" action="">
                 {% for checkpoint in chkp_list %}
                     <tr>
-                        <td>{{ checkpoint.get_checkpoint_username() }}</td>
+                        <td>{{ checkpoint.get_checkpoint_username() or 'Deleted student'}}</td>
                         <td>
                             <input name="id[]" type="hidden" value="{{ checkpoint.id }}">
                             <select name="checkpoint-grade[]" class="select-graded">
