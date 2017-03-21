@@ -63,7 +63,13 @@
                         <td><a href="{{ url_for('assignment_controller.view_assignments',assignments_id=student_assignment.id) }}"><i
                                 class="fa fa-search" aria-hidden="true"></a></td>
                         </td>
-
+                    <tbody>
+                    {% for student_assignment in student_assignments %}
+                        <tr>
+                            <td>{{ student_assignment.title }}</td>
+                            <td><a href="{{ url_for('view_assignments',assignments_id=student_assignment.id) }}"><i
+                                    class="fa fa-search" aria-hidden="true"></a></td>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
