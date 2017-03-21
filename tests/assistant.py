@@ -17,7 +17,7 @@ class Assistant(unittest.TestCase):
         self.accept_next_alert = True
 
     def login_assistant(self):
-        print('\tlogin test start')
+        print('\tlogin test START')
         driver = self.driver
         driver.get(self.base_url + "/login")
         driver.find_element_by_name("username").clear()
@@ -25,31 +25,31 @@ class Assistant(unittest.TestCase):
         driver.find_element_by_name("password").clear()
         driver.find_element_by_name("password").send_keys("kkk")
         driver.find_element_by_name("submit").click()
-        print('\tlogin success')
+        print('\tlogin SUCCESS')
 
     def list_students(self, test_student=False):
-        print('\tlist student start')
+        print('\tlist student START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List students").click()
         students = [{'name':'Piotr Gurdek'},{'name':'Monika Plocica'}]
         for i in range(2):
-            print('\tcheck if test student name:{} exist start'.format(students[i]['name']))
+            print('\t\tcheck if test student name:{} exist START'.format(students[i]['name']))
             try:
                 driver.find_element_by_xpath(
                     '//*[@id="homepage"]/section/div/table/tbody/tr[{}]/td[2]'.format(i+1)).text == students[i]['name']
             except:
                 raise ValueError('there is no test student')
-            print('\tcheck if test student name:{} exist success'.format(students[i]['name']))
+            print('\t\tcheck if test student name:{} exist SUCCESS'.format(students[i]['name']))
         if test_student:
-            print('\tcheck if test student exist start')
+            print('\t\tcheck if test student exist START')
             try:
                 driver.find_element_by_xpath(
                     '//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]').text == "test test"
             except:
                 raise ValueError('there is no test student')
-            print('\tcheck if test student exist success')
-        print('\tlist student success')
+            print('\t\tcheck if test student exist SUCCESS')
+        print('\tlist student SUCCESS')
 
     # ----------TESTS-----------
 

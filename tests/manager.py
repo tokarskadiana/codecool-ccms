@@ -17,7 +17,7 @@ class Manager(unittest.TestCase):
         self.accept_next_alert = True
 
     def login_manager(self):
-        print('\tlogin manager start')
+        print('\tlogin manager START')
         driver = self.driver
         driver.get(self.base_url + "/login")
         driver.find_element_by_name("username").clear()
@@ -25,10 +25,10 @@ class Manager(unittest.TestCase):
         driver.find_element_by_name("password").clear()
         driver.find_element_by_name("password").send_keys("kkk")
         driver.find_element_by_name("submit").click()
-        print('\tlogin manager success')
+        print('\tlogin manager SUCCESS')
 
     def add_mentor(self):
-        print('\tadd mentor start')
+        print('\tadd mentor START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List mentors").click()
@@ -46,16 +46,16 @@ class Manager(unittest.TestCase):
         driver.find_element_by_name("phone_number").clear()
         driver.find_element_by_name("phone_number").send_keys("123456789")
         driver.find_element_by_name("submition").click()
-        print('\t\tcheck if test mentor exist start')
+        print('\t\tcheck if test mentor exist START')
         try:
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]').text == 'test test'
         except:
             raise ValueError('there is no test mentor')
-        print('\t\tcheck if test mentor exist success')
-        print('\tadd mentor success')
+        print('\t\tcheck if test mentor exist SUCCESS')
+        print('\tadd mentor SUCCESS')
 
     def edit_mentor(self):
-        print('\tedit mentor start')
+        print('\tedit mentor START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List mentors").click()
@@ -71,35 +71,35 @@ class Manager(unittest.TestCase):
         driver.find_element_by_name("password").clear()
         driver.find_element_by_name("password").send_keys("edited")
         driver.find_element_by_name("submition").click()
-        print('\t\t check if edited mentor exist start')
+        print('\t\t check if edited mentor exist START')
         try:
             driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]') == "edited edited"
         except:
             raise ValueError('there is no edited mentor')
-        print('\t\t check if edited mentor exist success')
-        print('\tedit mentor success')
+        print('\t\t check if edited mentor exist SUCCESS')
+        print('\tedit mentor SUCCESS')
 
     def remove_mentor(self):
-        print('\tremove mentor start')
+        print('\tremove mentor START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List mentors").click()
         driver.find_element_by_xpath("//body[@id='homepage']/section/div/table/tbody/tr[2]/td[7]/a/i").click()
-        print('\tremove mentor success')
+        print('\tremove mentor SUCCESS')
 
     def list_mentors(self):
-        print('\tlist mentor start')
+        print('\tlist mentor START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List mentors").click()
-        print('\tlist mentor success')
+        print('\tlist mentor SUCCESS')
 
     def list_students(self):
-        print('\tlist student start')
+        print('\tlist student START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List students").click()
-        print('\tlist student success')
+        print('\tlist student SUCCESS')
 
     # --------- TESTS ----------
 
