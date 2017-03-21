@@ -40,8 +40,7 @@ class Assignment:
 
         Returns: boolean value
         '''
-        query = "SELECT * FROM employee WHERE (position='mentor' AND username='{}');".format(
-            user_name)
+
         assignment = cls(title, description, due_date, mentor_id, type)
         date = datetime.datetime.now().date()
         query = "INSERT OR IGNORE INTO assignment (title, description, date, due_date, type, mentor_id) \

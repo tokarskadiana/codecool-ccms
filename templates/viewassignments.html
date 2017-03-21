@@ -39,24 +39,23 @@
                     {% endfor %}
                     </tbody>
                 </table>
-              </div>
+                </div>
             {% else %}
-              <div class="small-wrapper no-content">
-                <p>There is no Assignments. Please add assignment.</p>
-              </div>
+                <div class="small-wrapper no-content">
+                    <p>There is no Assignments. Please add assignment.</p>
+                </div>
             {% endif %}
 
     {% elif choose=="Student" %}
 
         <h3>Assignments avaiable to you</h3>
         {% if student_assignments %}
-        <div class="small-wrapper">
-            <table class='table-style'>
-                <thead>
-                <th>Assiment</th>
+            <div class="small-wrapper">
+                <table class='table-style'>
+                    <thead>
+                    <th>Assiment</th>
 
-                <th >View/Submit</th>
-
+                    <th>View/Submit</th>
                 <tbody>
                 {% for student_assignment in student_assignments %}
                     <tr>
@@ -65,15 +64,15 @@
                                 class="fa fa-search" aria-hidden="true"></a></td>
                         </td>
 
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
-        <div class="small-wrapper no-content">
-          <p>There is no assignments at the moment available for you.</p>
-        </div>
+            <div class="small-wrapper no-content">
+                <p>There is no assignments at the moment available for you.</p>
+            </div>
 
         {% endif %}
     {% endif %}

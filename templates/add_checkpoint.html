@@ -1,13 +1,14 @@
 {% extends 'index.html' %}
 {% block content %}
-<h3>Add new checkpoint</h3>
-<form class="main-form" action="" method="post">
-    <label>Title</label>
-    <input type="text" name="checkpoint_name" placeholder="Title" data-isvalid="False" onkeyup="isEmpty('main-form-title')"
-           id="main-form-title" required>
-    <label>Date</label>
-    <input name="date" type="date" placeholder="dd/mm/yyyy" id="main-form-date">
-    <input name="add_checkpoint" id='main-sub-button' class='main-button' type="submit" value="Save">
+    <h3>Add new checkpoint</h3>
+    <form class="main-form" action="" method="post">
+        <label>Title</label>
+        <input type="text" name="checkpoint_name" placeholder="Title" data-isvalid="False"
+               onkeyup="isEmpty('main-form-title')"
+               id="main-form-title" required>
+        <label>Date</label>
+        <input name="date" type="date" placeholder="dd/mm/yyyy" id="main-form-date">
+        <input name="add_checkpoint" id='main-sub-button' class='main-button' type="submit" value="Save">
 
 </form>
 <div class="back-button"><a href="{{url_for('checkpoint_controller.list_checkpoints')}}"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
