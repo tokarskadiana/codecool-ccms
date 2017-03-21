@@ -1,6 +1,7 @@
 import base64
 
 
+
 class User:
     """
     This class representing User class

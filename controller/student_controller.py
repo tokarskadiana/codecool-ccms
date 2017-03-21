@@ -21,8 +21,16 @@ def save_student(save, id=None):
                       team_id=request.form.get('team', ''))
     if save == 'add':
         student.add_student()
-    elif save == 'edit':
-        student.edit_student()
+    elif save == 'edit' and id:
+        # SQLALCHEMY - need to get element from db and edit it , rather then create new object (won't work , other way)
+        student = Student.get_by_id(id)
+        student.first_name = request.form['first-name']
+        student.last_name = request.form['last-name']
+        student.password = request.form['password']
+        student.telephone = request.form.get('phone-number', '')
+        student.mail = request.form.get('mail', '')
+        student.team_id = request.form.get('team', '')
+        student.add_student()
 
 
 @student_controller.route('/list-students', methods=['GET', 'POST'])

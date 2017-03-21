@@ -1,8 +1,22 @@
 from model.user import User
+from model.sql_alchemy_db import db
 from model.sqlRequest import SqlRequest
 
 
-class Student(User):
+class Student(User,db.Model):
+
+    __tablename__ = 'student'
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    password = db.Column(db.String)
+    telephone = db.Column(db.String)
+    mail = db.Column(db.String)
+    username = db.Column(db.String)
+    team_id = db.Column(db.Integer,db.ForeignKey('team.id'))
+    # team = db.relationship("Team",foreign_keys=[team_id])
+
+
     def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id="", student_cards=""):
         """
         Represents Student object.
@@ -20,7 +34,9 @@ class Student(User):
         arguments: int(team_id)
         return: str(team name)
         """
+
         if team_id:
+           # team_name  = self.query.join(Student).join(Team).fliter(Student.team_id==Team.id).first() Gota figure it out
             query = 'SELECT * FROM team WHERE id={}'.format(team_id)
             team = SqlRequest.sql_request(query)
             if team:
@@ -36,44 +52,23 @@ class Student(User):
         arguments: int(id)
         return: obj(Team)
         """
-        query = 'SELECT * FROM student WHERE id={}'.format(id)
-        student = SqlRequest.sql_request(query)
-        if student:
-            return cls(id=student[0][0],
-                       password=student[0][3],
-                       first_name=student[0][1],
-                       last_name=student[0][2],
-                       telephone=student[0][4],
-                       mail=student[0][5],
-                       team_id=student[0][7])
-        return None
+        return  db.session.query(cls).get(id)
+
 
     def add_student(self):
         """
         Add student to database.
         """
-        query = (
-            'INSERT OR IGNORE INTO student (first_name,last_name,password,telephone,mail,username,team_id) \
-            VALUES("{}","{}","{}","{}","{}","{}","{}");'.format(self.first_name, self.last_name, self.password,
-                                                                self.telephone, self.mail, self.username, self.team_id))
-        SqlRequest.sql_request(query)
-
-    def edit_student(self):
-        """
-        Update student id database.
-        """
-        query = ("""UPDATE student SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
-        team_id="{}", username="{}" WHERE id={};""".format(self.first_name, self.last_name, self.password,
-                                                           self.telephone, self.mail, self.team_id,
-                                                           self.username, self.id))
-        SqlRequest.sql_request(query)
+        db.session.flush()
+        db.session.add(self)
+        db.session.commit()
 
     def delete_student(self):
         """
         Remove student from database..
         """
-        query = ('DELETE FROM student WHERE id={}'.format(self.id))
-        SqlRequest.sql_request(query)
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def list_students(cls):
@@ -81,18 +76,7 @@ class Student(User):
         Find all students in database.
         return: list(Student objects)
         """
-        list_of_students = []
-        query = 'SELECT id, password, first_name,last_name, mail, telephone, team_id FROM student'
-        data = SqlRequest.sql_request(query)
-        for row in data:
-            list_of_students.append(cls(id=row[0],
-                                        password=row[1],
-                                        first_name=row[2],
-                                        last_name=row[3],
-                                        telephone=(row[5] if row[5] else '-----'),
-                                        mail=(row[4] if row[4] else '-----'),
-                                        team_id=row[6]))
-        return list_of_students
+        return cls.query.all()
 
     def grade_average(self):
         """
