@@ -1,11 +1,20 @@
+from model.sql_alchemy_db import db
 from model.sqlRequest import SqlRequest
 import datetime
 
 
-class Submition:
+class Submition(db.Model):
     '''
     Represent an submit of individual student for specific assignment
     '''
+    __tablename__ = 'submition'
+    id = db.Column(db.Integer, primary_key=True)
+    assignment_id = (db.Integer, db.ForeignKey('assignment.id'))
+    student_id = (db.Integer, db.ForeignKey('student.id'))
+    content = db.Column(db.String)
+    grade = db.Column(db.Integer)
+    update_data = db.Column(db.String)
+    mentor_id = (db.Integer, db.ForeignKey('mentor.id'))
 
     def __init__(self, assignment_id, student_id, id=None, content=None, grade=None, update=None, mentor_id=None):
         '''
@@ -58,19 +67,7 @@ class Submition:
                     int(assignment_id)
         return: obj(Submit)
         """
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
-         student_id={} AND assignment_id={}'.format(student_id, assignment_id)
-
-        submit = SqlRequest.sql_request(query)
-        if submit:
-            return cls(assignment_id=submit[0][0],
-                       student_id=submit[0][1],
-                       content=submit[0][2],
-                       id=submit[0][3],
-                       grade=submit[0][4],
-                       update=submit[0][5],
-                       mentor_id=submit[0][6])
-        return None
+        return cls.query.filter(cls.student_id==student_id,cls.assignment_id==assignment_id).first()
 
     @classmethod
     def get_by_id(cls, id):
@@ -79,15 +76,4 @@ class Submition:
         arguments: int(id)
         return: obj(Submit)
         """
-        query = 'SELECT assignment_id,student_id,content,id,grade,update_data,mentor_id FROM submition WHERE \
-        id={}'.format(id)
-        submit = SqlRequest.sql_request(query)
-        if submit:
-            return cls(assignment_id=submit[0][0],
-                       student_id=submit[0][1],
-                       content=submit[0][2],
-                       id=submit[0][3],
-                       grade=submit[0][4],
-                       update=submit[0][5],
-                       mentor_id=submit[0][6])
-        return None
+        return db.session.query(cls).get(id)
