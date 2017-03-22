@@ -7,6 +7,8 @@ class Team(db.Model):
     """
     Represents team object.
     """
+
+    __tablename__ = 'team'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     username = db.relationship('Student',backref="team",lazy="dynamic")
@@ -23,6 +25,7 @@ class Team(db.Model):
         Returns list of Student objects where team_id = id of current team.
         return: list(Student objects)
         """
+
         return self.username.all() # get all members of team
 
 
@@ -38,6 +41,7 @@ class Team(db.Model):
         """
         Update team in database.
         """
+
         db.session.flush()
         db.session.add(self)
         db.session.commit()
@@ -46,6 +50,7 @@ class Team(db.Model):
         """
         Remove team from database.
         """
+
         db.session.flush()
         db.session.delete(self)
         db.session.commit()
