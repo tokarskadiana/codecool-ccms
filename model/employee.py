@@ -73,7 +73,7 @@ class Employee(db.Model, User):
         return cls.query.filter_by(position=position).all()
 
     @classmethod
-    def get_to_login(cls, username, password, position='employee'):
+    def get_to_login(cls, username, password, position='assistant'):
         """
         Return Employee object by given username and password.
         :param username (str): username
