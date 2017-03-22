@@ -1,5 +1,5 @@
 from model.employee import Employee
-from model.sql_alchemy_db import db
+
 
 class Manager(Employee):
     """
@@ -15,6 +15,7 @@ class Manager(Employee):
         return: obj(Mentor)
         """
         return super(Manager, cls).get_by_id(id)
+
     @classmethod
     def list_managers(cls):
         """
