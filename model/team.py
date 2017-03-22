@@ -1,11 +1,15 @@
 from model.sqlRequest import SqlRequest
 from model.student import Student
+from model.sql_alchemy_db import db
 
 
-class Team:
+class Team(db.Model):
     """
     Represents team object.
     """
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
 
     def __init__(self, name, id=None):
         """
