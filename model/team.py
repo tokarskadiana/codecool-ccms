@@ -1,5 +1,3 @@
-from model.sqlRequest import SqlRequest
-from model.student import Student
 from model.sql_alchemy_db import db
 
 
