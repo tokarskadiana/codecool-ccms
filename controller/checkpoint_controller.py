@@ -31,7 +31,7 @@ def list_checkpoints():
                                list_checkpoints=list_checkpoints)
     elif isinstance(user, Student):
         choose = "Student"
-        list_checkpoints = Checkpoint.get_by_studedent_id(user.id)
+        list_checkpoints = Checkpoint.get_by_student_id(user.id)
         return render_template('viewcheckpoints.html', user=user_session(session['user'], session['type']),
                                choose=choose, list_checkpoints=list_checkpoints)
     else:

@@ -12,6 +12,7 @@ class Student(User, db.Model):
     mail = db.Column(db.String)
     username = db.Column(db.String)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    username_chkp = db.relationship('Checkpoint', backref="student", lazy="dynamic")
 
     # team = db.relationship("Team",foreign_keys=[team_id])
 
@@ -33,7 +34,7 @@ class Student(User, db.Model):
         arguments: int(team_id)
         return: str(team name)
         """
-        #Does it really work? Gota check it out
+        # Does it really work? Gota check it out
         print('get_team_name')
         if teamID:
             print(self.query.filter_by(team_id=teamID).first())
