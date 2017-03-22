@@ -21,6 +21,16 @@ class Mentor(User):
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List students").click()
+        print('\tcheck if sample students exist START')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[2]': "Piotr Gurdek",
+                         '//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[3]': "666666666",
+                         '//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[4]': "pgurdek@dupa.pl",
+                         '//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]': "Monika Plocica",
+                         '//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[3]': "333333666",
+                         '//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[4]': "monika@dupa.pl"}
+
+        self.match_data(xpaths_values, massage='there is no sample student')
+        print('\tcheck if test student exist SUCCESS')
         if test_student:
             print('\tcheck if test student exist START')
             xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]': "test test"}
@@ -233,7 +243,7 @@ class Mentor(User):
         driver.find_element_by_xpath('//*[@id="main-form-date"]').send_keys('12/12/2012')
         driver.find_element_by_xpath('//*[@id="main-sub-button"]').click()
         print('\t\tcheck if checkpoint exist START')
-        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[1]':'test'}
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[1]': 'test'}
         self.match_data(xpaths_values, massage='there is no checkpoint')
         print('\t\tcheck if checkpoint exist SUCCESS')
         print('\tadd checkpoint SUCCESS')
@@ -245,7 +255,7 @@ class Mentor(User):
         driver.find_element_by_link_text("List checkpoints").click()
         driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[4]/form/button').click()
         print('\t\tcheck if checkpoint still exist START')
-        xpaths_values ={'//*[@id="homepage"]/section/div/div/p': 'There is no Checkpoints. Please add checkpoint.'}
+        xpaths_values = {'//*[@id="homepage"]/section/div/div/p': 'There is no Checkpoints. Please add checkpoint.'}
         self.match_data(xpaths_values, massage='there is still checkpoint')
         print('\t\tcheck if checkpoint still exist SUCCESS')
         print('\tremove checkpoint SUCCESS')
