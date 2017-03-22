@@ -35,10 +35,8 @@ class Manager(User):
         driver.find_element_by_name("phone_number").send_keys("123456789")
         driver.find_element_by_name("submition").click()
         print('\t\tcheck if test mentor exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]').text == 'test test'
-        except:
-            raise ValueError('there is no test mentor')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]': 'test test'}
+        self.match_data(xpaths_values, massage='there is no test mentor')
         print('\t\tcheck if test mentor exist SUCCESS')
         print('\tadd mentor SUCCESS')
 
@@ -60,10 +58,8 @@ class Manager(User):
         driver.find_element_by_name("password").send_keys("edited")
         driver.find_element_by_name("submition").click()
         print('\t\t check if edited mentor exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]') == "edited edited"
-        except:
-            raise ValueError('there is no edited mentor')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]': "edited edited"}
+        self.match_data(xpaths_values, massage='there is no edited mentor')
         print('\t\t check if edited mentor exist SUCCESS')
         print('\tedit mentor SUCCESS')
 

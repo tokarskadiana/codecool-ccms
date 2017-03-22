@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest, time, re
 from tests.user import User
+from selenium.webdriver.support.ui import Select
 
 
 class Mentor(User):
-
-    def logout(self):
-        print('\tlogout START')
-        driver = self.driver
-        driver.find_element_by_xpath('//*[@id="homepage"]/aside/div[1]/div/div/a').click()
-        print('\tlogout SUCCESS')
-
     def login_mentor(self):
         print('\tlogin test START')
         driver = self.driver
@@ -29,11 +23,8 @@ class Mentor(User):
         driver.find_element_by_link_text("List students").click()
         if test_student:
             print('\tcheck if test student exist START')
-            try:
-                driver.find_element_by_xpath(
-                    '//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]').text == "test test"
-            except:
-                raise ValueError('there is no test student')
+            xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]': "test test"}
+            self.match_data(xpaths_values, massage='there is no test student')
             print('\tcheck if test student exist SUCCESS')
         print('\tlist student SUCCESS')
 
@@ -71,10 +62,8 @@ class Mentor(User):
         driver.find_element_by_link_text("List assignments").click()
         if test_assignments:
             print('\t\tcheck if test assignments exist START')
-            try:
-                driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == "test"
-            except:
-                raise ValueError('there is no test assignments')
+            xpath_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[1]': "test"}
+            self.match_data(xpath_values, massage='there is no test assignments')
             print('\t\tcheck if test assignments exist SUCCESS')
         print('\tlist assignments SUCCESS')
 
@@ -98,14 +87,9 @@ class Mentor(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("Show student statistics").click()
         print('\t\tcheck if students have correct attendance % START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[3]').text == "100.0"
-        except:
-            raise ValueError('no visable present %% in piotrek')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[3]').text == "100.0"
-        except:
-            raise ValueError('no visable present %% in monika')
+        xpath_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[1]/td[3]': "100.0",
+                        '//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[3]': "100.0"}
+        self.match_data(xpath_values)
         print('\t\tcheck if students have correct attendance % SUCCESS')
         print('\tattendance test SUCCESS')
 
@@ -126,11 +110,9 @@ class Mentor(User):
         driver.find_element_by_name("phone-number").clear()
         driver.find_element_by_name("phone-number").send_keys("123456789")
         driver.find_element_by_name("submition").click()
-        try:
-            print("\t\tcheck if test student exist START")
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]') == "test test"
-        except:
-            raise ValueError('there is no test student')
+        print("\t\tcheck if test student exist START")
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]': "test test"}
+        self.match_data(xpaths_values, massage='there is no test student')
         print("\t\tcheck if test student exist SUCCESS")
         print('\tadd student SUCCESS')
 
@@ -157,11 +139,9 @@ class Mentor(User):
         driver.find_element_by_name("mail").clear()
         driver.find_element_by_name("mail").send_keys("edited@edited.com")
         driver.find_element_by_name("submition").click()
-        try:
-            print("\t\tcheck if edited test student exist START")
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]') == "edited edited"
-        except:
-            raise ValueError('there is no test student')
+        print("\t\tcheck if edited test student exist START")
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[3]/td[2]': "edited edited"}
+        self.match_data(xpaths_values, massage='there is no test student')
         print("\t\tcheck if test edited student exist SUCCESS")
         print('\tedit student SUCCESS')
 
@@ -175,10 +155,8 @@ class Mentor(User):
         driver.find_element_by_name("name").send_keys("test")
         driver.find_element_by_css_selector("input.main-button").click()
         print('\t\tcheck if added team exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == "test"
-        except:
-            raise ValueError('there is no test team')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[1]': "test"}
+        self.match_data(xpaths_values, massage='there is no test team')
         print('\t\tcheck if added team exist SUCCESS')
         print('\tadd team SUCCESS')
 
@@ -200,10 +178,8 @@ class Mentor(User):
         driver.find_element_by_name("name").send_keys("edit")
         driver.find_element_by_css_selector("input.main-button").click()
         print('\t\tcheck if edited team exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == "edit"
-        except:
-            raise ValueError('there is no edited test team')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[1]': "edit"}
+        self.match_data(xpaths_values, massage='there is no edited test team')
         print('\t\tcheck if edited team exist SUCCESS')
         print('\tedit team SUCCESS')
 
@@ -257,10 +233,8 @@ class Mentor(User):
         driver.find_element_by_xpath('//*[@id="main-form-date"]').send_keys('12/12/2012')
         driver.find_element_by_xpath('//*[@id="main-sub-button"]').click()
         print('\t\tcheck if checkpoint exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == 'test'
-        except:
-            raise ValueError('there is no checkpoint')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[1]':'test'}
+        self.match_data(xpaths_values, massage='there is no checkpoint')
         print('\t\tcheck if checkpoint exist SUCCESS')
         print('\tadd checkpoint SUCCESS')
 
@@ -271,11 +245,8 @@ class Mentor(User):
         driver.find_element_by_link_text("List checkpoints").click()
         driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[4]/form/button').click()
         print('\t\tcheck if checkpoint still exist START')
-        try:
-            driver.find_element_by_xpath(
-                '//*[@id="homepage"]/section/div/div/p') == 'There is no Checkpoints. Please add checkpoint.'
-        except:
-            raise ValueError('there is still checkpoint')
+        xpaths_values ={'//*[@id="homepage"]/section/div/div/p': 'There is no Checkpoints. Please add checkpoint.'}
+        self.match_data(xpaths_values, massage='there is still checkpoint')
         print('\t\tcheck if checkpoint still exist SUCCESS')
         print('\tremove checkpoint SUCCESS')
 

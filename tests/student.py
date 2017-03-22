@@ -17,11 +17,6 @@ class Student(User):
         driver.find_element_by_name("submit").click()
         print('\tlogin SUCCESS')
 
-    def logout(self):
-        print('\tlogout START')
-        driver = self.driver
-        driver.find_element_by_xpath('//*[@id="homepage"]/aside/div[1]/div/div/a').click()
-        print('\tlogout SUCCESS')
 
     def check_attendance_stats(self):
         print('\tcheck attendance stats START')
@@ -29,10 +24,8 @@ class Student(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("Show student statistics").click()
         print('\t\tcheck if attendance stats exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[3]') == '100.0'
-        except:
-            raise ValueError('there is no stats')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[3]': '100.0'}
+        self.match_data(xpaths_values, massage='there is no stats')
         print('\t\tcheck if attendance stats exist SUCCESS')
         print('\tcheck attendance stats SUCCESS')
 
@@ -72,10 +65,8 @@ class Student(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("Show student statistics").click()
         print('\t\tcheck if grade stats exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[2]') == '5.0'
-        except:
-            raise ValueError('there is no stats')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[2]': '5.0'}
+        self.match_data(xpaths_values, massage='there is no stats')
         print('\t\tcheck if grade stats exist SUCCESS')
         print('\tcheck grade SUCCESS')
 

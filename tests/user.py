@@ -16,6 +16,22 @@ class User(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
 
+    def logout(self):
+        print('\tlogout START')
+        driver = self.driver
+        driver.find_element_by_xpath('//*[@id="homepage"]/aside/div[1]/div/div/a').click()
+        print('\tlogout SUCCESS')
+
+    def match_data(self, xpaths_values, massage=None):
+        driver = self.driver
+        for key, value in xpaths_values.items():
+            try:
+                driver.find_element_by_xpath(key) == value
+            except:
+                if massage:
+                    raise ValueError('there is no {}'.format(massage))
+                raise ValueError('there is no {}'.format(value))
+
     def is_element_present(self, how, what):
         try:
             self.driver.find_element(by=how, value=what)
