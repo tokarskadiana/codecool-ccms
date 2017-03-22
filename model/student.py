@@ -3,8 +3,7 @@ from model.sql_alchemy_db import db
 from model.sqlRequest import SqlRequest
 
 
-class Student(User,db.Model):
-
+class Student(User, db.Model):
     __tablename__ = 'student'
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
@@ -13,7 +12,8 @@ class Student(User,db.Model):
     telephone = db.Column(db.String)
     mail = db.Column(db.String)
     username = db.Column(db.String)
-    team_id = db.Column(db.Integer,db.ForeignKey('team.id'))
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+
     # team = db.relationship("Team",foreign_keys=[team_id])
 
 
@@ -28,21 +28,23 @@ class Student(User,db.Model):
         self.student_cards = student_cards
         self.team_name = self.get_team_name(team_id)
 
-    def get_team_name(self, team_id):
+    def get_team_name(self, teamID):
         """
         Return team name by team id.
         arguments: int(team_id)
         return: str(team name)
         """
-
-        if team_id:
-           # team_name  = self.query.join(Student).join(Team).fliter(Student.team_id==Team.id).first() Gota figure it out
-            query = 'SELECT * FROM team WHERE id={}'.format(team_id)
-            team = SqlRequest.sql_request(query)
-            if team:
-                for row in team:
-                    team_name = row[1]
-                return team_name
+        #Does it really work?
+        if teamID:
+            print(self.query.filter_by(team_id=teamID).first())
+            return self.query.filter_by(team_id=teamID).first()
+            # team_name  = self.query.join(Student).join(Team).fliter(Student.team_id==Team.id).first() Gota figure it out
+            #  query = 'SELECT * FROM team WHERE id={}'.format(team_id)
+            #  team = SqlRequest.sql_request(query)
+            #  if team:
+            #      for row in team:
+            #          team_name = row[1]
+            #      return team_name
         return ''
 
     @classmethod
@@ -52,8 +54,7 @@ class Student(User,db.Model):
         arguments: int(id)
         return: obj(Team)
         """
-        return  db.session.query(cls).get(id)
-
+        return db.session.query(cls).get(id)
 
     def add_student(self):
         """

@@ -41,6 +41,7 @@ def list_students():
     GET to generate a list of students
     """
     students = Student.list_students()
+    students[0].team_name
     return render_template('viewstudents.html', user=user_session(session['user'], session['type']), students=students)
 
 

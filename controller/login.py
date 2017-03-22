@@ -28,6 +28,7 @@ def login():
 
     if request.method == "POST":
         for user in all_users:
+            print(user.__dict__)
             if request.form['username'] == user.username and request.form['password'] == user.password:
                 session['logged_in'] = True
                 session['user'] = user.id

@@ -9,7 +9,7 @@ class Team(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-
+    username = db.relationship('Student',backref="team",lazy="dynamic")
 
     def __init__(self, name, id=None):
         """
@@ -23,40 +23,32 @@ class Team(db.Model):
         Returns list of Student objects where team_id = id of current team.
         return: list(Student objects)
         """
-        members = []
-        query = 'SELECT * FROM student WHERE team_id={}'.format(self.id)
-        students = SqlRequest.sql_request(query)
-        if students:
-            for student in students:
-                members.append(Student(id=student[0],
-                                       password=student[3],
-                                       first_name=student[1],
-                                       last_name=student[2],
-                                       telephone=student[4],
-                                       mail=student[5],
-                                       team_id=student[7]))
-            return members
+        return self.username.all() # get all members of team
+
 
     def add_team(self):
         """
         Add team to database.
         """
-        query = 'INSERT OR IGNORE INTO team (name) VALUES("{}");'.format(self.name)
-        SqlRequest.sql_request(query)
+        db.session.flush()
+        db.session.add(self)
+        db.session.commit()
 
     def edit_team(self):
         """
         Update team in database.
         """
-        query = 'UPDATE team SET name="{}" WHERE id={}'.format(self.name, self.id)
-        SqlRequest.sql_request(query)
+        db.session.flush()
+        db.session.add(self)
+        db.session.commit()
 
     def delete_team(self):
         """
         Remove team from database.
         """
-        query = 'DELETE FROM team WHERE id={}'.format(self.id)
-        SqlRequest.sql_request(query)
+        db.session.flush()
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def list_teams(cls):
@@ -64,12 +56,7 @@ class Team(db.Model):
         Get all team objects from database.
         return: list(Team objects)
         """
-        teams_list = []
-        query = 'SELECT * FROM team'
-        teams = SqlRequest.sql_request(query)
-        for row in teams:
-            teams_list.append(cls(row[1], row[0]))
-        return teams_list
+        return cls.query.all()
 
     @classmethod
     def get_by_id(cls, id):
@@ -77,7 +64,4 @@ class Team(db.Model):
         Get team by id from database.
         return: obj(Team object)
         """
-        query = 'SELECT * FROM team WHERE id={}'.format(id)
-        team = SqlRequest.sql_request(query)
-        if team:
-            return cls(id=team[0][0], name=team[0][1])
+        return db.session.query(cls).get(id)
