@@ -1,10 +1,12 @@
 from model.employee import Employee
+from model.sqlRequest import SqlRequest
 
 
 class Mentor(Employee):
     """
     Represents Mentor object.
     """
+    __tablename__ = 'employee'
 
     @classmethod
     def get_by_id(cls, id):
@@ -13,7 +15,7 @@ class Mentor(Employee):
         arguments: int(mentor id)
         return: obj(Mentor)
         """
-        return super(Mentor, cls).get_by_id(id, 'mentor')
+        return super(Mentor, cls).get_by_id(id)
 
     @classmethod
     def list_mentors(cls):

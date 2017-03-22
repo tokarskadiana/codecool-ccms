@@ -1,4 +1,4 @@
-from flask import Blueprint, session, render_template, redirect, url_for, flash, request, session
+from flask import Blueprint, session, render_template, redirect, url_for, flash, request
 from model.manager import Manager
 from model.mentor import Mentor
 from model.student import Student

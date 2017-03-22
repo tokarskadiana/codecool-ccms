@@ -1,14 +1,29 @@
 from model.user import User
 from model.sqlRequest import SqlRequest
+from model.sql_alchemy_db import db
 
 
-class Employee(User):
+class Employee(db.Model, User):
     """
     This class representing Employee class
     """
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    telephone = db.Column(db.String)
+    username = db.Column(db.String, nullable=False)
+    position = db.Column(db.String, nullable=False)
+    mail = db.Column(db.String)
+    salary = db.Column(db.String)
 
-    def __init__(self, id, password, first_name, last_name, position, telephone="", mail="", salary=""):
-        super().__init__(id, password, first_name, last_name, telephone, mail)
+    def __init__(self, password, first_name, last_name, position, telephone=None, mail=None, salary=None):
+        self.username = '{}.{}'.format(first_name.lower(), last_name.lower())
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
+        self.telephone = telephone
+        self.mail = mail
         self.position = position
         self.salary = salary
 
@@ -16,33 +31,27 @@ class Employee(User):
         """
         Add mentor to db.
         """
-        SqlRequest.sql_request(
-            'INSERT OR IGNORE INTO  employee (first_name,last_name,password,telephone,username,position,mail,salary)\
-            VALUES ("{}","{}","{}","{}","{}", "{}", "{}", "{}")'.format(self.first_name,
-                                                                        self.last_name,
-                                                                        self.password,
-                                                                        self.telephone,
-                                                                        self.username,
-                                                                        self.position,
-                                                                        self.mail,
-                                                                        self.salary))
+        db.session.add(self)
+        db.session.commit()
 
-    def edit_employee(self):
+    def edit_employee(self, password, first_name, last_name, telephone, mail, salary):
         """
         Update employee in database.
         """
-        query = ("""UPDATE employee SET first_name="{}", last_name="{}", password="{}", telephone="{}", mail="{}",
-                username="{}", salary="{}" WHERE id={}""".format(self.first_name, self.last_name, self.password,
-                                                                 self.telephone, self.mail, self.username, self.salary,
-                                                                 self.id))
-        SqlRequest.sql_request(query)
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
+        self.telephone = telephone
+        self.mail = mail
+        self.salary = salary
+        db.session.commit()
 
     def delete_employee(self):
         """
         Remove employee from db.
         """
-        query = ('DELETE FROM employee WHERE id={}'.format(self.id))
-        SqlRequest.sql_request(query)
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def get_by_id(cls, id, position):
@@ -52,18 +61,7 @@ class Employee(User):
         :param position: position
         :return: Object
         """
-        query = 'SELECT * FROM employee WHERE id={} AND position = "{}"'.format(id, position)
-        employee = SqlRequest.sql_request(query)
-        if employee:
-            return cls(id=employee[0][0],
-                       password=employee[0][3],
-                       first_name=employee[0][1],
-                       last_name=employee[0][2],
-                       position=employee[0][8],
-                       telephone=employee[0][4],
-                       mail=employee[0][5],
-                       salary=employee[0][7])
-        return None
+        return cls.query.get(id)
 
     @classmethod
     def list_employee(cls, position):
@@ -72,16 +70,4 @@ class Employee(User):
         :param position (str): position
         :return: list of objects
         """
-        employee_list = []
-        query = 'SELECT * FROM employee WHERE position="{}"'.format(position)
-        employees = SqlRequest.sql_request(query)
-        for row in employees:
-            employee_list.append(cls(id=row[0],
-                                     password=row[3],
-                                     first_name=row[1],
-                                     last_name=row[2],
-                                     position=row[8],
-                                     telephone=(row[4] if row[4] else '-----'),
-                                     mail=(row[5] if row[5] else '-----'),
-                                     salary=(row[7] if row[7] else '-----')))
-        return employee_list
+        return cls.query.filter_by(position=position).all()

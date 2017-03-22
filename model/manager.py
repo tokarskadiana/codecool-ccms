@@ -1,20 +1,20 @@
 from model.employee import Employee
-
+from model.sql_alchemy_db import db
 
 class Manager(Employee):
     """
     Represents manager object.
     """
+    __tablename__ = "employee"
 
     @classmethod
     def get_by_id(cls, id):
         """
-        Get manager by id from database.
-        arguments: int(manager id)
-        return: obj(Manager)
+        Get mentor by id from database.
+        arguments: int(mentor id)
+        return: obj(Mentor)
         """
-        return super(Manager, cls).get_by_id(id, 'manager')
-
+        return super(Manager, cls).get_by_id(id)
     @classmethod
     def list_managers(cls):
         """
