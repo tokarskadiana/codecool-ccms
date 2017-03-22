@@ -23,3 +23,13 @@ class Manager(Employee):
         return: list(list of Manager objects)
         """
         return super(Manager, cls).list_employee('manager')
+
+    @classmethod
+    def get_to_login(cls, username, password):
+        """
+        Return Manager object by given username and password.
+        :param username (str): username
+        :param password (str): password
+        :return: object
+        """
+        return super(Manager, cls).get_to_login(username, password, 'manager')

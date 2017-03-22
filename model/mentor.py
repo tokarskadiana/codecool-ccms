@@ -23,3 +23,13 @@ class Mentor(Employee):
         return: list(list of Mentor objects)
         """
         return super(Mentor, cls).list_employee('mentor')
+
+    @classmethod
+    def get_to_login(cls, username, password):
+        """
+        Return Mentor object by given username and password.
+        :param username (str): username
+        :param password (str): password
+        :return: object
+        """
+        return super(Mentor, cls).get_to_login(username, password, 'mentor')

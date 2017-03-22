@@ -103,3 +103,13 @@ class Student(User,db.Model):
                 stats = 0
             stats = (presence_average[0][0] / presence_average[0][1]) * 100
             return stats
+
+    @classmethod
+    def get_to_login(cls, username, password):
+        """
+        Return Employee object by given username and password.
+        :param username (str): username
+        :param password (str): password
+        :return: object
+        """
+        return cls.query.filter_by(username=username, password=password).first()

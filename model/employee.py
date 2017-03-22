@@ -54,7 +54,7 @@ class Employee(db.Model, User):
         db.session.commit()
 
     @classmethod
-    def get_by_id(cls, id, position):
+    def get_by_id(cls, id, position=None):
         """
         Get Object by given id and position in database.
         :param id: id
@@ -71,3 +71,13 @@ class Employee(db.Model, User):
         :return: list of objects
         """
         return cls.query.filter_by(position=position).all()
+
+    @classmethod
+    def get_to_login(cls, username, password, position='employee'):
+        """
+        Return Employee object by given username and password.
+        :param username (str): username
+        :param password (str): password
+        :return: object
+        """
+        return cls.query.filter_by(username=username, password=password, position=position).first()
