@@ -1,4 +1,3 @@
-from model.sqlRequest import SqlRequest
 from model.sql_alchemy_db import db
 from model.student import Student
 from model.employee import Employee
@@ -99,7 +98,7 @@ class Checkpoint(db.Model):
     @classmethod
     def get_by_student_id(cls, student_id):
         """
-        Get list of checkpoin objects by  student id
+        Get list of checkpoint objects by  student id
         """
 
         return cls.query.filter(cls.student_id == student_id).all()
