@@ -210,6 +210,12 @@ class Mentor(unittest.TestCase):
         driver.find_element_by_name("name").clear()
         driver.find_element_by_name("name").send_keys("edit")
         driver.find_element_by_css_selector("input.main-button").click()
+        print('\t\tcheck if edited team exist START')
+        try:
+            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[1]').text == "edit"
+        except:
+            raise ValueError('there is no edited test team')
+        print('\t\tcheck if edited team exist SUCCESS')
         print('\tedit team SUCCESS')
 
     def add_student_to_team(self, test_student=False):
@@ -355,6 +361,7 @@ class Mentor(unittest.TestCase):
         Mentor.login_mentor(self)
         Mentor.add_team(self)
         Mentor.add_student_to_team(self)
+        Mentor.remove_team(self)
 
     def test_edit_team(self):
         print('test edit team')
@@ -377,6 +384,7 @@ class Mentor(unittest.TestCase):
         Mentor.add_student_to_team(self, test_student=True)
         Mentor.remove_team(self)
         Mentor.check_student_team_status(self, test_student=True)
+        Mentor.remove_student(self)
 
     def test_add_checkpoint(self):
         print('test add checkpoint')
