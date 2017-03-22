@@ -56,8 +56,9 @@ class Submition(db.Model):
         Changes a content of submition.
         '''
         date = datetime.datetime.now().date()
-        SqlRequest.sql_request(
-            'UPDATE submition SET content="{}", update_data="{}" WHERE id="{}";'.format(new_content, date, self.id))
+        self.content = new_content
+        self.update_data = date
+        db.session.commit()
 
     @classmethod
     def get_submit(cls, student_id, assignment_id):
