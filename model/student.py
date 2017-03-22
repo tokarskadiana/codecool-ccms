@@ -1,6 +1,5 @@
 from model.user import User
 from model.sql_alchemy_db import db
-from model.sqlRequest import SqlRequest
 
 
 class Student(User, db.Model):
@@ -34,7 +33,8 @@ class Student(User, db.Model):
         arguments: int(team_id)
         return: str(team name)
         """
-        #Does it really work?
+        #Does it really work? Gota check it out
+        print('get_team_name')
         if teamID:
             print(self.query.filter_by(team_id=teamID).first())
             return self.query.filter_by(team_id=teamID).first()
