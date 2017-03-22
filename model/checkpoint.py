@@ -1,8 +1,19 @@
 from model.sqlRequest import SqlRequest
+from model.sql_alchemy_db import db
 from model.student import Student
 
 
 class Checkpoint():
+
+    __tablename__ = 'checkpoint'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    checkpoint_date = db.Column(db.String)
+    card = db.Column(db.Integer)
+    student_id = db.Column(db.Integer)
+    mentor_id = db.Column(db.Integer)
+
+
     def __init__(self, id, name, checkpoint_date, student_id, mentor_id, card):
         self.student_id = student_id
         self.mentor_id = mentor_id
@@ -44,6 +55,7 @@ class Checkpoint():
         :param name:
         :return:
         """
+
         SqlRequest.sql_request('DELETE  FROM checkpoint WHERE name="{}"'.format(name))
 
     @classmethod
