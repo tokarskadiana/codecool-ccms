@@ -8,7 +8,6 @@ from model.student import Student
 
 attendance_controller = Blueprint('attendance_controller', __name__,
                                   template_folder='templates')
-# ---------------ATTENDANCE-----------------
 
 
 @attendance_controller.route("/attendance", methods=['GET', 'POST'])
@@ -20,21 +19,20 @@ def attendance():
     POST: Add or update attendance in database by given value in request.form. Redirect to attendance definition.
     """
     students = Student.list_students()
-    date = datetime.datetime.now().strftime("%Y-%m-%d")
+    date = datetime.datetime.today().date()
     students_checked = Attendance.get_attendance_day(date)
     if request.method == 'POST':
         if Attendance.already_checked(date):
             for student in students_checked:
-                value = int(request.form[str(student[0])])
-                Attendance.update_attendance_day(
-                    int(student[0]), date, int(value))
+                status = bool(int(request.form[str(student[0])]))
+                Attendance.update_attendance_day(int(student[0]), date, status)
         else:
             for student in students:
-                value = int(request.form[str(student.id)])
-                Attendance.add(student.id, value, date)
+                status = bool(request.form[str(student.id)])
+                Attendance(date, status, student.id).add()
         return redirect(url_for('attendance_controller.attendance'))
     if Attendance.already_checked(date):
         return render_template('attendance.html', user=user_session(session['user'], session['type']),
-                               students_checked=students_checked, date=date)
+                               students_checked=students_checked, date=date, students=students)
     return render_template('attendance.html', user=user_session(session['user'], session['type']), students=students,
-                           date=date)
+                           date=date, students_checked=students_checked)
