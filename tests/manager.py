@@ -2,8 +2,8 @@
 from tests.user import User
 import unittest, time, re
 
-class Manager(User):
 
+class Manager(User):
     def login_manager(self):
         print('\tlogin manager START')
         driver = self.driver

@@ -2,8 +2,8 @@
 import unittest, time, re
 from tests.user import User
 
-class Assistant(User):
 
+class Assistant(User):
     def login_assistant(self):
         print('\tlogin test START')
         driver = self.driver
@@ -20,12 +20,13 @@ class Assistant(User):
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List students").click()
-        students = [{'name':'Piotr Gurdek'},{'name':'Monika Plocica'}]
+        students = [{'name': 'Piotr Gurdek'}, {'name': 'Monika Plocica'}]
         for i in range(2):
             print('\t\tcheck if test student name:{} exist START'.format(students[i]['name']))
             try:
                 driver.find_element_by_xpath(
-                    '//*[@id="homepage"]/section/div/table/tbody/tr[{}]/td[2]'.format(i+1)).text == students[i]['name']
+                    '//*[@id="homepage"]/section/div/table/tbody/tr[{}]/td[2]'.format(i + 1)).text == students[i][
+                    'name']
             except:
                 raise ValueError('there is no test student')
             print('\t\tcheck if test student name:{} exist SUCCESS'.format(students[i]['name']))
@@ -49,6 +50,7 @@ class Assistant(User):
         print('test list students')
         Assistant.login_assistant(self)
         Assistant.list_students(self)
+
 
 if __name__ == "__main__":
     unittest.main()

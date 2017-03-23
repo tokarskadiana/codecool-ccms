@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from tests.user import User
-from tests.mentor import  Mentor
+from tests.mentor import Mentor
 import unittest, time, re
 
 
 class Student(User):
-
     def login_student(self, username):
         print('\tlogin START')
         driver = self.driver
@@ -16,7 +15,6 @@ class Student(User):
         driver.find_element_by_name("password").send_keys("kkk")
         driver.find_element_by_name("submit").click()
         print('\tlogin SUCCESS')
-
 
     def check_attendance_stats(self):
         print('\tcheck attendance stats START')
