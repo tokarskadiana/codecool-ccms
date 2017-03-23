@@ -24,7 +24,7 @@ app.register_blueprint(main_page)
 
 
 if __name__ == '__main__':
-    # DatabaseController.createSqlDatabase()
+    DatabaseController.createSqlDatabase()
     db.create_all()
     DatabaseController.sample_data()
     app.run(debug=True)

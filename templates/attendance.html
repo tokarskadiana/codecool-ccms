@@ -1,8 +1,8 @@
 {% extends 'index.html' %}
 {% block content %}
     <h3>Check Attendance {{ date }}</h3>
+    <div class="small-wrapper">
     <form class="main-form" action="" method="post">
-        <div class="small-wrapper">
             <table class='table-style' onclick="toggleButtonRadioForm('attendance-sub-button', 'attendance-radio')">
                 <thead>
                 <th>Name</th>
@@ -28,24 +28,20 @@
                         <tr>
                             <td>{{ student[-2] }} {{ student[-1] }}</td>
                             <td><input type="radio" id="{{ student[0] }}-yes" name="{{ student[0] }}"
-                                       class="attendance-radio" value="1" {% if student[1]==1 %} checked {% endif %}/>
+                                       class="attendance-radio" value="1" {% if student[1] %} checked {% endif %}/>
                                 <label for="{{ student[0] }}-yes"><span></span>Yes</label>
                             </td>
                             <td><input type="radio" id="{{ student[0] }}-no" name="{{ student[0] }}"
-                                       class="attendance-radio" value="0" {% if student[1]==0 %} checked {% endif %}/>
+                                       class="attendance-radio" value="0" {% if not student[1]%} checked {% endif %}/>
                                 <label for="{{ student[0] }}-no"><span></span>No</label>
                             </td>
                         </tr>
                     {% endfor %}
                 {% endif %}
                 </tbody>
-                <tfoot>
-                </tfoot>
-
-
-            </table>
+          </table>
             <input class='main-button' type="submit" value="Submit" id="attendance-sub-button" disabled="disabled">
             <script type="text/javascript" src="{{ url_for('static', filename = 'js/main.js') }}"></script>
-        </div>
     </form>
+  </div>
 {% endblock %}
