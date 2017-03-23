@@ -149,6 +149,7 @@ class Assignment(db.Model):
 
         if assignments:
             return assignments
+
         return None
 
     def delete_assignment(self):
