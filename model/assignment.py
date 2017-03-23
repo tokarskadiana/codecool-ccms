@@ -17,6 +17,7 @@ class Assignment(db.Model):
     due_date = db.Column(db.String)
     mentor_id = db.Column(db.Integer)
     type = db.Column(db.String)
+    # submition = db.relationship('Submition', backref='assignment', lazy='dynamic')
 
     def __init__(self, title, description, due_date, mentor_id, type, id=None, date=None):
         '''
@@ -149,9 +150,7 @@ class Assignment(db.Model):
         # assignments = SqlRequest.sql_request(query)
         assignments = db.session.query(cls).distinct(Assignment.id, Assignment.description, Assignment.due_date, Assignment.mentor_id).join(Submition).filter_by()
 
-        assignments = db.session.query(Assignment, Submition) \
-            .join(Submition, Submition.assignment_id == Assignment.id) \
-            .filter(Submition.student_id == id).all()
+
         print('lista assigmentów TO TUUU', assignments)
 
         # assignments_list = []

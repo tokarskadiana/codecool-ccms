@@ -40,8 +40,6 @@ class Team(db.Model):
         Update team in database.
         """
 
-        db.session.flush()
-        db.session.add(self)
         db.session.commit()
 
     def delete_team(self):
