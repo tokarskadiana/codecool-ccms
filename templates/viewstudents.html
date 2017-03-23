@@ -25,7 +25,7 @@
                     <td>{{ student.full_name() }}</td>
                     <td>{{ student.telephone }}</td>
                     <td>{{ student.mail }}</td>
-                    <td>{{ student.team_name }}</td>
+                    <td>{{ student.get_team_name() }}</td>
                     {% if user.__class__.__name__ == 'Mentor' %}
                         <td><a href="{{ url_for('student_controller.edit_student', student_id=student.id) }}"><i
                                 class="fa fa-pencil-square-o"

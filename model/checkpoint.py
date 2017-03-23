@@ -1,8 +1,17 @@
-from model.sqlRequest import SqlRequest
+from model.sql_alchemy_db import db
 from model.student import Student
+from model.employee import Employee
 
 
-class Checkpoint():
+class Checkpoint(db.Model):
+    __tablename__ = 'checkpoint'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    checkpoint_date = db.Column(db.String)
+    card = db.Column(db.Integer)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+    mentor_id = db.Column(db.Integer)
+
     def __init__(self, id, name, checkpoint_date, student_id, mentor_id, card):
         self.student_id = student_id
         self.mentor_id = mentor_id
@@ -19,14 +28,13 @@ class Checkpoint():
         """
 
         for student in student_list:
-            cls.add_checkpoint(name, checkpoint_date, student.id, mentor_id, card)
+            cls(None, name, checkpoint_date, student.id, mentor_id, card).add_checkpoint()
 
-    @classmethod
-    def add_checkpoint(cls, name, checkpoint_date, student_id, mentor_id, card):
+    def add_checkpoint(self):
         """Add checkpoint to db"""
-        SqlRequest.sql_request(
-            "INSERT INTO checkpoint (name, checkpoint_date, student_id, mentor_id,card) VALUES ('{}', '{}', {}, {},{})".format(
-                name, checkpoint_date, student_id, mentor_id, card))
+        db.session.flush()
+        db.session.add(self)
+        db.session.commit()
 
     @classmethod
     def get_list_distinct(cls):
@@ -34,8 +42,12 @@ class Checkpoint():
         Get all available checkpoints
         :return:
         """
-        query = "SELECT name,checkpoint_date FROM checkpoint GROUP BY name"
-        return SqlRequest.sql_request(query)
+        return db.session.query(cls.name,cls.checkpoint_date).distinct()
+
+    def remove_chkp(self):
+        db.session.flush()
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def remove_checkpoint(cls, name):
@@ -44,7 +56,9 @@ class Checkpoint():
         :param name:
         :return:
         """
-        SqlRequest.sql_request('DELETE  FROM checkpoint WHERE name="{}"'.format(name))
+        checkpoints = cls.get_details_checkpoint_by_name(name)
+        for checkpoint in checkpoints:
+            checkpoint.remove_chkp()
 
     @classmethod
     def get_details_checkpoint_by_name(cls, name):
@@ -52,16 +66,7 @@ class Checkpoint():
         Get details of checkpoint by its name
         :return: List of objects
         """
-        query = "SELECT id, name, checkpoint_date, student_id, mentor_id, card FROM checkpoint WHERE name='{}'".format(
-            name)
-        checkpoints = SqlRequest.sql_request(query)
-        chkp_objects = []
-        if checkpoints:
-            for chkp in checkpoints:
-                temp_object = cls(chkp[0], chkp[1], chkp[2], chkp[3], chkp[4], chkp[5])
-                chkp_objects.append(temp_object)
-            return chkp_objects
-        return None
+        return cls.query.filter(cls.name == name).all()
 
     @classmethod
     def grade_checkpoints(cls, grade_list, id_list):
@@ -74,8 +79,9 @@ class Checkpoint():
         for i, grade in enumerate(grade_list):
             try:
                 if int(grade) >= 0 and int(grade) <= 3:
-                    query = "UPDATE checkpoint SET card={} WHERE id={}".format(int(grade), id_list[i])
-                    SqlRequest.sql_request(query)
+                    chkp = cls.get_by_id(id_list[i])
+                    chkp.card = int(grade)
+                    chkp.add_checkpoint()
             except:
                 print('Hackers arent ya?')
 
@@ -89,26 +95,19 @@ class Checkpoint():
             return student.username
         return None
 
+    @classmethod
+    def get_by_student_id(cls, student_id):
+        """
+        Get list of checkpoint objects by  student id
+        """
+
+        return cls.query.filter(cls.student_id == student_id).all()
 
     @classmethod
-    def get_by_studedent_id(cls, student_id):
+    def get_by_id(cls, id):
         """
-        Get list of checkpoin objects by  student id
+        Rteurn team object by id from database.
+        arguments: int(id)
+        return: obj(Team)
         """
-        chkp_objects = []
-        query = 'SELECT * FROM checkpoint WHERE student_id={}'.format(student_id)
-        checkpoints = SqlRequest.sql_request(query)
-        if checkpoints:
-            for chkp in checkpoints:
-                check = 'Not graded'
-                if chkp[5] == 1:
-                    check = 'Red'
-                elif chkp[5] == 2:
-                    check = 'Yellow'
-                elif chkp[5] == 2:
-                    check = 'Green'
-
-                temp_object = cls(chkp[0], chkp[1], chkp[2], chkp[3], chkp[4], check)
-                chkp_objects.append(temp_object)
-            return chkp_objects
-        return None
+        return db.session.query(cls).get(id)

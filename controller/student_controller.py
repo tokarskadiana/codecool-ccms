@@ -12,17 +12,21 @@ student_controller = Blueprint('student_controller', __name__,
 
 
 def save_student(save, id=None):
-    student = Student(id=id,
-                      first_name=request.form['first-name'],
-                      last_name=request.form['last-name'],
-                      password=request.form['password'],
-                      telephone=request.form.get('phone-number', ''),
-                      mail=request.form.get('mail', ''),
-                      team_id=request.form.get('team', ''))
+    print('asdasdasd')
+
     if save == 'add':
+        student = Student(id=id,
+                          first_name=request.form['first-name'],
+                          last_name=request.form['last-name'],
+                          password=request.form['password'],
+                          telephone=request.form.get('phone-number', ''),
+                          mail=request.form.get('mail', ''),
+                          team_id=request.form.get('team', ''))
+        print('ADD')
         student.add_student()
     elif save == 'edit' and id:
         # SQLALCHEMY - need to get element from db and edit it , rather then create new object (won't work , other way)
+        print('IN EDIT')
         student = Student.get_by_id(id)
         student.first_name = request.form['first-name']
         student.last_name = request.form['last-name']
@@ -41,6 +45,7 @@ def list_students():
     GET to generate a list of students
     """
     students = Student.list_students()
+    students[0].get_team_name()
     return render_template('viewstudents.html', user=user_session(session['user'], session['type']), students=students)
 
 
@@ -71,6 +76,7 @@ def edit_student(student_id):
     """
     teams = Team.list_teams()
     student = Student.get_by_id(student_id)
+    print('Editing')
     if student:
         if request.method == 'POST':
             save_student('edit', student.id)

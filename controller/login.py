@@ -19,24 +19,25 @@ def login():
     POST: returns HTTP 200 on success and redirect to index page
           returns HTTP 200 when login/password not correct and back to login page
     """
-    error = None
-    students = Student.list_students()
-    employees = Employee.list_employee('assistant')
-    mentors = Mentor.list_mentors()
-    managers = Manager.list_managers()
-    all_users = students + employees + mentors + managers
-
     if request.method == "POST":
-        for user in all_users:
-            if request.form['username'] == user.username and request.form['password'] == user.password:
-                session['logged_in'] = True
-                session['user'] = user.id
-                session['type'] = user.__class__.__name__
-                return redirect(url_for('main_page.index'))
-            else:
-                error = "Invalid Credentials. Please Try Again "
+        user = None
+        username, password = request.form['username'], request.form['password']
+        users = [Student.get_to_login(username, password),
+                Mentor.get_to_login(username, password),
+                Manager.get_to_login(username, password),
+                Employee.get_to_login(username, password)]
+        for item in users:
+            if item:
+                user = item
+        if user:
+            session['logged_in'] = True
+            session['user'] = user.id
+            session['type'] = user.__class__.__name__
+            return redirect(url_for('main_page.index'))
+        else:
+            flash("Invalid Credentials. Please Try Again ")
 
-    return render_template("login.html", error=error)
+    return render_template("login.html")
 
 
 @authorization.route("/logout", methods=["GET", "POST"])

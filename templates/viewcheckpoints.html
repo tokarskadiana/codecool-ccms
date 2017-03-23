@@ -60,7 +60,17 @@
 
                   <td>{{checkpoint.name}}</td>
                   <td>{{checkpoint.checkpoint_date}}</td>
-                  <td>{{checkpoint.card}}</td>
+                  <td>
+                      {% if checkpoint.card == 0 %}
+                        Not Graded
+                      {% elif checkpoint.card == 1 %}
+                        Red
+                      {% elif checkpoint.card == 2 %}
+                        Yellow
+                      {% else %}
+                        Green
+                      {% endif %}
+                  </td>
                 </tr>
                   {% endfor %}
                 {% endif %}

@@ -37,13 +37,6 @@ class Submition(db.Model):
         db.session.add(self)
         db.session.commit()
 
-        # SqlRequest.sql_request(
-        #     'INSERT INTO submition (assignment_id, student_id) VALUES("{}", "{}")'.format(assignment_id, student_id))
-        # submition = cls(assignment_id, student_id)
-
-        # submition_id = SqlRequest.sql_request('SELECT * FROM submition WHERE id = (SELECT MAX(id) \
-        # FROM submition);')[0][0]
-        # submition.set_id(submition_id)
 
     def update_grade(self, new_grade):
         '''

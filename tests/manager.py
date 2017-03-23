@@ -1,21 +1,9 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
+from tests.user import User
 import unittest, time, re
 
 
-class Manager(unittest.TestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
-        self.base_url = "http://127.0.0.1:5000/"
-        self.verificationErrors = []
-        self.accept_next_alert = True
-
+class Manager(User):
     def login_manager(self):
         print('\tlogin manager START')
         driver = self.driver
@@ -47,10 +35,8 @@ class Manager(unittest.TestCase):
         driver.find_element_by_name("phone_number").send_keys("123456789")
         driver.find_element_by_name("submition").click()
         print('\t\tcheck if test mentor exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]').text == 'test test'
-        except:
-            raise ValueError('there is no test mentor')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]': 'test test'}
+        self.match_data(xpaths_values, massage='there is no test mentor')
         print('\t\tcheck if test mentor exist SUCCESS')
         print('\tadd mentor SUCCESS')
 
@@ -72,10 +58,8 @@ class Manager(unittest.TestCase):
         driver.find_element_by_name("password").send_keys("edited")
         driver.find_element_by_name("submition").click()
         print('\t\t check if edited mentor exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]') == "edited edited"
-        except:
-            raise ValueError('there is no edited mentor')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr[2]/td[2]': "edited edited"}
+        self.match_data(xpaths_values, massage='there is no edited mentor')
         print('\t\t check if edited mentor exist SUCCESS')
         print('\tedit mentor SUCCESS')
 
@@ -135,36 +119,6 @@ class Manager(unittest.TestCase):
         print('test list students')
         Manager.login_manager(self)
         Manager.list_students(self)
-
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
-
-    def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
 
 
 if __name__ == "__main__":

@@ -1,22 +1,10 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
+from tests.user import User
+from tests.mentor import Mentor
 import unittest, time, re
-from model.mentor import  Mentor
 
 
-class Student(unittest.TestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
-        self.base_url = "http://127.0.0.1:5000/"
-        self.verificationErrors = []
-        self.accept_next_alert = True
-
+class Student(User):
     def login_student(self, username):
         print('\tlogin START')
         driver = self.driver
@@ -28,22 +16,14 @@ class Student(unittest.TestCase):
         driver.find_element_by_name("submit").click()
         print('\tlogin SUCCESS')
 
-    def logout(self):
-        print('\tlogout START')
-        driver = self.driver
-        driver.find_element_by_xpath('//*[@id="homepage"]/aside/div[1]/div/div/a').click()
-        print('\tlogout SUCCESS')
-
     def check_attendance_stats(self):
         print('\tcheck attendance stats START')
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("Show student statistics").click()
         print('\t\tcheck if attendance stats exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[3]') == '100.0'
-        except:
-            raise ValueError('there is no stats')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[3]': '100.0'}
+        self.match_data(xpaths_values, massage='there is no stats')
         print('\t\tcheck if attendance stats exist SUCCESS')
         print('\tcheck attendance stats SUCCESS')
 
@@ -83,10 +63,8 @@ class Student(unittest.TestCase):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("Show student statistics").click()
         print('\t\tcheck if grade stats exist START')
-        try:
-            driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[2]') == '5.0'
-        except:
-            raise ValueError('there is no stats')
+        xpaths_values = {'//*[@id="homepage"]/section/div/table/tbody/tr/td[2]': '5.0'}
+        self.match_data(xpaths_values, massage='there is no stats')
         print('\t\tcheck if grade stats exist SUCCESS')
         print('\tcheck grade SUCCESS')
 
@@ -148,36 +126,6 @@ class Student(unittest.TestCase):
         Student.logout(self)
         Mentor.login_mentor(self)
         Mentor.remove_assignments(self)
-
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
-
-    def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
 
 
 if __name__ == "__main__":
