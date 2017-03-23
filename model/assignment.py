@@ -159,16 +159,16 @@ class Assignment(db.Model):
         print('lista assigmentów TO TUUU', assignments)
 
         assignments_list = []
-        if assignments:
-            for assignment in assignments:
-                assignments_list.append(cls(id=assignment[0][0],
-                                            title=assignment[0][1],
-                                            description=assignment[0][2],
-                                            due_date=assignment[0][3],
-                                            mentor_id=assignment[0][4],
-                                            type=assignment[0][5],
-                                            ))
-            return assignments
+        # if assignments:
+        #     for assignment in assignments:
+        #         assignments_list.append(cls(id=assignment[0][0],
+        #                                     title=assignment[0][1],
+        #                                     description=assignment[0][2],
+        #                                     due_date=assignment[0][3],
+        #                                     mentor_id=assignment[0][4],
+        #                                     type=assignment[0][5],
+        #                                     ))
+            # return assignments
         return None
 
     def delete_assignment(self):

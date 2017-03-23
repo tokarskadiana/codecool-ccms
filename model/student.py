@@ -1,5 +1,8 @@
 from model.user import User
 from model.sql_alchemy_db import db
+from sqlalchemy import func
+from model.sqlRequest import SqlRequest
+from model.submit import Submition
 
 
 class Student(User, db.Model):
@@ -14,6 +17,8 @@ class Student(User, db.Model):
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
     checkpoints = db.relationship('Checkpoint', backref="student", lazy="dynamic")
     teams = db.relationship('Team', backref="student", lazy="joined")
+    attendance = db.relationship('Attendance', backref="student", lazy="dynamic")
+
 
     def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id="", student_cards=""):
         """
@@ -77,9 +82,7 @@ class Student(User, db.Model):
         Get student average grade
         return: float(average garde)
         """
-        query = 'SELECT AVG(grade) FROM submition WHERE student_id = "{}"'.format(self.id)
-        grade_average = SqlRequest.sql_request(query)
-        grade = grade_average[0][0]
+        grade = db.session.query(func.avg(Submition.grade)).filter_by(student_id=self.id).scalar()
         if grade:
             return grade
         elif grade == 0:
@@ -90,8 +93,11 @@ class Student(User, db.Model):
         Get average present for student
         return: float(average present)
         """
-        query = 'SELECT SUM(status), COUNT(status) FROM attendance WHERE student_id="{}"'.format(self.id)
-        presence_average = SqlRequest.sql_request(query)
+        attendance = self.attendance.first()
+        attendance = attendance.__class__
+        presence_average = db.session.query(func.avg(attendance.status),
+                                            func.count(attendance.status)).filter_by(student_id=self.id).all()
+
         if presence_average[0][1]:
             if not presence_average[0][0]:
                 stats = 0
