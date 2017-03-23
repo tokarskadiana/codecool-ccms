@@ -34,8 +34,6 @@ class Assignment(db.Model):
     def set_id(self, id):
         self.id = id
 
-
-    # nieużywana
     def make_submit_list(self):
         '''
         Make a list of submitions for particular assigment instance for every students.
@@ -47,8 +45,8 @@ class Assignment(db.Model):
         for student in student_list:
             print('eloeloeleoeleoleoeeo')
             print(self.id)
-            lol =Submition(assignment_id=self.id, student_id=student.id)
-            lol.create()
+            submit =Submition(assignment_id=self.id, student_id=student.id)
+            submit.create()
 
     @classmethod
     def create(cls, title, description, type, user_name, due_date, mentor_id):  # add user_name
@@ -106,10 +104,8 @@ class Assignment(db.Model):
             # SqlRequest.sql_request(
             # "SELECT * FROM submition WHERE assignment_id='{}'".format(self.id))
 
-        user_id = db.session.query(Student).filter_by(username=user_name)[0][0]
-
-            # SqlRequest.sql_request(
-            # "SELECT * FROM student WHERE username='{}'".format(user_name))[0][0]
+        user = db.session.query(Student).filter_by(username=user_name)
+        user_id = user.id
 
         for submition in submitions:
             if submition[2] == user_id:
@@ -165,7 +161,6 @@ class Assignment(db.Model):
                                             title=assignment[0][1],
                                             description=assignment[0][2],
                                             due_date=assignment[0][3],
-                                            mentor_id=assignment[0][4],
                                             type=assignment[0][5],
                                             ))
             return assignments

@@ -29,8 +29,6 @@ class Submition(db.Model):
     def set_id(self, id):
         self.id = id
 
-    # @classmethod
-    # @staticmethod
     def create(self):
         '''
         Make new submition.
