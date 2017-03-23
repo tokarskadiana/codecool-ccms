@@ -20,15 +20,13 @@ def login():
           returns HTTP 200 when login/password not correct and back to login page
     """
     if request.method == "POST":
-        user = None
         username, password = request.form['username'], request.form['password']
-        users = [Student.get_to_login(username, password),
-                Mentor.get_to_login(username, password),
-                Manager.get_to_login(username, password),
-                Employee.get_to_login(username, password)]
-        for item in users:
-            if item:
-                user = item
+        users = [Student, Mentor, Manager, Employee]
+        user = None
+        index = 0
+        while not user and index < 3:
+            user = users[index].get_to_login(username, password)
+            index += 1
         if user:
             session['logged_in'] = True
             session['user'] = user.id
