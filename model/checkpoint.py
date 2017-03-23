@@ -90,6 +90,7 @@ class Checkpoint(db.Model):
         Get student name
         :return: List of objects
         """
+        print(self.query)
         student = Student.get_by_id(self.student_id)
         if student:
             return student.username

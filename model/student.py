@@ -12,9 +12,9 @@ class Student(User, db.Model):
     mail = db.Column(db.String)
     username = db.Column(db.String)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
-    username_chkp = db.relationship('Checkpoint', backref="student", lazy="dynamic")
+    checkpoints  = db.relationship('Checkpoint', backref="student", lazy="dynamic")
+    teams = db.relationship('Team', backref="student", lazy="joined")
 
-    # team = db.relationship("Team",foreign_keys=[team_id])
 
 
     def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id="", student_cards=""):
@@ -26,27 +26,21 @@ class Student(User, db.Model):
                                       last_name, telephone, mail)
         self.team_id = team_id
         self.student_cards = student_cards
-        self.team_name = self.get_team_name(team_id)
+        self.team_name = self.get_team_name()
 
-    def get_team_name(self, teamID):
+    def get_team_name(self):
         """
         Return team name by team id.
         arguments: int(team_id)
         return: str(team name)
         """
-        # Does it really work? Gota check it out
-        print('get_team_name')
-        if teamID:
-            print(self.query.filter_by(team_id=teamID).first())
-            return self.query.filter_by(team_id=teamID).first()
-            # team_name  = self.query.join(Student).join(Team).fliter(Student.team_id==Team.id).first() Gota figure it out
-            #  query = 'SELECT * FROM team WHERE id={}'.format(team_id)
-            #  team = SqlRequest.sql_request(query)
-            #  if team:
-            #      for row in team:
-            #          team_name = row[1]
-            #      return team_name
+        if self.team_id:
+            team_name = self.teams
+            return team_name.name
+
         return ''
+    def get_checkpoints(self):
+        return self.checkpoints.all()
 
     @classmethod
     def get_by_id(cls, id):
