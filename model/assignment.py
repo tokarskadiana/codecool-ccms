@@ -42,9 +42,13 @@ class Assignment(db.Model):
 
         Returns:list
         '''
-        student_list = SqlRequest.sql_request('SELECT * FROM student')
+        student_list = db.session.query(Student).all()
+        print(student_list)
         for student in student_list:
-            Submition.create(self.id, student[0])
+            print('eloeloeleoeleoleoeeo')
+            print(self.id)
+            lol =Submition(assignment_id=self.id, student_id=student.id)
+            lol.create()
 
     @classmethod
     def create(cls, title, description, type, user_name, due_date, mentor_id):  # add user_name
@@ -61,6 +65,9 @@ class Assignment(db.Model):
         db.session.add(assignment)
         db.session.commit()
 
+        test = Assignment.get_by_id(assignment.id)
+        print(test.__dict__)
+        test.make_submit_list()
 
     @classmethod
     def get_list(cls):
@@ -69,8 +76,6 @@ class Assignment(db.Model):
         title, description, due_date, mentor_id, type, id=None):
         Returns:list
         '''
-
-        print('jestem TUUUU')
 
         return cls.query.all()
 
@@ -145,24 +150,24 @@ class Assignment(db.Model):
         :return: list of objects
         """
         print('get_all_assigments WCHODZI')
-        # query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM \
-        # assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(id)
-        # assignments = SqlRequest.sql_request(query)
-        assignments = db.session.query(cls).distinct(Assignment.id, Assignment.description, Assignment.due_date, Assignment.mentor_id).join(Submition).filter_by()
+        query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM \
+        assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(id)
+        assignments = SqlRequest.sql_request(query)
+        # assignments = db.session.query(cls).distinct(Assignment.id, Assignment.description, Assignment.due_date, Assignment.mentor_id).join(Submition).filter_by(student_id=id)
 
 
         print('lista assigmentów TO TUUU', assignments)
 
-        # assignments_list = []
+        assignments_list = []
         if assignments:
-        #     for assignment in assignments:
-        #         assignments_list.append(cls(id=assignment[0][0],
-        #                                     title=assignment[0][1],
-        #                                     description=assignment[0][2],
-        #                                     due_date=assignment[0][3],
-        #                                     mentor_id=assignment[0][4],
-        #                                     type=assignment[0][5],
-        #                                     ))
+            for assignment in assignments:
+                assignments_list.append(cls(id=assignment[0][0],
+                                            title=assignment[0][1],
+                                            description=assignment[0][2],
+                                            due_date=assignment[0][3],
+                                            mentor_id=assignment[0][4],
+                                            type=assignment[0][5],
+                                            ))
             return assignments
         return None
 

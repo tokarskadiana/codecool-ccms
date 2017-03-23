@@ -1,5 +1,4 @@
 from model.sql_alchemy_db import db
-from model.sqlRequest import SqlRequest
 import datetime
 
 
@@ -9,14 +8,14 @@ class Submition(db.Model):
     '''
     __tablename__ = 'submition'
     id = db.Column(db.Integer, primary_key=True)
-    assignment_id = (db.Integer, db.ForeignKey('assignment.id'))
-    student_id = (db.Integer, db.ForeignKey('student.id'))
+    assignment_id = db.Column(db.Integer, db.ForeignKey('assignment.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
     content = db.Column(db.String)
     grade = db.Column(db.Integer)
     update_data = db.Column(db.String)
-    mentor_id = (db.Integer, db.ForeignKey('mentor.id'))
+    mentor_id = db.Column(db.Integer)
 
-    def __init__(self, assignment_id, student_id, id=None, content=None, grade=None, update=None, mentor_id=None):
+    def __init__(self, assignment_id, student_id, content=None, grade=None, update=None, mentor_id=None):
         '''
         Constructor of Submition object.
         '''
@@ -26,25 +25,24 @@ class Submition(db.Model):
         self.content = content
         self.grade = grade
         self.update = update
-        self.id = id
 
     def set_id(self, id):
         self.id = id
 
-    @classmethod
-    def create(cls, assignment_id, student_id):
+    # @classmethod
+    # @staticmethod
+    def create(self):
         '''
         Make new submition.
         '''
-
-        submition = Submition(assignment_id=assignment_id, student_id=student_id)
-        db.session.flush()
-        db.session.add(submition)
+        # db.session.flush()
+        db.session.add(self)
         db.session.commit()
 
         # SqlRequest.sql_request(
         #     'INSERT INTO submition (assignment_id, student_id) VALUES("{}", "{}")'.format(assignment_id, student_id))
         # submition = cls(assignment_id, student_id)
+
         # submition_id = SqlRequest.sql_request('SELECT * FROM submition WHERE id = (SELECT MAX(id) \
         # FROM submition);')[0][0]
         # submition.set_id(submition_id)
