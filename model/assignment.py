@@ -1,21 +1,21 @@
 from model.student import Student
 from model.submit import Submition
 from model.sqlRequest import SqlRequest
-import datetime
 from model.sql_alchemy_db import db
+from datetime import date
 
 class Assignment(db.Model):
     '''
     Class representing assignment object.
     '''
 
-    __tablename__ = 'assigment'
+    __tablename__ = 'assignment'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    date = db.Column(db.Date)
+    date = db.Column(db.String, default=date.today())
     description = db.Column(db.String)
-    due_date = db.Column(db.Date)
-    mentor_id = db.Column(db.Integer, db.ForeignKey('mentor.id'))
+    due_date = db.Column(db.String)
+    mentor_id = db.Column(db.Integer)
     type = db.Column(db.String)
 
     def __init__(self, title, description, due_date, mentor_id, type, id=None, date=None):
@@ -33,6 +33,8 @@ class Assignment(db.Model):
     def set_id(self, id):
         self.id = id
 
+
+    # nieużywana
     def make_submit_list(self):
         '''
         Make a list of submitions for particular assigment instance for every students.
@@ -50,22 +52,14 @@ class Assignment(db.Model):
 
         Returns: boolean value
         '''
-        date = datetime.datetime.now().date()
 
-        # assignment = Assignment(title=title, description=description, due_date=due_date, type=type, mentor_id=mentor_id, date=date)
-        assignment = cls(title, description, due_date, mentor_id, type)
+        assignment = Assignment(title=title, description=description, due_date=due_date, type=type, mentor_id=mentor_id)
+        print('====> tworze obiekt')
+        print(assignment)
+        db.session.flush()
+        db.session.add(assignment)
+        db.session.commit()
 
-        query = "INSERT OR IGNORE INTO assignment (title, description, date, due_date, type, mentor_id) \
-                 VALUES ('{}', '{}', '{}', '{}', '{}', '{}');".format(
-            assignment.title, assignment.description, date,
-            assignment.due_date, assignment.type, assignment.mentor_id)
-        SqlRequest.sql_request(query)
-
-        # db.session.query(Assignment).filter_by(id=max(i))
-        assignment_id = SqlRequest.sql_request(
-                'SELECT * FROM assignment WHERE id = (SELECT MAX(id) FROM assignment);')[0][0]
-        assignment.set_id(assignment_id)
-        assignment.make_submit_list()
 
     @classmethod
     def get_list(cls):
@@ -74,16 +68,12 @@ class Assignment(db.Model):
         title, description, due_date, mentor_id, type, id=None):
         Returns:list
         '''
-        # list_assignment = []
-        # data = SqlRequest.sql_request(
-        #     'SELECT id,title,description,due_date,mentor_id,type FROM assignment')
-        # for item in data:
-        #     assignment = cls(item[1], item[2], item[3],
-        #                      item[4], item[5], item[0])
-        #     assignment.set_id(item[0])
-        #     list_assignment.append(assignment)
+
+        print('jestem TUUUU')
+
         return cls.query.all()
 
+    # to jest nieużywane?
     def get_submition_content(self, user_name):
 
         submitions = db.session.query(Submition).filter_by(assignment_id=self.id).all()
@@ -98,7 +88,7 @@ class Assignment(db.Model):
             if submition[2] == user_id:
                 return submition[3]
         return None
-
+    # to jest nieużywane?
     def submit_assignment(self, user_name, content):
         '''
         Make able to submit assigment to students.
@@ -139,9 +129,11 @@ class Assignment(db.Model):
         :param id: assigment id
         :return: list of tuples
         """
+        print('get_students_of_assgmnet JESTEM TU')
         query = "SELECT student.ID, first_name,last_name,grade,content,update_data, (\
         student.first_name || '.' || student.last_name ) as username from submition LEFT JOIN \
         student ON student.ID = student_id WHERE assignment_id={}".format(id)
+        x = db.session.query()
         return SqlRequest.sql_request(query)
 
     @classmethod
@@ -151,20 +143,28 @@ class Assignment(db.Model):
         :param id: student id
         :return: list of objects
         """
-        query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM \
-        assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(id)
-        assignments = SqlRequest.sql_request(query)
-        assignments_list = []
+        print('get_all_assigments WCHODZI')
+        # query = 'SELECT DISTINCT assignment.id,title,description,due_date,assignment.mentor_id,type FROM \
+        # assignment LEFT JOIN submition ON assignment_id = submition.assignment_id WHERE student_id ={}'.format(id)
+        # assignments = SqlRequest.sql_request(query)
+        assignments = db.session.query(cls).distinct(Assignment.id, Assignment.description, Assignment.due_date, Assignment.mentor_id).join(Submition).filter_by()
+
+        assignments = db.session.query(Assignment, Submition) \
+            .join(Submition, Submition.assignment_id == Assignment.id) \
+            .filter(Submition.student_id == id).all()
+        print('lista assigmentów TO TUUU', assignments)
+
+        # assignments_list = []
         if assignments:
-            for assignment in assignments:
-                assignments_list.append(cls(id=assignment[0],
-                                            title=assignment[1],
-                                            description=assignment[2],
-                                            due_date=assignment[3],
-                                            mentor_id=assignment[4],
-                                            type=assignment[5],
-                                            ))
-            return assignments_list
+        #     for assignment in assignments:
+        #         assignments_list.append(cls(id=assignment[0][0],
+        #                                     title=assignment[0][1],
+        #                                     description=assignment[0][2],
+        #                                     due_date=assignment[0][3],
+        #                                     mentor_id=assignment[0][4],
+        #                                     type=assignment[0][5],
+        #                                     ))
+            return assignments
         return None
 
     def delete_assignment(self):
