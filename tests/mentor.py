@@ -10,7 +10,7 @@ import unittest, time, re
 
 class Mentor(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         self.base_url = "http://127.0.0.1:5000/"
         self.verificationErrors = []
         self.accept_next_alert = True
