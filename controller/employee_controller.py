@@ -12,9 +12,8 @@ employee_controller = Blueprint('employee_controller', __name__,
 # -----------------EMPLOYEE------------------
 
 
-def save_employee(position, save, id=None):
-    employee = Employee(id=id,
-                        password=request.form['password'],
+def save_employee(position, save, obj=None):
+    employee = Employee(password=request.form['password'],
                         first_name=request.form['first_name'],
                         last_name=request.form['last_name'],
                         position=position,
@@ -24,7 +23,12 @@ def save_employee(position, save, id=None):
     if save == 'add':
         employee.add_employee()
     elif save == 'edit':
-        employee.edit_employee()
+        obj.edit_employee(password=request.form['password'],
+                          first_name=request.form['first_name'],
+                          last_name=request.form['last_name'],
+                          telephone=request.form.get('phone_number', ''),
+                          mail=request.form.get('mail', ''),
+                          salary=request.form.get('salary', ''))
 
 
 # ----------------MENTORS-----------------
@@ -75,7 +79,7 @@ def edit_mentor(employee_id):
     """
     mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
-        save_employee('mentor', 'edit', mentor.id)
+        save_employee('mentor', 'edit', mentor)
         return redirect(url_for('employee_controller.list_mentors'))
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=mentor,
                            list='employee_controller.list_mentors')
@@ -141,7 +145,7 @@ def edit_assistant(employee_id):
     """
     assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
-        save_employee('assistant', 'edit', assistant.id)
+        save_employee('assistant', 'edit', assistant)
         return redirect(url_for('employee_controller.list_assistants'))
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=assistant,
                            list='employee_controller.list_assistants')
