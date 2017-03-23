@@ -42,7 +42,7 @@ class Checkpoint(db.Model):
         Get all available checkpoints
         :return:
         """
-        return db.session.query(cls.name).distinct()
+        return db.session.query(cls.name,cls.checkpoint_date).distinct()
 
     def remove_chkp(self):
         db.session.flush()
@@ -90,7 +90,6 @@ class Checkpoint(db.Model):
         Get student name
         :return: List of objects
         """
-        print(self.query)
         student = Student.get_by_id(self.student_id)
         if student:
             return student.username
