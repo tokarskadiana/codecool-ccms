@@ -1,4 +1,5 @@
 from app import app
+from model.sql_alchemy_db import db
 from flask import Flask, render_template
 from controller.database_controller import DatabaseController
 from controller.login import authorization
@@ -24,5 +25,6 @@ app.register_blueprint(main_page)
 
 if __name__ == '__main__':
     DatabaseController.createSqlDatabase()
+    # db.create_all()
     DatabaseController.sample_data()
     app.run(debug=True)

@@ -12,9 +12,10 @@ class Student(User, db.Model):
     mail = db.Column(db.String)
     username = db.Column(db.String)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
-    username_chkp = db.relationship('Checkpoint', backref="student", lazy="dynamic")
+    # username_chkp = db.relationship('Checkpoint', backref="student", lazy="dynamic")
 
     # team = db.relationship("Team",foreign_keys=[team_id])
+    # attendance_id = db.relationship('Attandance', backref="student", lazy="dynamic")
 
 
     def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id="", student_cards=""):
