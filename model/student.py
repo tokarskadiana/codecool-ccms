@@ -98,13 +98,13 @@ class Student(User, db.Model):
             attendance = attendance.__class__
             presence_average = db.session.query(func.avg(attendance.status),
                                                 func.count(attendance.status)).filter_by(student_id=self.id).all()
-        avg = presence_average[0][0]
-        count = presence_average[0][1]
-        if count:
-            if not avg:
-                avg = 0
-            stats = (presence_average[0][0] / presence_average[0][1]) * 100
-            return stats
+            avg = presence_average[0][0]
+            count = presence_average[0][1]
+            if count:
+                if not avg:
+                    avg = 0
+                stats = (presence_average[0][0] / presence_average[0][1]) * 100
+                return stats
 
     @classmethod
     def get_to_login(cls, username, password):
