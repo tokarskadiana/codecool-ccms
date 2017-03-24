@@ -9,7 +9,7 @@ class Team(db.Model):
     __tablename__ = 'team'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    username = db.relationship('Student',backref="team",lazy="dynamic")
+    username = db.relationship('Student', backref="team", lazy="dynamic")
 
     def __init__(self, name, id=None):
         """
@@ -24,8 +24,7 @@ class Team(db.Model):
         return: list(Student objects)
         """
 
-        return self.username.all() # get all members of team
-
+        return self.username.all()  # get all members of team
 
     def add_team(self):
         """

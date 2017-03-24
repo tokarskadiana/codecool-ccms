@@ -37,14 +37,12 @@ class Submition(db.Model):
         db.session.add(self)
         db.session.commit()
 
-
     def update_grade(self, new_grade):
         '''
         Changes a submition grage to new value.
         '''
         self.grade = new_grade
         db.session.commit()
-
 
     def change_content(self, new_content):
         '''
@@ -63,7 +61,7 @@ class Submition(db.Model):
                     int(assignment_id)
         return: obj(Submit)
         """
-        return cls.query.filter(cls.student_id==student_id,cls.assignment_id==assignment_id).first()
+        return cls.query.filter(cls.student_id == student_id, cls.assignment_id == assignment_id).first()
 
     @classmethod
     def get_by_id(cls, id):
