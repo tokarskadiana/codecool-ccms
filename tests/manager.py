@@ -69,6 +69,8 @@ class Manager(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List mentors").click()
         driver.find_element_by_xpath("//body[@id='homepage']/section/div/table/tbody/tr[2]/td[7]/a/i").click()
+        driver.switch_to_alert().accept()
+
         print('\tremove mentor SUCCESS')
 
     def list_mentors(self):
