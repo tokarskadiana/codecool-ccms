@@ -59,12 +59,14 @@
                 </thead>
                 <tbody>
                 {% for student_assignment in student_assignments %}
+                    {%  if student_assignment.type == "group" and user.team or  student_assignment.type == "individual" %}
                     <tr>
                         <td>{{ student_assignment.title }}</td>
                         <td><a href="{{ url_for('assignment_controller.view_assignments',assignments_id=student_assignment.id) }}"><i
                                 class="fa fa-search" aria-hidden="true"></a></td>
                         </td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

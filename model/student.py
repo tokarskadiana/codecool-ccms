@@ -19,7 +19,6 @@ class Student(User, db.Model):
     teams = db.relationship('Team', backref="student", lazy="joined")
     attendance = db.relationship('Attendance', backref="student", lazy="dynamic")
 
-
     def __init__(self, id, password, first_name, last_name, telephone="", mail="", team_id="", student_cards=""):
         """
         Represents Student object.
@@ -42,6 +41,7 @@ class Student(User, db.Model):
             return team_name.name
 
         return ''
+
     def get_checkpoints(self):
         return self.checkpoints.all()
 
