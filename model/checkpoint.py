@@ -1,9 +1,11 @@
 from model.sql_alchemy_db import db
 from model.student import Student
-from model.employee import Employee
 
 
 class Checkpoint(db.Model):
+    '''
+    Class representing checkpoint object.
+    '''
     __tablename__ = 'checkpoint'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -42,7 +44,7 @@ class Checkpoint(db.Model):
         Get all available checkpoints
         :return:
         """
-        return db.session.query(cls.name,cls.checkpoint_date).distinct()
+        return db.session.query(cls.name, cls.checkpoint_date).distinct()
 
     def remove_chkp(self):
         db.session.flush()
@@ -83,7 +85,7 @@ class Checkpoint(db.Model):
                     chkp.card = int(grade)
                     chkp.add_checkpoint()
             except:
-                print('Hackers arent ya?')
+                print("Hackers aren't ya?")
 
     def get_checkpoint_username(self):
         """
@@ -106,7 +108,7 @@ class Checkpoint(db.Model):
     @classmethod
     def get_by_id(cls, id):
         """
-        Rteurn team object by id from database.
+        Return team object by id from database.
         arguments: int(id)
         return: obj(Team)
         """

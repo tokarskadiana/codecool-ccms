@@ -1,10 +1,11 @@
 from model.student import Student
 from model.sql_alchemy_db import db
-import datetime
 
 
 class Attendance(db.Model):
-
+    '''
+    Class representing attendance object.
+    '''
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date)
     status = db.Column(db.Boolean)
@@ -26,7 +27,6 @@ class Attendance(db.Model):
         db.session.add(self)
         db.session.commit()
 
-
     @staticmethod
     def already_checked(date):
         """
@@ -47,15 +47,14 @@ class Attendance(db.Model):
         :return: list of list
         """
         students_presence = Attendance.query.filter_by(date=date).join(Student).values(Attendance.student_id,
-                                                                                    Attendance.status,
-                                                                                    Student.first_name,
-                                                                                    Student.last_name)
+                                                                                       Attendance.status,
+                                                                                       Student.first_name,
+                                                                                       Student.last_name)
         students_presence = [list(student) for student in students_presence]
         if students_presence:
             for student in students_presence:
                 student[0] = str(student[0])
         return students_presence
-
 
     @staticmethod
     def update_attendance_day(student_id, date, status):
