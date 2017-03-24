@@ -26,10 +26,12 @@ def attendance():
             for student in students_checked:
                 status = bool(int(request.form[str(student[0])]))
                 Attendance.update_attendance_day(int(student[0]), date, status)
+            flash('Attendence was updated')
         else:
             for student in students:
                 status = bool(request.form[str(student.id)])
                 Attendance(date, status, student.id).add()
+                flash('Attendence was checked')
         return redirect(url_for('attendance_controller.attendance'))
     if Attendance.already_checked(date):
         return render_template('attendance.html', user=user_session(session['user'], session['type']),

@@ -29,6 +29,7 @@ def add_team():
     """
     if request.method == 'POST':
         Team(request.form['name']).add_team()
+        flash('Team was added')
         return redirect('list-teams')
     return render_template("team_form.html", user=user_session(session['user'], session['type']))
 
@@ -46,6 +47,7 @@ def edit_team(team_id):
     if request.method == 'POST':
         team.name = request.form['name']
         team.edit_team()
+        flash('Team was edited')
         return redirect(url_for('team_controller.list_teams'))
     return render_template('team_form.html', user=user_session(session['user'], session['type']), team=team)
 
@@ -57,4 +59,5 @@ def delete_team(team_id):
     """Delete from database team by given id in team_id"""
     team = Team.get_by_id(team_id)
     team.delete_team()
+    flash('Team was deleted')
     return redirect(url_for('team_controller.list_teams'))

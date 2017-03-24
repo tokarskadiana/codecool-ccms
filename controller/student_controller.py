@@ -60,6 +60,7 @@ def add_student():
     teams = Team.list_teams()
     if request.method == 'POST':
         save_student('add')
+        flash('Student was added')
         return redirect(url_for('student_controller.list_students'))
     return render_template('student_form.html', user=user_session(session['user'], session['type']), teams=teams)
 
@@ -80,6 +81,7 @@ def edit_student(student_id):
     if student:
         if request.method == 'POST':
             save_student('edit', student.id)
+            flash('Student was edited')
             return redirect(url_for('student_controller.list_students'))
         return render_template('edit_student_form.html', user=user_session(session['user'], session['type']),
                                student=student, teams=teams)
@@ -98,6 +100,7 @@ def delete(student_id):
     student = Student.get_by_id(student_id)
     if student:
         student.delete_student()
+        flash('Student was deleted')
         return redirect(url_for('student_controller.list_students'))
     return redirect(url_for('student_controller.list_students'))
 

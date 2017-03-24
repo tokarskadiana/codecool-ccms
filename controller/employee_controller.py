@@ -62,6 +62,7 @@ def add_mentor():
 
     if request.method == 'POST':
         save_employee('mentor', 'add')
+        flash('Mentor was added')
         return redirect(url_for('employee_controller.list_mentors'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']),
                            list='employee_controller.list_mentors')
@@ -80,6 +81,7 @@ def edit_mentor(employee_id):
     mentor = Mentor.get_by_id(employee_id)
     if request.method == 'POST':
         save_employee('mentor', 'edit', mentor)
+        flash('Mentor was edited')
         return redirect(url_for('employee_controller.list_mentors'))
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=mentor,
                            list='employee_controller.list_mentors')
@@ -96,6 +98,7 @@ def delete_mentor(employee_id):
     """
     mentor = Mentor.get_by_id(employee_id)
     mentor.delete_employee()
+    flash('Mentor was deleted')
     return redirect(url_for('employee_controller.list_mentors'))
 
 
@@ -128,6 +131,7 @@ def add_assistant():
     """
     if request.method == 'POST':
         save_employee('assistant', 'add')
+        flash('Assistant was added')
         return redirect(url_for('employee_controller.list_assistants'))
     return render_template('addemployee.html', user=user_session(session['user'], session['type']),
                            employee='Assistant', list='employee_controller.list_assistants')
@@ -146,6 +150,7 @@ def edit_assistant(employee_id):
     assistant = Employee.get_by_id(employee_id, 'assistant')
     if request.method == 'POST':
         save_employee('assistant', 'edit', assistant)
+        flash('Assistant was edited')
         return redirect(url_for('employee_controller.list_assistants'))
     return render_template('editemployee.html', user=user_session(session['user'], session['type']), employee=assistant,
                            list='employee_controller.list_assistants')
@@ -162,4 +167,5 @@ def delete_assistant(employee_id):
     """
     assistant = Employee.get_by_id(employee_id, 'assistant')
     assistant.delete_employee()
+    flash('Assistant was deleted')
     return redirect(url_for('employee_controller.list_assistants'))

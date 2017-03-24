@@ -62,6 +62,7 @@ def add_assignment():
                               user_session(session['user'], session[
                                   'type']).username, due_to,
                               user_session(session['user'], session['type']).id)
+            flash('Assignment was added')
             return redirect(url_for('assignment_controller.list_assignments'))
 
     return render_template('addassignment.html', user=user_session(session['user'], session['type']))

@@ -56,6 +56,7 @@ def add_checkpoint():
                 Checkpoint.add_checkpoint_students(checkpoint_name, date,
                                                    user_session(session['user'], session[
                                                        'type']).id, students)
+                flash('Checkpoint was added')
                 return redirect(url_for('checkpoint_controller.list_checkpoints'))
 
         return render_template('add_checkpoint.html', user=user_session(session['user'], session['type']))
@@ -73,6 +74,7 @@ def delete_checkpoint():
             if request.form['action']:
                 checkpoint_name = request.form['checkpoint_name']
                 Checkpoint.remove_checkpoint(checkpoint_name)
+                flash('Checkpoint was deleted')
                 return redirect(url_for('checkpoint_controller.list_checkpoints'))
 
     return render_template('404.html', user=user_session(session['user'], session['type']))
