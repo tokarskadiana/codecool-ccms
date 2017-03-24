@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% block content %}
-    <h3>Add student</h3>
+    <h3>Edit student</h3>
     <div class="large-wrapper">
         <form id="student-form" name='student-form' class="main-form" action="" method="post">
             <div class="right-side">
@@ -27,20 +27,5 @@
             <input class='main-button' type="submit" name="submition" value="Save">
         </form>
     </div>
-    <label for="phone-number">Telephone number</label>
-    <input type="tel" pattern='^\+?\d{0,13}' name="phone-number" value="{{student.telephone}}">
-    <label for="mail">Mail</label>
-    <input type="email" name="mail" value="{{student.mail}}">
-    <label for="team">Team</label>
-    <select name='team' form="student-form">
-      <option selected='selected' disabled required>Chose team</option>
-      {% for team in teams %}
-        <option {% if team.id == student.team_id %} selected='selected' {% endif%} value="{{team.id}}">{{team.name}}
-        </option>
-      {% endfor %}
-    </select>
-    <input class='main-button' type="submit" name="submition" value="Save">
-  </form>
-</div>
 <div class="back-button"><a href="{{url_for('student_controller.list_students')}}"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
 {% endblock %}
