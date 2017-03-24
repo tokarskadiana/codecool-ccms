@@ -33,8 +33,5 @@ def attendance():
                 Attendance(date, status, student.id).add()
                 flash('Attendence was checked')
         return redirect(url_for('attendance_controller.attendance'))
-    if Attendance.already_checked(date):
-        return render_template('attendance.html', user=user_session(session['user'], session['type']),
-                               students_checked=students_checked, date=date, students=students)
     return render_template('attendance.html', user=user_session(session['user'], session['type']), students=students,
                            date=date, students_checked=students_checked)

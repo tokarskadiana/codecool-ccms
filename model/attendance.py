@@ -34,7 +34,7 @@ class Attendance(db.Model):
         :param date: date
         :return: boolean
         """
-        checked_day = Attendance.query.filter_by(date=date).first()
+        checked_day = Attendance.query.filter_by(date=date)
         if checked_day:
             return True
         return False
