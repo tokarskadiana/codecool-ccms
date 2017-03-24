@@ -24,7 +24,7 @@ def login():
         users = [Student, Mentor, Manager, Employee]
         user = None
         index = 0
-        while not user and index < 3:
+        while not user and index < 4:
             user = users[index].get_to_login(username, password)
             index += 1
         if user:
