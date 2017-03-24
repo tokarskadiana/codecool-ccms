@@ -24,7 +24,8 @@
                         <td>{{ employee.salary }}</td>
                         <td><a href="{{ url_for(edit, employee_id=employee.id) }}"><i class="fa fa-pencil-square-o"
                                                                                       aria-hidden="true"></i></a></td>
-                        <td><a href="{{ url_for(delete, employee_id=employee.id) }}"><i class="fa fa-trash"
+                        <td><a href="{{ url_for(delete, employee_id=employee.id) }}"
+                          onclick="return confirm('Do you really want to delete item?');"><i class="fa fa-trash"
                                                                                         aria-hidden="true"></i></a></td>
                     </tr>
                 {% endfor %}

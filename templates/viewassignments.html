@@ -32,7 +32,8 @@
                                 </form>
                             </td>
                             <td>
-                              <a href="{{url_for('assignment_controller.delete_assignment', assignment_id=assignment.id)}}">
+                              <a href="{{url_for('assignment_controller.delete_assignment', assignment_id=assignment.id)}}"
+                              onclick="return confirm('Do you really want to delete item?');">
                               <i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>

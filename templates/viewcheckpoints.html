@@ -27,7 +27,8 @@
                             <td>
                                 <form method="post" action="{{ url_for('checkpoint_controller.delete_checkpoint') }}">
                                     <input type="hidden" value="{{ checkpoint[0] }}" name="checkpoint_name">
-                                    <button name="action" type="submit" value="editAssignment"><i class="fa fa-trash"
+                                    <button name="action" type="submit" value="editAssignment"
+                                    onclick="return confirm('Do you really want to delete item?');"><i class="fa fa-trash"
                                                                                                   aria-hidden="true"></i>
                                     </button>
                                 </form>

@@ -31,7 +31,8 @@
                                 class="fa fa-pencil-square-o"
                                 aria-hidden="true"></i></a>
                         </td>
-                        <td><a href="{{ url_for('student_controller.delete', student_id=student.id) }}"><i class="fa fa-trash"
+                        <td><a href="{{ url_for('student_controller.delete', student_id=student.id) }}"
+                          onclick="return confirm('Do you really want to delete item?');"><i class="fa fa-trash"
                                                                                     aria-hidden="true"></i>
                     {% endif %}
                     </a></td>
