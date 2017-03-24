@@ -83,6 +83,7 @@ class Mentor(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List assignments").click()
         driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[6]/a').click()
+        driver.switch_to_alert().accept()
         print('\tremove assignments SUCCESS')
 
     def attendance(self):
@@ -132,6 +133,7 @@ class Mentor(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List students").click()
         driver.find_element_by_xpath("//body[@id='homepage']/section/div/table/tbody/tr[3]/td[7]/a/i").click()
+        driver.switch_to_alert().accept()
         print('\tremove student SUCCESS')
 
     def edit_student(self):
@@ -176,6 +178,7 @@ class Mentor(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List teams").click()
         driver.find_element_by_css_selector("i.fa.fa-trash").click()
+        driver.switch_to_alert().accept()
         print('\tremove team SUCCESS')
 
     def edit_team(self):
@@ -254,6 +257,7 @@ class Mentor(User):
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("List checkpoints").click()
         driver.find_element_by_xpath('//*[@id="homepage"]/section/div/table/tbody/tr/td[4]/form/button').click()
+        driver.switch_to_alert().accept()
         # print('\t\tcheck if checkpoint still exist START')
         # xpaths_values = {'//*[@id="homepage"]/section/div/div/p': 'There is no Checkpoints. Please add checkpoint.'}
         # self.match_data(xpaths_values, massage='there is still checkpoint')
