@@ -83,33 +83,6 @@ class Student(User):
         Student.login_student(self, "piotr.gurdek")
         Student.check_attendance_stats(self)
 
-    def test_submit_assignment_as_individual(self):
-        print('test submit assignment')
-        Mentor.login_mentor(self)
-        Mentor.add_assignments(self)
-        Mentor.logout(self)
-        Student.login_student(self, "piotr.gurdek")
-        Student.submit_assignment(self)
-        Student.logout(self)
-        Mentor.login_mentor(self)
-        Mentor.remove_assignments(self)
-
-    def test_submit_assignment_as_a_team(self):
-        print('test submit assignment as a team')
-        Mentor.login_mentor(self)
-        Mentor.add_assignments(self, group=True)
-        Mentor.add_team(self)
-        Mentor.add_student_to_team(self)
-        Mentor.logout(self)
-        Student.login_student(self, "piotr.gurdek")
-        Student.submit_assignment(self)
-        Student.logout(self)
-        Student.login_student(self, "monika.plocica")
-        Student.check_assignment(self)
-        Student.logout(self)
-        Mentor.login_mentor(self)
-        Mentor.remove_assignments(self)
-
     def test_check_grades(self):
         print('test submit assignment')
         Mentor.login_mentor(self)
