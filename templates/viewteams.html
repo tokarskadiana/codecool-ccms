@@ -26,7 +26,8 @@
                     </td>
                     <td><a href="{{ url_for('team_controller.edit_team', team_id=team.id) }}"><i class="fa fa-pencil-square-o"
                                                                                  aria-hidden="true"></i></a></td>
-                    <td><a href="{{ url_for('team_controller.delete_team', team_id=team.id) }}"><i class="fa fa-trash"
+                    <td><a href="{{ url_for('team_controller.delete_team', team_id=team.id) }}"
+                      onclick="return confirm('Do you really want to delete item?');"><i class="fa fa-trash"
                                                                                    aria-hidden="true"></i></a></td>
                 </tr>
             {% endfor %}
