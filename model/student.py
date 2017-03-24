@@ -13,7 +13,7 @@ class Student(User, db.Model):
     password = db.Column(db.String)
     telephone = db.Column(db.String)
     mail = db.Column(db.String)
-    username = db.Column(db.String,unique=True)
+    username = db.Column(db.String)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
     checkpoints = db.relationship('Checkpoint', backref="student", lazy="dynamic")
     teams = db.relationship('Team', backref="student", lazy="joined")

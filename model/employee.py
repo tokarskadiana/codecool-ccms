@@ -12,7 +12,7 @@ class Employee(db.Model, User):
     last_name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     telephone = db.Column(db.String)
-    username = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String, nullable=False)
     position = db.Column(db.String, nullable=False)
     mail = db.Column(db.String)
     salary = db.Column(db.String)
